@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\User;
 
 class RoleController extends Controller
 {
     public function index(Request $request)
     {
+        $permissions = Permission::all();
         $query = $request->input('search');
         $roles = Role::where('name', 'like', '%' . $query . '%')->paginate(10);
         return view('admin.roles.index', compact('roles', 'query'));

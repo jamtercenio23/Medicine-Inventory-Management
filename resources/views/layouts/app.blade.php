@@ -81,48 +81,79 @@
     <div class="d-flex" id="wrapper">
         @if (Auth::check())
             <div class="bg-light border-right" id="sidebar-wrapper">
-                <div class="sidebar-heading">Mabini Health Center </div>
+                <div class="sidebar-heading">Mabini Health Center</div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-item-action bg-light">
                         <a href="{{ url('/home') }}"><i class="fas fa-home"></i> Dashboard</a>
                     </li>
-                    <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('categories.index') }}"><i class="fas fa-th-large"></i> Categories</a>
-                    </li>
-                    <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('medicines.index') }}"><i class="fas fa-pills"></i> Medicines</a>
-                    </li>
-                    <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('medicines.out-of-stock') }}"><i class="fas fa-exclamation-triangle"></i> Out
-                            of Stock Medicines</a>
-                    </li>
-                    <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('medicines.expired') }}"><i class="fas fa-calendar-times"></i> Expired
-                            Medicines</a>
-                    </li>
-                    <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('patients.index') }}"><i class="fas fa-users"></i> Patients</a>
-                    </li>
-                    <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('barangays.index') }}"><i class="fas fa-map-marked-alt"></i> Barangays</a>
-                    </li>
-                    <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('schedules.index') }}"><i class="fas fa-clock"></i> Schedules</a>
-                    </li>
-                    <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('distributions.index') }}"><i class="fas fa-clipboard-list"></i> Patient
-                            Distributions</a>
-                    </li>
-                    <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('distribution-barangay.index') }}"><i class="fas fa-chart-bar"></i> Barangay
-                            Distributions</a>
-                    </li>
-                    <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('permissions.index') }}"><i class="fas fa-lock"></i> Permissions</a>
-                    </li>
-                    <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('roles.index') }}"><i class="fas fa-user-shield"></i> Roles</a>
-                    </li>
+                    @can('view-categories')
+                        <li class="list-group-item list-group-item-action bg-light">
+                            <a href="{{ route('categories.index') }}"><i class="fas fa-th-large"></i> Categories</a>
+                        </li>
+                    @endcan
+                    @can('view-medicines')
+                        <li class="list-group-item list-group-item-action bg-light">
+                            <a href="{{ route('medicines.index') }}"><i class="fas fa-pills"></i> Medicines</a>
+                        </li>
+                    @endcan
+                    @can('view-out-of-stock')
+                        <li class="list-group-item list-group-item-action bg-light">
+                            <a href="{{ route('medicines.out-of-stock') }}"><i class="fas fa-exclamation-triangle"></i> Out
+                                of Stock Medicines</a>
+                        </li>
+                    @endcan
+                    @can('view-expired')
+                        <li class="list-group-item list-group-item-action bg-light">
+                            <a href="{{ route('medicines.expired') }}"><i class="fas fa-calendar-times"></i> Expired
+                                Medicines</a>
+                        </li>
+                    @endcan
+                    @can('view-patients')
+                        <li class="list-group-item list-group-item-action bg-light">
+                            <a href="{{ route('patients.index') }}"><i class="fas fa-users"></i> Patients</a>
+                        </li>
+                    @endcan
+                    @can('view-barangays')
+                        <li class="list-group-item list-group-item-action bg-light">
+                            <a href="{{ route('barangays.index') }}"><i class="fas fa-map-marked-alt"></i> Barangays</a>
+                        </li>
+                    @endcan
+                    @can('view-schedules')
+                        <li class="list-group-item list-group-item-action bg-light">
+                            <a href="{{ route('schedules.index') }}"><i class="fas fa-clock"></i> Schedules</a>
+                        </li>
+                    @endcan
+                    @can('view-distributions')
+                        <li class="list-group-item list-group-item-action bg-light">
+                            <a href="{{ route('distributions.index') }}"><i class="fas fa-clipboard-list"></i> Patient
+                                Distributions</a>
+                        </li>
+                    @endcan
+                    @can('view-distribution-barangay')
+                        <li class="list-group-item list-group-item-action bg-light">
+                            <a href="{{ route('distribution-barangay.index') }}"><i class="fas fa-chart-bar"></i> Barangay
+                                Distributions</a>
+                        </li>
+                    @endcan
+
+                    @can('view-permissions')
+                        <li class="list-group-item list-group-item-action bg-light">
+                            <a href="{{ route('permissions.index') }}"><i class="fas fa-lock"></i> Permissions</a>
+                        </li>
+                    @endcan
+
+                    @can('view-roles')
+                        <li class="list-group-item list-group-item-action bg-light">
+                            <a href="{{ route('roles.index') }}"><i class="fas fa-user-shield"></i> Roles</a>
+                        </li>
+                    @endcan
+
+                    @can('view-users')
+                        <li class="list-group-item list-group-item-action bg-light">
+                            <a href="{{ route('users.index') }}"><i class="fas fa-users"></i> Users</a>
+                        </li>
+                    @endcan
+
                 </ul>
                 <div style="padding: 10px; margin-top: 50px">
                     <a href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal"

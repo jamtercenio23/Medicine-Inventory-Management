@@ -11,6 +11,8 @@ use App\Http\Controllers\BarangayController;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\DistributionBarangayController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,5 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('admin/distribution-barangay', DistributionBarangayController::class);
     Route::resource('admin/permissions', PermissionController::class);
     Route::resource('admin/roles', RoleController::class);
-
+    Route::resource('admin/users', UserController::class);
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 });
