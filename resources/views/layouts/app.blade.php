@@ -21,8 +21,13 @@
             $("#menu-toggle").click(function(e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
+                if ($("#wrapper").hasClass("toggled")) {
+                    $("#menu-icon").removeClass("fa-chevron-left").addClass("fa-chevron-right");
+                } else {
+                    $("#menu-icon").removeClass("fa-chevron-right").addClass("fa-chevron-left");
+                }
             });
-        })
+        });
     </script>
     <style>
         body {
@@ -76,50 +81,62 @@
     <div class="d-flex" id="wrapper">
         @if (Auth::check())
             <div class="bg-light border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading">Mabini Health Center </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item list-group-item-action bg-light">
-            <a href="{{ url('/home') }}"><i class="fas fa-home"></i> Dashboard</a>
-        </li>
-        <li class="list-group-item list-group-item-action bg-light">
-            <a href="{{ route('categories.index') }}"><i class="fas fa-th-large"></i> Categories</a>
-        </li>
-        <li class="list-group-item list-group-item-action bg-light">
-            <a href="{{ route('medicines.index') }}"><i class="fas fa-pills"></i> Medicines</a>
-        </li>
-        <li class="list-group-item list-group-item-action bg-light">
-            <a href="{{ route('medicines.out-of-stock') }}"><i class="fas fa-exclamation-triangle"></i> Out of Stock Medicines</a>
-        </li>
-        <li class="list-group-item list-group-item-action bg-light">
-            <a href="{{ route('medicines.expired') }}"><i class="fas fa-calendar-times"></i> Expired Medicines</a>
-        </li>
-        <li class="list-group-item list-group-item-action bg-light">
-            <a href="{{ route('patients.index') }}"><i class="fas fa-users"></i> Patients</a>
-        </li>
-        <li class="list-group-item list-group-item-action bg-light">
-            <a href="{{ route('barangays.index') }}"><i class="fas fa-map-marked-alt"></i> Barangays</a>
-        </li>
-        <li class="list-group-item list-group-item-action bg-light">
-            <a href="{{ route('schedules.index') }}"><i class="fas fa-clock"></i> Schedules</a>
-        </li>
-        <li class="list-group-item list-group-item-action bg-light">
-            <a href="{{ route('distributions.index') }}"><i class="fas fa-clipboard-list"></i> Patient Distributions</a>
-        </li>
-        <li class="list-group-item list-group-item-action bg-light">
-            <a href="{{ route('distribution-barangay.index') }}"><i class="fas fa-chart-bar"></i> Barangay Distributions</a>
-        </li>
-    </ul>
-    <div style="padding: 10px; margin-top: 50px">
-        <a href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal" class="btn btn-danger btn-block text-white">Logout</a>
-    </div>
-</div>
-
+                <div class="sidebar-heading">Mabini Health Center </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ url('/home') }}"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ route('categories.index') }}"><i class="fas fa-th-large"></i> Categories</a>
+                    </li>
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ route('medicines.index') }}"><i class="fas fa-pills"></i> Medicines</a>
+                    </li>
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ route('medicines.out-of-stock') }}"><i class="fas fa-exclamation-triangle"></i> Out
+                            of Stock Medicines</a>
+                    </li>
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ route('medicines.expired') }}"><i class="fas fa-calendar-times"></i> Expired
+                            Medicines</a>
+                    </li>
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ route('patients.index') }}"><i class="fas fa-users"></i> Patients</a>
+                    </li>
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ route('barangays.index') }}"><i class="fas fa-map-marked-alt"></i> Barangays</a>
+                    </li>
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ route('schedules.index') }}"><i class="fas fa-clock"></i> Schedules</a>
+                    </li>
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ route('distributions.index') }}"><i class="fas fa-clipboard-list"></i> Patient
+                            Distributions</a>
+                    </li>
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ route('distribution-barangay.index') }}"><i class="fas fa-chart-bar"></i> Barangay
+                            Distributions</a>
+                    </li>
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ route('permissions.index') }}"><i class="fas fa-lock"></i> Permissions</a>
+                    </li>
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ route('roles.index') }}"><i class="fas fa-user-shield"></i> Roles</a>
+                    </li>
+                </ul>
+                <div style="padding: 10px; margin-top: 50px">
+                    <a href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal"
+                        class="btn btn-danger btn-block text-white">Logout</a>
+                </div>
+            </div>
         @endif
         <div id="page-content-wrapper">
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                 @if (Auth::check())
-                    <button class="btn btn-primary" id="menu-toggle">X</button>
+                    <button class="btn btn-primary" id="menu-toggle">
+                        <i id="menu-icon" class="fas fa-chevron-left"></i>
+                    </button>
                 @endif
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -144,7 +161,7 @@
                                     @endif
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Profile</a>
+                                    <a class="dropdown-item" href="/profile">Profile</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal"
                                         data-target="#logoutModal">Logout</a>

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MedicineController;
@@ -35,5 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('admin/distributions', DistributionController::class);
     Route::resource('admin/distribution-barangay', DistributionBarangayController::class);
+    Route::resource('admin/permissions', PermissionController::class);
+    Route::resource('admin/roles', RoleController::class);
 
 });
