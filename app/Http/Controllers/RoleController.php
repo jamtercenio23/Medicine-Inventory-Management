@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\Models\User;
-
+use Illuminate\Support\Facades\DB;
 class RoleController extends Controller
 {
     public function index(Request $request)
@@ -22,6 +21,7 @@ class RoleController extends Controller
         $permissions = Permission::all();
         return view('admin.roles.create_modal', compact('permissions'));
     }
+
 
     public function store(Request $request)
     {
@@ -47,9 +47,23 @@ class RoleController extends Controller
             'name' => 'required|unique:roles,name,' . $role->id,
         ]);
 
-        $role->update(['name' => $request->name]);
+        DB::beginTransaction();
 
-        return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
+        try {
+            // Update the role
+            $role->name = $request->name;
+            $role->save();
+
+            // Sync permissions
+            $role->syncPermissions($request->permissions);
+
+            DB::commit();
+
+            return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('roles.index')->with('error', 'Failed to update the role.');
+        }
     }
 
     public function destroy(Role $role)

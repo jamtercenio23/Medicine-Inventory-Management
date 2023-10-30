@@ -1,9 +1,9 @@
 <!-- Edit Role Modal -->
-<div class="modal fade" id="editRoleModal" tabindex="-1" role="dialog" aria-labelledby="editRoleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editRoleModal{{ $role->id }}" tabindex="-1" role="dialog" aria-labelledby="editRoleModalLabel{{ $role->id }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editRoleModalLabel">Edit Role</h5>
+                <h5 class="modal-title" id="editRoleModalLabel{{ $role->id }}">Edit Role</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -19,7 +19,7 @@
                     <div class="form-group">
                         <label for="permissions">Select Permissions</label>
                         <select multiple class="form-control" id="permissions" name="permissions[]">
-                            @foreach($permissions as $permission)
+                            @foreach(\Spatie\Permission\Models\Permission::all() as $permission)
                                 <option value="{{ $permission->name }}" {{ $role->hasPermissionTo($permission->name) ? 'selected' : '' }}>
                                     {{ $permission->name }}
                                 </option>

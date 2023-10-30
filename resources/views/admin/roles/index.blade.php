@@ -54,17 +54,12 @@
                                         <td>{{ $role->id }}</td>
                                         <td>{{ $role->name }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showRoleModal{{ $role->id }}">Show</button>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editRoleModal{{ $role->id }}">Edit</button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#deleteRoleModal{{ $role->id }}">Delete</button>
                                         </td>
                                     </tr>
-
-                                    <!-- Show Role Modal -->
-                                    @include('admin.roles.show_modal', ['role' => $role])
 
                                     <!-- Edit Role Modal -->
                                     @include('admin.roles.edit_modal', ['role' => $role])
@@ -96,8 +91,7 @@
                             </li>
                         @endfor
 
-                        <li
-                            class="page-item {{ $roles->currentPage() == $roles->lastPage() ? 'disabled' : '' }}">
+                        <li class="page-item {{ $roles->currentPage() == $roles->lastPage() ? 'disabled' : '' }}">
                             <a class="page-link" href="{{ $roles->nextPageUrl() }}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>

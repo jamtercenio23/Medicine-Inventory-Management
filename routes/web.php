@@ -21,27 +21,50 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
+    Route::group(['middleware' => 'permission:view-users'], function () {
+        Route::resource('admin/users', UserController::class);
+    });
+    Route::group(['middleware' => 'permission:view-roles'], function () {
+        Route::resource('admin/roles', RoleController::class);
+    });
+    Route::group(['middleware' => 'permission:view-permissions'], function () {
+        Route::resource('admin/permissions', PermissionController::class);
+    });
+    Route::group(['middleware' => 'permission:view-medicines'], function () {
+        Route::resource('admin/medicines', MedicineController::class);
+    });
+    Route::group(['middleware' => 'permission:view-out-of-stock'], function () {
+        Route::get('/medicines/out-of-stock/{medicine}/edit', [MedicineController::class, 'editOutOfStock'])->name('out-of-stock.edit');
+        Route::put('/medicines/out-of-stock/{medicine}', [MedicineController::class, 'updateOutOfStock'])->name('out-of-stock.update');
+        Route::get('/medicines/out-of-stock', [MedicineController::class, 'outOfStock'])->name('medicines.out-of-stock');
+    });
+    Route::group(['middleware' => 'permission:view-expired'], function () {
+        Route::get('/medicines/expired', [MedicineController::class, 'expired'])->name('medicines.expired');
+        Route::delete('/medicines/expired/{medicine}', [MedicineController::class, 'deleteExpired'])->name('medicines.delete-expired');
+    });
+    Route::group(['middleware' => 'permission:view-categories'], function () {
+        Route::resource('admin/categories', CategoryController::class);
+    });
+    Route::group(['middleware' => 'permission:view-categories'], function () {
+        Route::resource('admin/categories', CategoryController::class);
+    });
+    Route::group(['middleware' => 'permission:view-patients'], function () {
+        Route::resource('admin/patients', PatientController::class);
+    });
+    Route::group(['middleware' => 'permission:view-barangays'], function () {
+        Route::resource('admin/barangays', BarangayController::class);
+    });
+    Route::group(['middleware' => 'permission:view-schedules'], function () {
+        Route::resource('admin/schedules', ScheduleController::class);
+    });
+    Route::group(['middleware' => 'permission:view-distributions'], function () {
+        Route::resource('admin/distributions', DistributionController::class);
+    });
+    Route::group(['middleware' => 'permission:view-distribution-barangay'], function () {
+        Route::resource('admin/distribution-barangay', DistributionBarangayController::class);
+    });
+
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-    Route::resource('admin/medicines', MedicineController::class);
-    Route::get('/medicines/out-of-stock/{medicine}/edit', [MedicineController::class, 'editOutOfStock'])->name('out-of-stock.edit');
-    Route::put('/medicines/out-of-stock/{medicine}', [MedicineController::class, 'updateOutOfStock'])->name('out-of-stock.update');
-    Route::get('/medicines/out-of-stock', [MedicineController::class, 'outOfStock'])->name('medicines.out-of-stock');
-    Route::get('/medicines/expired', [MedicineController::class, 'expired'])->name('medicines.expired');
-    Route::delete('/medicines/expired/{medicine}', [MedicineController::class, 'deleteExpired'])->name('medicines.delete-expired');
-    Route::resource('admin/categories', CategoryController::class);
-
-    Route::resource('admin/patients', PatientController::class);
-
-    Route::resource('admin/barangays', BarangayController::class);
-
-    Route::resource('admin/schedules', ScheduleController::class);
-
-    Route::resource('admin/distributions', DistributionController::class);
-    Route::resource('admin/distribution-barangay', DistributionBarangayController::class);
-    Route::resource('admin/permissions', PermissionController::class);
-    Route::resource('admin/roles', RoleController::class);
-    Route::resource('admin/users', UserController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');

@@ -33,18 +33,6 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3 row">
-                            <div class="col-md-8 offset-md-0">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember" style="margin-left: 5px;"> <!-- Added margin for spacing -->
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="mb-3 text-center">
                             <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
                                 {{ __('Login') }}

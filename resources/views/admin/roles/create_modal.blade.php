@@ -18,7 +18,7 @@
                     <div class="form-group">
                         <label for="permissions">Select Permissions</label>
                         <select multiple class="form-control" id="permissions" name="permissions[]">
-                            @foreach($permissions as $permission)
+                            @foreach(\Spatie\Permission\Models\Permission::all() as $permission)
                                 <option value="{{ $permission->name }}">{{ $permission->name }}</option>
                             @endforeach
                         </select>

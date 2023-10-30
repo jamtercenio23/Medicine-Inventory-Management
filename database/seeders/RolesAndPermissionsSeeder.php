@@ -20,21 +20,26 @@ class RolesAndPermissionsSeeder extends Seeder
 
         //create permissions
         $arrayOfPermissionNames = [
-            'view-distributions', 'create-distributions', 'destroy-distributions', 'edit-distributions',
-            'view-distribution-barangay', 'create-distribution-barangay', 'destroy-distribution-barangay', 'edit-distribution-barangay',
-            'view-reports', 'view-categories', 'create-categories', 'destroy-categories', 'edit-categories',
-            'view-medicines', 'create-medicines', 'edit-medicines', 'destroy-medicines',
-            'view-patients', 'create-patients', 'edit-patients', 'destroy-patients',
-            'view-barangays', 'create-barangays', 'edit-barangays', 'destroy-barangays',
-            'view-schedules', 'create-schedules', 'edit-schedules', 'destroy-schedules',
-            'view-users', 'create-users', 'edit-users', 'destroy-users',
+            'view-distributions',
+            'view-distribution-barangay',
+            'view-reports',
+            'view-categories',
+            'view-medicines',
+            'view-patients',
+            'view-barangays',
+            'view-schedules',
+            'view-users',
             'view-access-control',
-            'view-roles', 'edit-roles', 'destroy-roles', 'create-roles',
-            'view-permissions', 'create-permissions', 'edit-permissions', 'destroy-permissions',
-            'view-expired', 'view-out-of-stock', 'backup-app', 'backup-db', 'view-settings',
-            'view-barangay_medicines', 'create-barangay_medicines', 'edit-barangay_medicines', 'destroy-barangay_medicines',
-            'view-barangay_distributions', 'create-barangay_distributions', 'edit-barangay_distributions', 'destroy-barangay_distributions',
-            'view-barangay_patients', 'create-barangay_patients', 'edit-barangay_patients', 'destroy-barangay_patients'
+            'view-roles',
+            'view-permissions',
+            'view-expired',
+            'view-out-of-stock',
+            'backup-app',
+            'backup-db',
+            'view-settings',
+            'view-barangay_medicines',
+            'view-barangay_distributions',
+            'view-barangay_patients',
         ];
         $permissions = collect($arrayOfPermissionNames)->map(function ($permission) {
             return ['name' => $permission, 'guard_name' => 'web'];
@@ -45,11 +50,22 @@ class RolesAndPermissionsSeeder extends Seeder
         $role = Role::create(['name' => 'admin']);
         $role->givePermissionTo(Permission::all());
         $role = Role::create(['name' => 'pharmacist'])
-            ->givePermissionTo(['view-distributions', 'view-reports', 'create-distributions']);
+            ->givePermissionTo([
+                'view-categories',
+                'view-distributions',
+                'view-reports',
+                'view-distribution-barangay',
+                'view-medicines',
+                'view-patients',
+                'view-barangays',
+                'view-schedules',
+                'view-expired',
+                'view-out-of-stock',
+            ]);
 
         $role = Role::create(['name' => 'bhw'])
-            ->givePermissionTo(['view-barangay_medicines', 'create-barangay_medicines', 'edit-barangay_medicines', 'destroy-barangay_medicines',
-            'view-barangay_distributions', 'create-barangay_distributions', 'edit-barangay_distributions', 'destroy-barangay_distributions',
-            'view-barangay_patients', 'create-barangay_patients', 'edit-barangay_patients', 'destroy-barangay_patients']);
+            ->givePermissionTo(['view-barangay_medicines',
+            'view-barangay_distributions',
+            'view-barangay_patients',]);
     }
 }
