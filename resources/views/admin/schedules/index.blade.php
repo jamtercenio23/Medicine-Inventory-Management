@@ -25,7 +25,9 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary btn-sm" type="submit">Search</button>
+                                <button class="btn btn-secondary btn" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -37,7 +39,7 @@
                     @if ($schedules->isEmpty())
                         <p>No schedules found.</p>
                     @else
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -52,11 +54,14 @@
                                         <td>{{ $schedule->barangay->name }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showScheduleModal{{ $schedule->id }}">Show</button>
+                                                data-target="#showScheduleModal{{ $schedule->id }}">
+                                                <i class="fas fa-eye"></i> Show</button>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editScheduleModal{{ $schedule->id }}">Edit</button>
+                                                data-target="#editScheduleModal{{ $schedule->id }}">
+                                                <i class="fas fa-edit"></i> Edit</button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteScheduleModal{{ $schedule->id }}">Delete</button>
+                                                data-target="#deleteScheduleModal{{ $schedule->id }}">
+                                                <i class="fas fa-trash"></i> Delete</button>
                                         </td>
                                     </tr>
 
@@ -108,6 +113,7 @@
     <!-- Create Schedule Modal -->
     @include('admin.schedules.create_modal')
 @endsection
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
 <!-- Include Bootstrap CSS for pagination styles -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">

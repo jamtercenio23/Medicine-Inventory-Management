@@ -8,11 +8,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>ID: {{ $barangay->id }}</p>
-                <p>Name: {{ $barangay->name }}</p>
+                <p><strong>ID:</strong><br>{{ $barangay->id }}</p>
+                <p><strong>Name:</strong><br>{{ $barangay->name }}</p>
 
                 <!-- Medicines distributed to this barangay -->
-                <h5>Medicines Distributed:</h5>
+                <h5><strong>Medicines Distributed:</strong><br></h5>
                 @if ($barangay->distributions->isEmpty())
                     <p>No medicines distributed to this barangay.</p>
                 @else
@@ -32,3 +32,38 @@
         </div>
     </div>
 </div>
+<style>
+    /* Add custom CSS styles here */
+    .modal-content {
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    }
+
+    .modal-title {
+        font-weight: bold;
+        color: #007bff; /* Change title color */
+        margin-bottom: 20px;
+    }
+
+    .modal-body {
+        background-color: #f7f7f7; /* Change modal body background color */
+        padding: 20px;
+    }
+
+    .modal-body label {
+        font-weight: bold;
+    }
+
+    .modal-body input {
+        border: 1px solid #ccc; /* Add a border to input fields */
+        border-radius: 5px;
+    }
+
+    .modal-footer {
+        background-color: #f7f7f7; /* Change modal footer background color */
+        border-top: 1px solid #ccc;
+        padding: 15px;
+    }
+
+    /* Add transitions or animations as needed */
+</style>

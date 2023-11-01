@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Expired Medicines')
+@section('title', 'Medicine Inventory - Expired Medicines')
 @section('content')
     <div class="container">
         <div class="mb-4">
@@ -23,7 +23,9 @@
                             <input type="text" class="form-control" placeholder="Search" name="search"
                                 value="{{ $query }}">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary btn-sm" type="submit">Search</button>
+                                <button class="btn btn-secondary btn" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -35,7 +37,7 @@
                     @if ($expiredMedicines->isEmpty())
                         <p>No expired medicines found.</p>
                     @else
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -53,7 +55,8 @@
                                         <td>
                                             <!-- Delete Button -->
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteExpiredModal{{ $medicine->id }}">Delete</button>
+                                                data-target="#deleteExpiredModal{{ $medicine->id }}"><i
+                                                    class="fas fa-trash"></i> Delete</button>
                                         </td>
                                     </tr>
                                     <!-- Delete Expired Medicine Modal -->

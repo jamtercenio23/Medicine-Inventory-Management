@@ -27,11 +27,26 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:roles',
+            'permissions' => 'array', // Assuming the permissions are sent as an array
         ]);
 
-        Role::create(['name' => $request->name]);
+        DB::beginTransaction();
 
-        return redirect()->route('roles.index')->with('success', 'Role created successfully.');
+        try {
+            $role = Role::create(['name' => $request->input('name')]);
+
+            // Associate the selected permissions with the role
+            if ($request->has('permissions')) {
+                $role->syncPermissions($request->input('permissions'));
+            }
+
+            DB::commit();
+
+            return redirect()->route('roles.index')->with('success', 'Role created successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('roles.index')->with('error', 'Failed to create the role.');
+        }
     }
 
     public function edit($id)

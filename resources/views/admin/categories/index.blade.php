@@ -25,7 +25,9 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary btn-sm" type="submit">Search</button>
+                                <button class="btn btn-secondary btn" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -37,7 +39,7 @@
                     <p>No categories found.</p>
                 @else
                     <!-- Category Table -->
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -52,9 +54,13 @@
                                     <td>{{ $category->name }}</td>
                                     <td>
                                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                            data-target="#editCategoryModal{{ $category->id }}">Edit</button>
+                                            data-target="#editCategoryModal{{ $category->id }}">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#deleteCategoryModal{{ $category->id }}">Delete</button>
+                                            data-target="#deleteCategoryModal{{ $category->id }}">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
                                     </td>
                                 </tr>
 
@@ -103,6 +109,9 @@
     <!-- Create Category Modal -->
     @include('admin.categories.create_modal')
 @endsection
+
+<!-- Include Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
 <!-- Include Bootstrap CSS for pagination styles -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">

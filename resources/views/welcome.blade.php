@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,20 +8,20 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Nunito', sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url("/public/images/bg.jpg");
-            background-size: cover; /* Make the background image cover the entire page */
+            background-image: url('{{ asset('images/bg2.png') }}');
+            background-size: cover;
             color: #333;
         }
 
         header {
-            background-color: #2c3e50;
+            background-color: rgba(44, 62, 80, 0.7);
+            /* Semi-transparent background color */
             color: #ecf0f1;
             text-align: center;
-            padding: 2px;
-            position: relative;
+            padding: 20px 0;
         }
 
         #login-container {
@@ -36,30 +37,42 @@
         }
 
         section {
-            max-width: 800px;
+            max-width: 600px;
             margin: 2em auto;
             padding: 2em;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
 
         h1 {
             color: #ecf0f1;
+            /* Adjusted text color */
+            font-size: 36px;
+        }
+
+        h2 {
+            color: #3498db;
+            font-size: 28px;
+            margin-top: 20px;
         }
 
         p {
             line-height: 1.6em;
+            font-size: 18px;
+            margin-top: 15px;
         }
 
         .cta-button {
             display: inline-block;
             background-color: #3498db;
             color: #ecf0f1;
-            padding: 0.8em 1.5em;
+            padding: 10px 20px;
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s;
+            font-size: 18px;
+            margin-top: 20px;
         }
 
         .cta-button:hover {
@@ -67,36 +80,60 @@
         }
 
         footer {
-            background-color: #34495e;
+            background-color: rgba(52, 73, 94, 0.7);
+            /* Semi-transparent background color */
             color: #ecf0f1;
             text-align: center;
-            padding: 1em;
-            position: fixed;
+            position: fixed; /* Fixed to the bottom */
             bottom: 0;
             width: 100%;
         }
+
+        footer a {
+            color: #ecf0f1;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Media query for smaller screens (e.g., smartphones) */
+        @media (max-width: 768px) {
+            section {
+                max-width: 90%; /* Adjusted max-width for smaller screens */
+            }
+
+            .cta-button {
+                font-size: 16px; /* Slightly smaller button text for better mobile appearance */
+            }
+        }
     </style>
 </head>
+
 <body>
     <header>
         <h1>Welcome to Mabini Health Center</h1>
+        <div id="login-container">
+            <a id="login-link" href="{{ route('login') }}">Login</a>
+        </div>
     </header>
 
     <section>
         <h2>Your Health and Wellness at the Heart of Our Service</h2>
         <p>
-            At Mabini Health Center, we are committed to providing you with high-quality healthcare services.
-            Our state-of-the-art facilities and dedicated medical professionals are here to ensure your well-being.
+            At Mabini Health Center, we are committed to providing you with high-quality healthcare services. Our
+            state-of-the-art facilities and dedicated medical professionals are here to ensure your well-being.
         </p>
 
         <p>
             Explore our services and experience healthcare like never before. We offer:
-            <ul>
-                <li>Comprehensive medical care</li>
-                <li>Experienced healthcare professionals</li>
-                <li>Well-equipped facilities</li>
-                <li>Personalized treatment plans</li>
-            </ul>
+        <ul>
+            <li>Comprehensive medical care</li>
+            <li>Experienced healthcare professionals</li>
+            <li>Well-equipped facilities</li>
+            <li>Personalized treatment plans</li>
+        </ul>
         </p>
 
         <a href="{{ route('login') }}" class="cta-button">Get Started</a>
@@ -106,4 +143,5 @@
         <p>Contact us at <a href="mailto:info@mabinihealthcenter.com">info@mabinihealthcenter.com</a></p>
     </footer>
 </body>
+
 </html>

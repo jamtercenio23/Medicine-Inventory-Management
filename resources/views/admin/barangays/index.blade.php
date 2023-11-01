@@ -26,7 +26,9 @@
                             <input type="text" class="form-control" placeholder="Search" name="search"
                                 value="{{ $query }}">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary btn-sm" type="submit">Search</button>
+                                <button class="btn btn-secondary btn" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -38,7 +40,7 @@
                     <p>No barangays found.</p>
                 @else
                     <!-- Barangay Table -->
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -53,11 +55,14 @@
                                     <td>{{ $barangay->name }}</td>
                                     <td>
                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                            data-target="#showBarangayModal{{ $barangay->id }}">Show</button>
+                                            data-target="#showBarangayModal{{ $barangay->id }}">
+                                            <i class="fas fa-eye"></i> Show</button>
                                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                            data-target="#editBarangayModal{{ $barangay->id }}">Edit</button>
+                                            data-target="#editBarangayModal{{ $barangay->id }}">
+                                            <i class="fas fa-edit"></i> Edit</button>
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#deleteBarangayModal{{ $barangay->id }}">Delete</button>
+                                            data-target="#deleteBarangayModal{{ $barangay->id }}">
+                                            <i class="fas fa-trash"></i> Delete</button>
                                     </td>
                                 </tr>
                                 @include('admin.barangays.show_modal', ['barangay' => $barangay])
@@ -105,6 +110,7 @@
     <!-- Create Barangay Modal -->
     @include('admin.barangays.create_modal')
 @endsection
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
 <!-- Include Bootstrap CSS for pagination styles -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">

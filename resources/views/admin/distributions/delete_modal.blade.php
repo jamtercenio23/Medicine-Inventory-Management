@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete the Distribution ID {{ $distribution->id }}?</p>
+                <p>Are you sure you want to delete the Distribution for {{ $distribution->patient->first_name }}?</p>
                 <!-- Distribution Delete Form -->
                 <form action="{{ route('distributions.destroy', $distribution->id) }}" method="post">
                     @csrf

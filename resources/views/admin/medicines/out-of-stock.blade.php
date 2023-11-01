@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Out of Stock Medicines')
+@section('title', 'Medicine Inventory - Out of Stock Medicines')
 @section('content')
     <div class="container">
         <div class="mb-4">
@@ -23,7 +23,9 @@
                             <input type="text" class="form-control" placeholder="Search" name="search"
                                 value="{{ $query }}">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary btn-sm" type="submit">Search</button>
+                                <button class="btn btn-secondary btn" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -35,7 +37,7 @@
                     @if ($outOfStockMedicines->isEmpty())
                         <p>No out-of-stock medicines found.</p>
                     @else
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -50,7 +52,8 @@
                                         <td>{{ $medicine->generic_name }} - {{ $medicine->brand_name }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editOutOfStockModal{{ $medicine->id }}">Edit</button>
+                                                data-target="#editOutOfStockModal{{ $medicine->id }}"><i
+                                                    class="fas fa-edit"></i> Edit</button>
                                         </td>
                                     </tr>
                                     <!-- Edit Out of Stock Medicine Modal -->

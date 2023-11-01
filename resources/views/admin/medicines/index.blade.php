@@ -28,7 +28,9 @@
                             <input type="text" class="form-control" placeholder="Search" name="search"
                                 value="{{ $query }}">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary btn-sm" type="submit">Search</button>
+                                <button class="btn btn-secondary btn" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -40,7 +42,7 @@
                     @if ($medicines->isEmpty())
                         <p>No medicines found.</p>
                     @else
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -55,11 +57,17 @@
                                         <td>{{ $medicine->generic_name }} - {{ $medicine->brand_name }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showMedicineModal{{ $medicine->id }}">Show</button>
+                                                data-target="#showMedicineModal{{ $medicine->id }}">
+                                                <i class="fas fa-eye"></i> Show
+                                            </button>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editMedicineModal{{ $medicine->id }}">Edit</button>
+                                                data-target="#editMedicineModal{{ $medicine->id }}">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteMedicineModal{{ $medicine->id }}">Delete</button>
+                                                data-target="#deleteMedicineModal{{ $medicine->id }}">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </button>
                                         </td>
                                     </tr>
 
@@ -78,29 +86,19 @@
                 </div>
             </div>
             <div class="card-footer text-muted">
-                <div class="float-left">
-                    <!-- You can add any additional content here if needed -->
-                </div>
-                <div class="float-right">
-                    <!-- Bootstrap Pagination -->
+                <div class="float-left"> <!-- You can add any additional content here if needed --> </div>
+                <div class="float-right"> <!-- Bootstrap Pagination -->
                     <ul class="pagination">
-                        <li class="page-item {{ $medicines->currentPage() == 1 ? 'disabled' : '' }}">
-                            <a class="page-link" href="{{ $medicines->previousPageUrl() }}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-
+                        <li class="page-item {{ $medicines->currentPage() == 1 ? 'disabled' : '' }}"> <a class="page-link"
+                                href="{{ $medicines->previousPageUrl() }}" aria-label="Previous"> <span
+                                    aria-hidden="true">&laquo;</span> </a> </li>
                         @for ($i = 1; $i <= $medicines->lastPage(); $i++)
-                            <li class="page-item {{ $i == $medicines->currentPage() ? 'active' : '' }}">
-                                <a class="page-link" href="{{ $medicines->url($i) }}">{{ $i }}</a>
-                            </li>
+                            <li class="page-item {{ $i == $medicines->currentPage() ? 'active' : '' }}"> <a
+                                    class="page-link" href="{{ $medicines->url($i) }}">{{ $i }}</a> </li>
                         @endfor
-
                         <li class="page-item {{ $medicines->currentPage() == $medicines->lastPage() ? 'disabled' : '' }}">
-                            <a class="page-link" href="{{ $medicines->nextPageUrl() }}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                            <a class="page-link" href="{{ $medicines->nextPageUrl() }}" aria-label="Next"> <span
+                                    aria-hidden="true">&raquo;</span> </a> </li>
                     </ul>
                 </div>
                 <div class="clearfix"></div>
@@ -111,6 +109,9 @@
     <!-- Create Medicine Modal -->
     @include('admin.medicines.create_modal')
 @endsection
+
+<!-- Include Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
 <!-- Include Bootstrap CSS for pagination styles -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">

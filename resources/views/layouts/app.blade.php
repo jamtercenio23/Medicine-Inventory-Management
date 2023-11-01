@@ -18,17 +18,54 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         jQuery(document).ready(function($) {
+            // Toggle the sidebar
             $("#menu-toggle").click(function(e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
-                if ($("#wrapper").hasClass("toggled")) {
+                if ($("#wrapper").hasClass("toggled") && $("#menu-icon").hasClass("fa-chevron-left")) {
                     $("#menu-icon").removeClass("fa-chevron-left").addClass("fa-chevron-right");
                 } else {
                     $("#menu-icon").removeClass("fa-chevron-right").addClass("fa-chevron-left");
                 }
             });
+
+            // Toggle Inventory section
+            $("#inventory-toggle").click(function() {
+                $("#inventory-categories").slideToggle(300);
+                $("#manage-categories").slideUp(300);
+                $("#distributions-categories").slideUp(300);
+                $("#access-control-categories").slideUp(300);
+            });
+
+            // Toggle Manage section
+            $("#manage-toggle").click(function() {
+                $("#manage-categories").slideToggle(300);
+                $("#inventory-categories").slideUp(300);
+                $("#distributions-categories").slideUp(300);
+                $("#access-control-categories").slideUp(300);
+            });
+
+            // Toggle Distributions section
+            $("#distributions-toggle").click(function() {
+                $("#distributions-categories").slideToggle(300);
+                $("#inventory-categories").slideUp(300);
+                $("#manage-categories").slideUp(300);
+                $("#access-control-categories").slideUp(300);
+            });
+
+            // Toggle Access Control section
+            $("#access-control-toggle").click(function() {
+                $("#access-control-categories").slideToggle(300);
+                $("#inventory-categories").slideUp(300);
+                $("#manage-categories").slideUp(300);
+                $("#distributions-categories").slideUp(300);
+            });
         });
     </script>
+
+
+
+
     <style>
         body {
             overflow-x: hidden;
@@ -84,68 +121,101 @@
                 <div class="sidebar-heading">Mabini Health Center</div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ url('/home') }}"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="{{ url('/home') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                     </li>
-                    @can('view-categories')
-                        <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('categories.index') }}"><i class="fas fa-th-large"></i> Categories</a>
+                    <!-- Inventory -->
+                    @can('view-admin_inventory')
+                        <li class="list-group-item list-group-item-action bg-light" id="inventory-toggle">
+                            <a href="javascript:void(0)"><i class="fas fa-cubes"></i> Inventory</a>
                         </li>
-                    @endcan
-                    @can('view-medicines')
-                        <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('medicines.index') }}"><i class="fas fa-pills"></i> Medicines</a>
-                        </li>
-                    @endcan
-                    @can('view-out-of-stock')
-                        <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('medicines.out-of-stock') }}"><i class="fas fa-exclamation-triangle"></i> Out
-                                of Stock Medicines</a>
-                        </li>
-                    @endcan
-                    @can('view-expired')
-                        <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('medicines.expired') }}"><i class="fas fa-calendar-times"></i> Expired
-                                Medicines</a>
-                        </li>
-                    @endcan
-                    @can('view-patients')
-                        <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('patients.index') }}"><i class="fas fa-users"></i> Patients</a>
-                        </li>
-                    @endcan
-                    @can('view-barangays')
-                        <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('barangays.index') }}"><i class="fas fa-map-marked-alt"></i> Barangays</a>
-                        </li>
-                    @endcan
-                    @can('view-schedules')
-                        <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('schedules.index') }}"><i class="fas fa-clock"></i> Schedules</a>
-                        </li>
-                    @endcan
-                    @can('view-distributions')
-                        <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('distributions.index') }}"><i class="fas fa-clipboard-list"></i> Patient
-                                Distributions</a>
-                        </li>
-                    @endcan
-                    @can('view-distribution-barangay')
-                        <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('distribution-barangay.index') }}"><i class="fas fa-chart-bar"></i> Barangay
-                                Distributions</a>
-                        </li>
+                        <div id="inventory-categories" style="display: none;">
+                            @can('view-categories')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    <a href="{{ route('categories.index') }}"><i class="fas fa-th-large"></i> Categories</a>
+                                </li>
+                            @endcan
+                            @can('view-medicines')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    <a href="{{ route('medicines.index') }}"><i class="fas fa-pills"></i> Medicines</a>
+                                </li>
+                            @endcan
+                            @can('view-out-of-stock')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    <a href="{{ route('medicines.out-of-stock') }}"><i class="fas fa-exclamation-triangle"></i>
+                                        Out of Stock Medicines</a>
+                                </li>
+                            @endcan
+                            @can('view-expired')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    <a href="{{ route('medicines.expired') }}"><i class="fas fa-calendar-times"></i> Expired
+                                        Medicines</a>
+                                </li>
+                            @endcan
+                        </div>
                     @endcan
 
-                    @can('view-permissions')
-                        <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('permissions.index') }}"><i class="fas fa-lock"></i> Permissions</a>
+                    <!-- Manage -->
+                    @can('view-admin_manage')
+                        <li class="list-group-item list-group-item-action bg-light" id="manage-toggle">
+                            <a href="javascript:void(0)"><i class="fas fa-tasks"></i> Manage</a>
                         </li>
+                        <div id="manage-categories" style="display: none;">
+                            @can('view-patients')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    <a href="{{ route('patients.index') }}"><i class="fas fa-users"></i> Patients</a>
+                                </li>
+                            @endcan
+                            @can('view-barangays')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    <a href="{{ route('barangays.index') }}"><i class="fas fa-map-marked-alt"></i> Barangays</a>
+                                </li>
+                            @endcan
+                            @can('view-schedules')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    <a href="{{ route('schedules.index') }}"><i class="fas fa-clock"></i> Schedules</a>
+                                </li>
+                            @endcan
+                        </div>
                     @endcan
 
-                    @can('view-roles')
-                        <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('roles.index') }}"><i class="fas fa-user-shield"></i> Roles</a>
+                    <!-- Distributions -->
+                    @can('view-admin_distributions')
+                        <li class="list-group-item list-group-item-action bg-light" id="distributions-toggle">
+                            <a href="javascript:void(0)"><i class="fas fa-truck"></i> Distributions</a>
                         </li>
+                        <div id="distributions-categories" style="display: none;">
+                            @can('view-distributions')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    <a href="{{ route('distributions.index') }}"><i class="fas fa-clipboard-list"></i> Patient
+                                        Distributions</a>
+                                </li>
+                            @endcan
+                            @can('view-distribution-barangay')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    <a href="{{ route('distribution-barangay.index') }}"><i class="fas fa-chart-bar"></i>
+                                        Barangay Distributions</a>
+                                </li>
+                            @endcan
+                        </div>
+                    @endcan
+
+                    <!-- Access Control -->
+                    @can('view-access-control')
+                        <li class="list-group-item list-group-item-action bg-light" id="access-control-toggle">
+                            <a href="javascript:void(0)"><i class="fas fa-lock"></i> Access Control</a>
+                        </li>
+                        <div id="access-control-categories" style="display: none;">
+                            @can('view-permissions')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    <a href="{{ route('permissions.index') }}"><i class="fas fa-lock"></i> Permissions</a>
+                                </li>
+                            @endcan
+                            @can('view-roles')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    <a href="{{ route('roles.index') }}"><i class="fas fa-user-shield"></i> Roles</a>
+                                </li>
+                            @endcan
+                        </div>
                     @endcan
 
                     @can('view-users')
@@ -153,7 +223,9 @@
                             <a href="{{ route('users.index') }}"><i class="fas fa-users"></i> Users</a>
                         </li>
                     @endcan
-
+                    <li class="list-group-item list-group-item-action bg-light">
+                        <a href="{{ route('profile.edit') }}"><i class="fas fa-user"></i> Profile</a>
+                    </li>
                 </ul>
                 <div style="padding: 10px; margin-top: 50px">
                     <a href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal"
@@ -171,8 +243,8 @@
                 @endif
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -183,8 +255,9 @@
                         </li>
                         @if (Auth::check())
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                                    role="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
                                     @if (Auth::check())
                                         {{ Auth::user()->name }}
                                     @else

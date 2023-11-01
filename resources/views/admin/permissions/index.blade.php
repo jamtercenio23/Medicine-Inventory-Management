@@ -32,7 +32,9 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary btn-sm" type="submit">Search</button>
+                                <button class="btn btn-secondary btn" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -44,7 +46,7 @@
                     @if ($permissions->isEmpty())
                         <p>No permissions found.</p>
                     @else
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -59,9 +61,11 @@
                                         <td>{{ $permission->name }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editPermissionModal{{ $permission->id }}">Edit</button>
+                                                data-target="#editPermissionModal{{ $permission->id }}">
+                                                <i class="fas fa-edit"></i> Edit</button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deletePermissionModal{{ $permission->id }}">Delete</button>
+                                                data-target="#deletePermissionModal{{ $permission->id }}">
+                                                <i class="fas fa-trash"></i> Delete</button>
                                         </td>
                                     </tr>
 

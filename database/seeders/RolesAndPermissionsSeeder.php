@@ -20,6 +20,12 @@ class RolesAndPermissionsSeeder extends Seeder
 
         //create permissions
         $arrayOfPermissionNames = [
+            'view-admin_inventory',
+            'view-admin_manage',
+            'view-admin_distributions',
+            'view-bhw_inventory',
+            'view-bhw_manage',
+            'view-bhw_distributions',
             'view-distributions',
             'view-distribution-barangay',
             'view-reports',

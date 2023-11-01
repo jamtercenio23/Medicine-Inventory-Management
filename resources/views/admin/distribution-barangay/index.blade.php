@@ -29,7 +29,9 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-secondary btn-sm" type="submit">Search</button>
+                                <button class="btn btn-secondary btn" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -41,7 +43,7 @@
                     <p>No distributions to barangays found.</p>
                 @else
                     <!-- Distribution to Barangay Table -->
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -56,11 +58,14 @@
                                     <td>{{ $distribution->barangay->name }}</td>
                                     <td>
                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                            data-target="#showDistributionBarangayModal{{ $distribution->id }}">Show</button>
+                                            data-target="#showDistributionBarangayModal{{ $distribution->id }}">
+                                            <i class="fas fa-eye"></i> Show</button>
                                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                            data-target="#editDistributionBarangayModal{{ $distribution->id }}">Edit</button>
+                                            data-target="#editDistributionBarangayModal{{ $distribution->id }}">
+                                            <i class="fas fa-edit"></i> Edit</button>
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#deleteDistributionBarangayModal{{ $distribution->id }}">Delete</button>
+                                            data-target="#deleteDistributionBarangayModal{{ $distribution->id }}">
+                                            <i class="fas fa-trash"></i> Delete</button>
                                     </td>
                                 </tr>
 
