@@ -30,7 +30,7 @@
                             <div class="input-group">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                                 <span class="input-group-text" id="password-toggle" style="cursor: pointer;">
-                                    <i class="fas fa-eye" id="password-icon" aria-hidden="true"></i>
+                                    <i class="fa fa-eye-slash" id="password-icon" aria-hidden="true"></i>
                                 </span>
                             </div>
 
@@ -58,15 +58,19 @@
     const passwordToggle = document.getElementById('password-toggle');
     const passwordIcon = document.getElementById('password-icon');
 
+    // Initial state: Password is obscured
+    passwordField.type = 'password';
+    passwordIcon.classList.add('fa-eye-slash');
+
     passwordToggle.addEventListener('click', () => {
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
-            passwordIcon.classList.remove('bi-eye-slash');
-            passwordIcon.classList.add('bi-eye');
+            passwordIcon.classList.remove('fa-eye-slash');
+            passwordIcon.classList.add('fa-eye');
         } else {
             passwordField.type = 'password';
-            passwordIcon.classList.remove('bi-eye');
-            passwordIcon.classList.add('bi-eye-slash');
+            passwordIcon.classList.remove('fa-eye');
+            passwordIcon.classList.add('fa-eye-slash');
         }
     });
 </script>

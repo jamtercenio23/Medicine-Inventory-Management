@@ -18,10 +18,9 @@
 
         header {
             background-color: rgba(44, 62, 80, 0.7);
-            /* Semi-transparent background color */
             color: #ecf0f1;
             text-align: center;
-            padding: 20px 0;
+            padding: 10px 0;
         }
 
         #login-container {
@@ -81,10 +80,9 @@
 
         footer {
             background-color: rgba(52, 73, 94, 0.7);
-            /* Semi-transparent background color */
             color: #ecf0f1;
             text-align: center;
-            position: fixed; /* Fixed to the bottom */
+            position: fixed;
             bottom: 0;
             width: 100%;
         }
@@ -98,14 +96,12 @@
             text-decoration: underline;
         }
 
-        /* Media query for smaller screens (e.g., smartphones) */
         @media (max-width: 768px) {
             section {
-                max-width: 90%; /* Adjusted max-width for smaller screens */
-            }
+                max-width: 90%;
 
             .cta-button {
-                font-size: 16px; /* Slightly smaller button text for better mobile appearance */
+                font-size: 16px;
             }
         }
     </style>
