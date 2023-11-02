@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete the Distribution to Barangay ID {{ $distribution->id }}?</p>
+                <p>Are you sure you want to delete the Distribution to Barangay {{ $distribution->barangay->name }}?</p>
                 <!-- Distribution to Barangay Delete Form -->
                 <form action="{{ route('distribution-barangay.destroy', $distribution->id) }}" method="post">
                     @csrf

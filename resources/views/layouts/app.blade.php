@@ -18,7 +18,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         jQuery(document).ready(function($) {
-            // Toggle the sidebar
             $("#menu-toggle").click(function(e) {
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
@@ -29,7 +28,6 @@
                 }
             });
 
-            // Toggle Inventory section
             $("#inventory-toggle").click(function() {
                 $("#inventory-categories").slideToggle(300);
                 $("#manage-categories").slideUp(300);
@@ -37,7 +35,6 @@
                 $("#access-control-categories").slideUp(300);
             });
 
-            // Toggle Manage section
             $("#manage-toggle").click(function() {
                 $("#manage-categories").slideToggle(300);
                 $("#inventory-categories").slideUp(300);
@@ -45,7 +42,6 @@
                 $("#access-control-categories").slideUp(300);
             });
 
-            // Toggle Distributions section
             $("#distributions-toggle").click(function() {
                 $("#distributions-categories").slideToggle(300);
                 $("#inventory-categories").slideUp(300);
@@ -53,7 +49,6 @@
                 $("#access-control-categories").slideUp(300);
             });
 
-            // Toggle Access Control section
             $("#access-control-toggle").click(function() {
                 $("#access-control-categories").slideToggle(300);
                 $("#inventory-categories").slideUp(300);
@@ -62,7 +57,19 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $("#loading-overlay").hide();
+        });
 
+        $(document).ajaxStart(function() {
+            $("#loading-overlay").show();
+        });
+
+        $(document).ajaxStop(function() {
+            $("#loading-overlay").hide();
+        });
+    </script>
 
 
 
@@ -111,10 +118,45 @@
                 margin-left: -15rem;
             }
         }
+
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
 <body>
+    <div id="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
     <div class="d-flex" id="wrapper">
         @if (Auth::check())
             <div class="bg-light border-right" id="sidebar-wrapper">

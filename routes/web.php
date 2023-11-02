@@ -1,18 +1,18 @@
 <?php
 
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\admin\PermissionController;
+use App\Http\Controllers\admin\RoleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MedicineController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\PatientController;
-use App\Http\Controllers\BarangayController;
-use App\Http\Controllers\DistributionController;
-use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\DistributionBarangayController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\admin\MedicineController;
+use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\PatientController;
+use App\Http\Controllers\admin\BarangayController;
+use App\Http\Controllers\admin\DistributionController;
+use App\Http\Controllers\admin\ScheduleController;
+use App\Http\Controllers\admin\DistributionBarangayController;
+use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -68,4 +68,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
+
 });
