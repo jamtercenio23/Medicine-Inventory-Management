@@ -12,13 +12,14 @@
                     <div class="col-md-6">
                         <div class="medicine-details">
                             <p><strong>Generic Name:</strong><br>{{ $medicine->generic_name }}</p>
+                            <p><strong>Brand Name:</strong><br>{{ $medicine->brand_name }}</p>
                             <p><strong>Category:</strong><br>{{ $medicine->category->name }}</p>
-                            <p><strong>Stocks:</strong><br>{{ $medicine->stocks }}</p>
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="medicine-details">
-                            <p><strong>Brand Name:</strong><br>{{ $medicine->brand_name }}</p>
+                            <p><strong>Stocks:</strong><br>{{ $medicine->stocks }}</p>
                             <p><strong>Price:</strong><br>₱{{ $medicine->price }}</p>
                             <p><strong>Expiration Date:</strong><br>{{ $medicine->expiration_date }}</p>
                         </div>

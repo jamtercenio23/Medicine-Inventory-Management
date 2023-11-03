@@ -79,7 +79,7 @@
 
     <style>
         body {
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
         #sidebar-wrapper {
@@ -102,6 +102,8 @@
 
         #page-content-wrapper {
             min-width: 100vw;
+            height: 100vh;
+            overflow: auto;
         }
 
         #wrapper.toggled #sidebar-wrapper {
@@ -154,7 +156,24 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* Style for the footer */
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .fixed-header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000; /* Adjust the z-index as needed */
+    }
     </style>
+
 </head>
 
 <body>
@@ -283,10 +302,10 @@
                         <a href="{{ route('profile.edit') }}"><i class="fas fa-user"></i> Profile</a>
                     </li>
                 </ul>
-                <div style="padding: 10px; margin-top: 50px">
+                {{-- <div style="padding: 10px; margin-top: 490px">
                     <a href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal"
                         class="btn btn-danger btn-block text-white">Logout</a>
-                </div>
+                </div> --}}
             </div>
         @endif
         <div id="page-content-wrapper">
@@ -298,8 +317,8 @@
                     </button>
                 @endif
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -332,9 +351,9 @@
                                 </div>
                             </li>
                         @endif
-
                     </ul>
                 </div>
+
             </nav>
 
             <div class="w3-container">

@@ -19,6 +19,10 @@
                                 <input type="text" class="form-control" id="first_name" name="first_name" value="{{ $patient->first_name }}" required>
                             </div>
                             <div class="form-group">
+                                <label for="last_name">Last Name:</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ $patient->last_name }}" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="birthdate">Birthdate:</label>
                                 <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{ $patient->birthdate }}" required>
                             </div>
@@ -26,18 +30,14 @@
                                 <label for="age">Age:</label>
                                 <input type="number" class="form-control" id="age" name="age" value="{{ $patient->age }}" required>
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="gender">Gender:</label>
                                 <select class="form-control" id="gender" name="gender" required>
                                     <option value="Male" {{ $patient->gender == 'Male' ? 'selected' : '' }}>Male</option>
                                     <option value="Female" {{ $patient->gender == 'Female' ? 'selected' : '' }}>Female</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="last_name">Last Name:</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ $patient->last_name }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="barangay_id">Barangay:</label>

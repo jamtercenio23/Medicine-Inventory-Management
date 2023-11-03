@@ -2,7 +2,7 @@
 @section('title', 'Medicine Inventory - Categories')
 @section('content')
     <div class="container">
-        <div class="mb-4">
+        <div class="mb-8">
             <h1>Medicine Categories</h1>
         </div>
         @if (session('success'))

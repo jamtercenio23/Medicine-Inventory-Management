@@ -1,4 +1,5 @@
-<div class="modal fade" id="createDistributionModal" tabindex="-1" role="dialog" aria-labelledby="createDistributionModalLabel" aria-hidden="true">
+<div class="modal fade" id="createDistributionModal" tabindex="-1" role="dialog"
+    aria-labelledby="createDistributionModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -16,30 +17,33 @@
                             <div class="form-group">
                                 <label for="patient_id">Patient:</label>
                                 <select class="form-control" id="patient_id" name="patient_id" required>
-                                    @foreach($patients as $patient)
-                                        <option value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }}</option>
+                                    @foreach ($patients as $patient)
+                                        <option value="{{ $patient->id }}">{{ $patient->first_name }}
+                                            {{ $patient->last_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="stocks">Stock:</label>
-                                <input type="number" class="form-control" id="stocks" name="stocks" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label for="medicine_id">Medicine:</label>
                                 <select class="form-control" id="medicine_id" name="medicine_id" required>
-                                    @foreach($medicines as $medicine)
+                                    @foreach ($medicines as $medicine)
                                         @if ($medicine->stocks > 0 && $medicine->expiration_date > now()->toDateString())
-                                            <option value="{{ $medicine->id }}">{{ $medicine->generic_name }} - {{ $medicine->brand_name }} | {{ $medicine->stocks }}</option>
+                                            <option value="{{ $medicine->id }}">{{ $medicine->generic_name }} -
+                                                {{ $medicine->brand_name }} | {{ $medicine->stocks }}</option>
                                         @endif
                                     @endforeach
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="stocks">Stock:</label>
+                                <input type="number" class="form-control" id="stocks" name="stocks" required>
+                            </div>
                             <div class="form-group">
                                 <label for="checkup_date">Checkup Date:</label>
-                                <input type="date" class="form-control" id="checkup_date" name="checkup_date" required>
+                                <input type="date" class="form-control" id="checkup_date" name="checkup_date"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -53,17 +57,20 @@
     /* Add custom CSS styles here */
     .modal-content {
         border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        /* Add a subtle shadow */
     }
 
     .modal-title {
         font-weight: bold;
-        color: #007bff; /* Change title color */
+        color: #007bff;
+        /* Change title color */
         margin-bottom: 20px;
     }
 
     .modal-body {
-        background-color: #f7f7f7; /* Change modal body background color */
+        background-color: #f7f7f7;
+        /* Change modal body background color */
         padding: 20px;
     }
 

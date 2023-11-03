@@ -27,13 +27,6 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="stocks">Stocks:</label>
-                                <input type="number" name="stocks" id="stocks" class="form-control"
-                                    value="{{ old('stocks', $distribution->stocks) }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label for="medicine_id">Medicine:</label>
                                 <select class="form-control" id="medicine_id" name="medicine_id" required>
                                     @foreach ($medicines as $medicine)
@@ -43,6 +36,13 @@
                                         </option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="stocks">Stocks:</label>
+                                <input type="number" name="stocks" id="stocks" class="form-control"
+                                    value="{{ old('stocks', $distribution->stocks) }}">
                             </div>
                             <div class="form-group">
                                 <label for="checkup_date">Checkup Date:</label>

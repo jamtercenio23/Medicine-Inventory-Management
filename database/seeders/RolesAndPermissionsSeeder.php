@@ -67,11 +67,16 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view-schedules',
                 'view-expired',
                 'view-out-of-stock',
+                'view-admin_inventory',
+                'view-admin_manage',
+                'view-admin_distributions',
             ]);
 
         $role = Role::create(['name' => 'bhw'])
-            ->givePermissionTo(['view-barangay_medicines',
-            'view-barangay_distributions',
-            'view-barangay_patients',]);
+            ->givePermissionTo([
+                'view-barangay_medicines',
+                'view-barangay_distributions',
+                'view-barangay_patients',
+            ]);
     }
 }
