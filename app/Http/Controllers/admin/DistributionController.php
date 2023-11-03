@@ -72,7 +72,7 @@ class DistributionController extends Controller
             $distribution = Distribution::create($request->all());
 
             // Update Medicine stock
-            $this->updateMedicineStock($distribution, 'decrement');
+            $this->updateMedicineStock($distribution, 'decrement', $request->input('stocks'));
 
             return redirect()->route('distributions.index')
                 ->with('success', 'Distribution created successfully');
@@ -81,6 +81,7 @@ class DistributionController extends Controller
                 ->with('error', 'Error creating distribution: ' . $e->getMessage());
         }
     }
+
 
     public function update(Request $request, Distribution $distribution)
     {
@@ -91,36 +92,53 @@ class DistributionController extends Controller
             'checkup_date' => 'required|date',
         ]);
 
+        // Get the original distribution data
+        $originalDistribution = $distribution->fresh();
+
         // Update Distribution
         $distribution->update($request->all());
 
+        // Calculate the stock change
+        $stockChange = $request->input('stocks') - $originalDistribution->stocks;
+
         // Update Medicine stock
-        $this->updateMedicineStock($distribution, 'decrement');
-        $this->updateMedicineStock($distribution, 'increment');
+        if ($stockChange != 0) {
+            if ($stockChange > 0) {
+                // Increase stock in inventory
+                $this->updateMedicineStock($distribution, 'decrement', abs($stockChange));
+            } else {
+                // Decrease stock in inventory
+                $this->updateMedicineStock($distribution, 'increment', abs($stockChange));
+            }
+        }
 
         return redirect()->route('distributions.index')->with('success', 'Distribution updated successfully');
     }
 
     public function destroy(Distribution $distribution)
     {
+        // Get the quantity of stocks in the distribution
+        $quantity = $distribution->stocks;
+
         // Update Medicine stock before deleting distribution
-        $this->updateMedicineStock($distribution, 'increment');
+        $this->updateMedicineStock($distribution, 'increment', $quantity);
 
         $distribution->delete();
 
         return redirect()->route('distributions.index')->with('success', 'Distribution deleted successfully');
     }
 
+
     // Helper method to update Medicine stock
-    private function updateMedicineStock(Distribution $distribution, $operation)
+    private function updateMedicineStock(Distribution $distribution, $operation, $quantity = 1)
     {
         $medicine = $distribution->medicine;
 
         // Perform increment or decrement based on the operation
         if ($operation === 'increment') {
-            $medicine->increment('stocks', $distribution->stocks);
+            $medicine->increment('stocks', $quantity);
         } elseif ($operation === 'decrement') {
-            $medicine->decrement('stocks', $distribution->stocks);
+            $medicine->decrement('stocks', $quantity);
         }
     }
 }

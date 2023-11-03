@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\RoleController;
+// use App\Http\Controllers\barangay\BarangayMedicineController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\MedicineController;
@@ -19,7 +20,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+// Admin Route
 Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => 'permission:view-users'], function () {
         Route::resource('admin/users', UserController::class);
@@ -63,10 +64,14 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => 'permission:view-distribution-barangay'], function () {
         Route::resource('admin/distribution-barangay', DistributionBarangayController::class);
     });
+// Barangay Route
+    // Route::group(['middleware' => 'permission:view-barangay_medicines'], function () {
+    //     Route::resource('barangay/barangay-medicines', BarangayMedicineController::class);
+    // });
+
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
-
 });

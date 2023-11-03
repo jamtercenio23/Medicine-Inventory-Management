@@ -20,4 +20,5 @@ class DistributionBarangay extends Model
     {
         return $this->belongsTo(Medicine::class);
     }
+
 }
