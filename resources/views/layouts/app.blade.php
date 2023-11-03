@@ -166,12 +166,6 @@
             text-align: center;
             padding: 10px 0;
         }
-        .fixed-header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000; /* Adjust the z-index as needed */
-    }
     </style>
 
 </head>
@@ -267,7 +261,7 @@
                             @endcan
                             @can('view-distribution-barangay')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    <a href="{{ route('distribution-barangay.index') }}"><i class="fas fa-chart-bar"></i>
+                                    <a href="{{ route('distribution_barangay.index') }}"><i class="fas fa-chart-bar"></i>
                                         Barangay Distributions</a>
                                 </li>
                             @endcan
@@ -302,7 +296,7 @@
                         <a href="{{ route('profile.edit') }}"><i class="fas fa-user"></i> Profile</a>
                     </li>
                 </ul>
-                {{-- <div style="padding: 10px; margin-top: 490px">
+                {{-- <div style="padding: 10px; margin-top: 50px">
                     <a href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal"
                         class="btn btn-danger btn-block text-white">Logout</a>
                 </div> --}}
@@ -362,7 +356,6 @@
                 </main>
             </div>
         </div>
-
     </div>
     @include('auth.logout-modal')
 </body>

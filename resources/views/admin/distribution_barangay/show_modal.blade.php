@@ -10,17 +10,17 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <p><strong>ID:</strong><br>{{ $distribution->id }}</p>
-                        <p><strong>Barangay:</strong><br>{{ $distribution->barangay->name }}</p>
+                        <p><strong>ID:</strong><br>{{ $distribution_barangay->id }}</p>
+                        <p><strong>Barangay:</strong><br>{{ $distribution_barangay->barangay->name }}</p>
                     </div>
                     <div class="col-md-6">
-                        <p><strong>Medicine:</strong><br>{{ $distribution->medicine->generic_name }} - {{ $distribution->medicine->brand_name }}</p>
-                        <p><strong>Stock:</strong><br>{{ $distribution->stocks }}</p>
+                        <p><strong>Medicine:</strong><br>{{ $distribution_barangay->medicine->generic_name }} - {{ $distribution_barangay->medicine->brand_name }}</p>
+                        <p><strong>Stock:</strong><br>{{ $distribution_barangay->stocks }}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <p><strong>Distribution Date:</strong><br>{{ $distribution->distribution_date }}</p>
+                        <p><strong>Distribution Date:</strong><br>{{ $distribution_barangay->distribution_date }}</p>
                     </div>
                     <!-- Add other details as needed -->
                 </div>

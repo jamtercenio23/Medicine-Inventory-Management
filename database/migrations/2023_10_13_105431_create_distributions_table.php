@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('stocks');
             $table->date('checkup_date');
             $table->timestamps();
-            $table->foreign('patient_id')->references('id')->on('patients');
+            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
             $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
         });
     }

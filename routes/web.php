@@ -62,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('admin/distributions', DistributionController::class);
     });
     Route::group(['middleware' => 'permission:view-distribution-barangay'], function () {
-        Route::resource('admin/distribution-barangay', DistributionBarangayController::class);
+        Route::resource('admin/distribution_barangay', DistributionBarangayController::class);
     });
 // Barangay Route
     // Route::group(['middleware' => 'permission:view-barangay_medicines'], function () {

@@ -10,7 +10,7 @@
             </div>
             <div class="modal-body">
                 <!-- Distribution to Barangay Create Form -->
-                <form action="{{ route('distribution-barangay.store') }}" method="post">
+                <form action="{{ route('distribution_barangay.store') }}" method="post">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">

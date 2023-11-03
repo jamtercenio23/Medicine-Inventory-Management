@@ -4,8 +4,8 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\DistributionBarangay;
 use App\Models\Barangay;
+use App\Models\DistributionBarangay;
 use App\Models\Medicine;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -14,22 +14,23 @@ class DistributionBarangayController extends Controller
 {
     public function index(Request $request)
     {
-        $distributions = DistributionBarangay::with(['barangay', 'medicine']);
+        $distribution_barangays = DistributionBarangay::with(['barangay', 'medicine']);
 
         $query = $request->input('search');
 
         if ($query) {
-            $distributions->whereHas('barangay', function ($subquery) use ($query) {
-                $subquery->where('name', 'like', '%' . $query . '%');
+            $distribution_barangays->whereHas('patient', function ($subquery) use ($query) {
+                $subquery->where('first_name', 'like', '%' . $query . '%')
+                    ->orWhere('last_name', 'like', '%' . $query . '%');
             });
         }
 
-        $distributions = $distributions->paginate($request->input('entries', 10));
+        $distribution_barangays = $distribution_barangays->paginate($request->input('entries', 10));
 
         $barangays = Barangay::all();
         $medicines = Medicine::all();
 
-        return view('admin.distribution-barangay.index', compact('distributions', 'barangays', 'medicines', 'query'));
+        return view('admin.distribution_barangay.index', compact('distribution_barangays', 'barangays', 'medicines', 'query'));
     }
 
     public function create()
@@ -37,7 +38,7 @@ class DistributionBarangayController extends Controller
         $barangays = Barangay::all();
         $medicines = Medicine::where('stocks', '>', 0)->where('expiration_date', '>=', now()->toDateString())->get();
 
-        return view('admin.distribution-barangay.create_modal', compact('barangays', 'medicines'));
+        return view('distribution_barangay.create', compact('barangays', 'medicines'));
     }
 
     public function store(Request $request)
@@ -64,24 +65,23 @@ class DistributionBarangayController extends Controller
                         }
                     },
                 ],
-                'distribution_date' => 'required|date', // Changed 'checkup_date' to 'distribution_date'
+                'distribution_date' => 'required|date',
             ]);
 
-            // Create DistributionBarangay
-            $distribution = DistributionBarangay::create($request->all());
+            // Create Distribution
+            $distribution_barangays = DistributionBarangay::create($request->all());
 
             // Update Medicine stock
-            $this->updateMedicineStock($distribution, 'decrement');
+            $this->updateMedicineStock($distribution_barangays, 'decrement', $request->input('stocks'));
 
-            return redirect()->route('distribution-barangay.index')
+            return redirect()->route('distribution_barangay.index')
                 ->with('success', 'Distribution created successfully');
         } catch (\Exception $e) {
-            return redirect()->route('distribution-barangay.index')
+            return redirect()->route('distribution_barangay.index')
                 ->with('error', 'Error creating distribution: ' . $e->getMessage());
         }
     }
-
-    public function update(Request $request, DistributionBarangay $distribution)
+    public function update(Request $request, DistributionBarangay $distribution_barangay)
     {
         $request->validate([
             'barangay_id' => 'required|exists:barangays,id',
@@ -90,36 +90,59 @@ class DistributionBarangayController extends Controller
             'distribution_date' => 'required|date',
         ]);
 
-        // Update DistributionBarangay
-        $distribution->update($request->all());
+        // Get the original distribution data
+        $originalDistribution = DistributionBarangay::find($distribution_barangay->id);
+
+        if (!$originalDistribution) {
+            return redirect()->route('distribution_barangay.index')->with('error', 'Distribution record not found.');
+        }
+
+        $originalStock = $originalDistribution->stocks;
+        $updatedStock = $request->input('stocks');
+
+        // Calculate the difference between the original stock and the updated stock
+        $stockChange = $updatedStock - $originalStock;
 
         // Update Medicine stock
-        $this->updateMedicineStock($distribution, 'decrement');
-        $this->updateMedicineStock($distribution, 'increment');
+        if ($stockChange > 0) {
+            // If stocks are increasing, we need to increment the medicine stock
+            $this->updateMedicineStock($originalDistribution, 'decrement', $stockChange);
+        } elseif ($stockChange < 0) {
+            // If stocks are decreasing, we need to decrement the medicine stock
+            $this->updateMedicineStock($originalDistribution, 'increment', abs($stockChange));
+        }
 
-        return redirect()->route('distribution-barangay.index')->with('success', 'Distribution to barangay updated successfully');
+        // Update Distribution
+        $distribution_barangay->update($request->all());
+
+        return redirect()->route('distribution_barangay.index')->with('success', 'Distribution updated successfully');
     }
 
-    public function destroy(DistributionBarangay $distribution)
+    public function destroy(DistributionBarangay $distribution_barangay)
     {
-        $this->updateMedicineStock($distribution, 'increment');
+        if (!$distribution_barangay) {
+            return redirect()->route('distribution_barangay.index')
+                ->with('error', 'Distribution record not found.');
+        }
 
-        $distribution->delete();
+        $quantity = $distribution_barangay->stocks;
 
-        return redirect()->route('distribution-barangay.index')->with('success', 'Barangay Distribution deleted successfully');
+        $this->updateMedicineStock($distribution_barangay, 'increment', $quantity);
+
+        $distribution_barangay->delete();
+
+        return redirect()->route('distribution_barangay.index')->with('success', 'Distribution deleted successfully');
     }
 
-    private function updateMedicineStock(DistributionBarangay $distribution, $operation)
+    private function updateMedicineStock(DistributionBarangay $distribution_barangays, $operation, $quantity = 1)
     {
-        $medicine = $distribution->medicine;
+        $medicine = $distribution_barangays->medicine;
 
-        if ($medicine) {
-            // Perform increment or decrement based on the operation
-            if ($operation === 'increment') {
-                $medicine->increment('stocks', $distribution->stocks);
-            } elseif ($operation === 'decrement') {
-                $medicine->decrement('stocks', $distribution->stocks);
-            }
+        // Perform increment or decrement based on the operation
+        if ($operation === 'increment') {
+            $medicine->increment('stocks', $quantity);
+        } elseif ($operation === 'decrement') {
+            $medicine->decrement('stocks', $quantity);
         }
     }
 }

@@ -25,7 +25,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
-                    <form action="{{ route('distribution-barangay.index') }}" method="GET" class="form-inline">
+                    <form action="{{ route('distribution_barangay.index') }}" method="GET" class="form-inline">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
                             <div class="input-group-append">
@@ -39,7 +39,7 @@
             </div>
             <div class="card-body">
                 <!-- Display message when there are no distributions -->
-                @if ($distributions->isEmpty())
+                @if ($distribution_barangays->isEmpty())
                     <p>No distributions to barangays found.</p>
                 @else
                     <!-- Distribution to Barangay Table -->
@@ -52,36 +52,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($distributions as $distribution)
+                            @foreach ($distribution_barangays as $distribution_barangay)
                                 <tr>
-                                    <td>{{ $distribution->id }}</td>
-                                    <td>{{ $distribution->barangay->name }}</td>
+                                    <td>{{ $distribution_barangay->id }}</td>
+                                    <td>{{ $distribution_barangay->barangay->name }}</td>
                                     <td>
                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                            data-target="#showDistributionBarangayModal{{ $distribution->id }}">
+                                            data-target="#showDistributionBarangayModal{{ $distribution_barangay->id }}">
                                             <i class="fas fa-eye"></i> Show</button>
                                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                            data-target="#editDistributionBarangayModal{{ $distribution->id }}">
+                                            data-target="#editDistributionBarangayModal{{ $distribution_barangay->id }}">
                                             <i class="fas fa-edit"></i> Edit</button>
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#deleteDistributionBarangayModal{{ $distribution->id }}">
+                                            data-target="#deleteDistributionBarangayModal{{ $distribution_barangay->id }}">
                                             <i class="fas fa-trash"></i> Delete</button>
                                     </td>
                                 </tr>
 
                                 <!-- Show Distribution to Barangay Modal -->
-                                @include('admin.distribution-barangay.show_modal', [
-                                    'distribution' => $distribution,
+                                @include('admin.distribution_barangay.show_modal', [
+                                    'distribution' => $distribution_barangay,
                                 ])
 
                                 <!-- Edit Distribution to Barangay Modal -->
-                                @include('admin.distribution-barangay.edit_modal', [
-                                    'distribution' => $distribution,
+                                @include('admin.distribution_barangay.edit_modal', [
+                                    'distribution' => $distribution_barangay,
                                 ])
 
                                 <!-- Delete Distribution to Barangay Modal -->
-                                @include('admin.distribution-barangay.delete_modal', [
-                                    'distribution' => $distribution,
+                                @include('admin.distribution_barangay.delete_modal', [
+                                    'distribution' => $distribution_barangay,
                                 ])
                             @endforeach
                         </tbody>
@@ -95,21 +95,21 @@
                 <div class="float-right">
                     <!-- Bootstrap Pagination -->
                     <ul class="pagination">
-                        <li class="page-item {{ $distributions->currentPage() == 1 ? 'disabled' : '' }}">
-                            <a class="page-link" href="{{ $distributions->previousPageUrl() }}" aria-label="Previous">
+                        <li class="page-item {{ $distribution_barangays->currentPage() == 1 ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $distribution_barangays->previousPageUrl() }}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
 
-                        @for ($i = 1; $i <= $distributions->lastPage(); $i++)
-                            <li class="page-item {{ $i == $distributions->currentPage() ? 'active' : '' }}">
-                                <a class="page-link" href="{{ $distributions->url($i) }}">{{ $i }}</a>
+                        @for ($i = 1; $i <= $distribution_barangays->lastPage(); $i++)
+                            <li class="page-item {{ $i == $distribution_barangays->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $distribution_barangays->url($i) }}">{{ $i }}</a>
                             </li>
                         @endfor
 
                         <li
-                            class="page-item {{ $distributions->currentPage() == $distributions->lastPage() ? 'disabled' : '' }}">
-                            <a class="page-link" href="{{ $distributions->nextPageUrl() }}" aria-label="Next">
+                            class="page-item {{ $distribution_barangays->currentPage() == $distribution_barangays->lastPage() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $distribution_barangays->nextPageUrl() }}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -121,7 +121,7 @@
     </div>
 
     <!-- Create Distribution to Barangay Modal -->
-    @include('admin.distribution-barangay.create_modal')
+    @include('admin.distribution_barangay.create_modal')
 @endsection
 
 <!-- Include Bootstrap CSS for pagination styles -->
