@@ -16,12 +16,12 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="generic_name">Generic Name:</label>
-                                <input type="text" class="form-control" id="generic_name" name="generic_name"
+                                <input type="text" class="form-control" id="generic_name" name="generic_name" placeholder="Enter the Generic Name"
                                     required>
                             </div>
                             <div class="form-group">
                                 <label for="brand_name">Brand Name:</label>
-                                <input type="text" class="form-control" id="brand_name" name="brand_name" required>
+                                <input type="text" class="form-control" id="brand_name" name="brand_name" placeholder="Enter the Brand Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="category_id">Category:</label>
@@ -35,11 +35,11 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="stocks">Stocks:</label>
-                                <input type="number" class="form-control" id="stocks" name="stocks" required>
+                                <input type="number" class="form-control" id="stocks" name="stocks" placeholder="Enter the Stocks" required>
                             </div>
                             <div class="form-group">
                                 <label for="price">Price:</label>
-                                <input type="number" class="form-control" id="price" name="price" required>
+                                <input type="number" class="form-control" id="price" name="price" placeholder="Enter the Price"required>
                             </div>
                             <div class="form-group">
                                 <label for="expiration_date">Expiration Date:</label>
@@ -48,47 +48,10 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create Medicine</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-    /* Add custom CSS styles here */
-    .modal-content {
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        /* Add a subtle shadow */
-    }
-
-    .modal-title {
-        font-weight: bold;
-        color: #007bff;
-        /* Change title color */
-        margin-bottom: 20px;
-    }
-
-    .modal-body {
-        background-color: #f7f7f7;
-        /* Change modal body background color */
-        padding: 20px;
-    }
-
-    .modal-body label {
-        font-weight: bold;
-        display: block;
-    }
-
-    .modal-body input {
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    .modal-footer {
-        background-color: #f7f7f7;
-        border-top: 1px solid #ccc;
-        padding: 15px;
-    }
-</style>

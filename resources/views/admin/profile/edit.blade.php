@@ -7,7 +7,9 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Edit Profile') }}</div>
+                    <div class="card-header">
+                        <h3>Edit Profile</h3>
+                    </div>
 
                     <div class="card-body">
                         @if (session('success'))
@@ -26,25 +28,20 @@
                             @csrf
                             @method('PUT')
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="name">{{ __('Name') }}</label>
-                                        <input type="text" name="name" id="name" value="{{ $user->name }}"
-                                            class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email">{{ __('Email') }}</label>
-                                        <input type="email" name="email" id="email" value="{{ $user->email }}"
-                                            class="form-control">
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" name="name" id="name" value="{{ $user->name }}"
+                                    class="form-control" placeholder="Enter the Name">
                             </div>
 
                             <div class="form-group">
-                                <label for="role">{{ __('Role') }}</label>
+                                <label for="email">Email</label>
+                                <input type="email" name="email" id="email" value="{{ $user->email }}"
+                                    class="form-control" placeholder="Enter the Email">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role">Role</label>
                                 <select name="role" id="role" class="form-control">
                                     @if (auth()->user()->hasRole('admin'))
                                         @foreach ($roles as $role)
@@ -61,7 +58,7 @@
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">{{ __('Update Profile') }}</button>
+                            <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
                         </form>
 
                         <hr>
@@ -70,39 +67,37 @@
                             @csrf
                             @method('PUT')
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="current_password">{{ __('Current Password') }}</label>
-                                        <input type="password" name="current_password" id="current_password"
-                                            class="form-control">
+                            <div class="form-group">
+                                <label for="current_password">Current Password</label>
+                                <input type="password" name="current_password" id="current_password" class="form-control" placeholder="Leave empty to keep the current password">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">New Password</label>
+                                <div class="input-group">
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="Leave empty to keep the current password">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i id="password-toggle-icon" class="fas fa-eye-slash"></i>
+                                        </span>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="password">{{ __('New Password') }}</label>
-                                        <div class="input-group">
-                                            <input type="password" name="password" id="password" class="form-control">
-                                            <span class="input-group-text">
-                                                <i id="password-toggle-icon" class="fas fa-eye-slash"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="password_confirmation">{{ __('Confirm New Password') }}</label>
-                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
-                                </div>
+                            <div class="form-group">
+                                <label for="password_confirmation">Confirm New Password</label>
+                                <input type="password" name="password_confirmation" id="password_confirmation"
+                                    class="form-control" placeholder="Leave empty to keep the current password">
+                            </div>
 
-                                <button type="submit" class="btn btn-primary">{{ __('Update Password') }}</button>
+                            <button type="submit" class="btn btn-primary btn-block">Update Password</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+
     <script>
         // Function to toggle password visibility
         function togglePasswordVisibility(inputId, iconId) {
@@ -139,42 +134,14 @@
             });
         });
     </script>
-    <style>
-        .card-header {
-            background-color: #007bff;
-            color: #fff;
-            text-align: center;
-        }
-
-        .card-body {
-            background-color: #f7f7f7;
-            padding: 20px;
-        }
-
-        .alert {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            font-weight: bold;
-        }
-
-        .form-control {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-    </style>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        .card {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+    }
+    </style>
 @endsection

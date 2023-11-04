@@ -2,7 +2,9 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="logoutModalLabel">Logout Confirmation</h5>
+                <h5 class="modal-title" id="logoutModalLabel">
+                    <i class="fas fa-sign-out-alt"></i> Logout Confirmation
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -12,7 +14,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-danger">Logout</a>
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
@@ -21,41 +25,9 @@
     </div>
 </div>
 
+<!-- Include Font Awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<style>
-    /* Add custom CSS styles here */
-    .modal-content {
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-    }
-
-    .modal-title {
-        font-weight: bold;
-        color: #007bff; /* Change title color */
-        margin-bottom: 20px;
-    }
-
-    .modal-body {
-        background-color: #f7f7f7; /* Change modal body background color */
-        padding: 20px;
-    }
-
-    .modal-body label {
-        font-weight: bold;
-    }
-
-    .modal-body input, .modal-body select {
-        border: 1px solid #ccc; /* Add a border to input fields */
-        border-radius: 5px;
-    }
-
-    .modal-footer {
-        background-color: #f7f7f7; /* Change modal footer background color */
-        border-top: 1px solid #ccc;
-        padding: 15px;
-    }
-
-    /* Add transitions or animations as needed */
-</style>

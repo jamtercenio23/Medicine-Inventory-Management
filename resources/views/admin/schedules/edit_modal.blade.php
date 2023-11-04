@@ -39,7 +39,7 @@
                             <div class="form-group">
                                 <label for="stock">Stock:</label>
                                 <input type="number" class="form-control" id="stock" name="stock"
-                                    value="{{ $schedule->stock }}" required>
+                                    value="{{ $schedule->stock }}" placeholder="Enter the Stocks" required>
                             </div>
                             <div class="form-group">
                                 <label for="schedule_date_time">Date/Time:</label>
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
                 </form>
             </div>
         </div>

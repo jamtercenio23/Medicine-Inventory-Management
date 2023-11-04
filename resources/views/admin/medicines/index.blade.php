@@ -2,8 +2,11 @@
 @section('title', 'Medicine Inventory - Medicines')
 @section('content')
     <div class="container">
-        <div class="mb-4">
+        <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Medicine Inventory</h1>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createMedicineModal">
+                <i class="fas fa-plus"></i> Add Medicine
+            </button>
         </div>
         <div>
             @if (session('success'))
@@ -15,11 +18,8 @@
                     {{ session('error') }}
                 </div>
             @endif
-            <h4><a href="{{ route('home') }}">Dashboard</a> / Medicines</h4>
+            <h5><a href="{{ route('home') }}">Dashboard</a> / Medicines</h5>
         </div>
-        <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#createMedicineModal">
-            Add Medicine
-        </button>
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
@@ -98,7 +98,8 @@
                         @endfor
                         <li class="page-item {{ $medicines->currentPage() == $medicines->lastPage() ? 'disabled' : '' }}">
                             <a class="page-link" href="{{ $medicines->nextPageUrl() }}" aria-label="Next"> <span
-                                    aria-hidden="true">&raquo;</span> </a> </li>
+                                    aria-hidden="true">&raquo;</span> </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="clearfix"></div>
@@ -108,14 +109,20 @@
 
     <!-- Create Medicine Modal -->
     @include('admin.medicines.create_modal')
+
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <!-- Include Bootstrap CSS for pagination styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+    </style>
 @endsection
-
-<!-- Include Font Awesome for icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-
-<!-- Include Bootstrap CSS for pagination styles -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

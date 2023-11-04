@@ -4,8 +4,11 @@
 
 @section('content')
     <div class="container">
-        <div class="mb-4">
-            <h1>Permissions</h1>
+        <div class="mb-8 d-flex justify-content-between align-items-center">
+            <h1>Manage Permissions</h1>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createPermissionModal">
+                <i class="fas fa-plus"></i> Add Permission
+            </button>
         </div>
 
         <div>
@@ -18,19 +21,16 @@
                     {{ session('error') }}
                 </div>
             @endif
-            <h4><a href="{{ route('home') }}">Dashboard</a> / Permissions</h4>
+            <h5><a href="{{ route('home') }}">Dashboard</a> / Permissions</h5>
         </div>
-
-        <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#createPermissionModal">
-            Add Permission
-        </button>
 
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
                     <form action="{{ route('permissions.index') }}" method="GET" class="form-inline">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
+                            <input type="text" class="form-control" placeholder="Search" name="search"
+                                value="{{ $query }}">
                             <div class="input-group-append">
                                 <button class="btn btn-secondary btn" type="submit">
                                     <i class="fas fa-search"></i>
@@ -73,7 +73,9 @@
                                     @include('admin.permissions.edit_modal', ['permission' => $permission])
 
                                     <!-- Delete Permission Modal -->
-                                    @include('admin.permissions.delete_modal', ['permission' => $permission])
+                                    @include('admin.permissions.delete_modal', [
+                                        'permission' => $permission,
+                                    ])
                                 @endforeach
                             </tbody>
                         </table>
@@ -99,7 +101,8 @@
                             </li>
                         @endfor
 
-                        <li class="page-item {{ $permissions->currentPage() == $permissions->lastPage() ? 'disabled' : '' }}">
+                        <li
+                            class="page-item {{ $permissions->currentPage() == $permissions->lastPage() ? 'disabled' : '' }}">
                             <a class="page-link" href="{{ $permissions->nextPageUrl() }}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
@@ -113,12 +116,18 @@
 
     <!-- Create Permission Modal -->
     @include('admin.permissions.create_modal')
-</div>
+    </div>
 
-<!-- Include Bootstrap CSS for pagination styles -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Bootstrap CSS for pagination styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+    </style>
 @endsection

@@ -2,8 +2,11 @@
 @section('title', 'Medicine Inventory - Barangays')
 @section('content')
     <div class="container">
-        <div class="mb-4">
-            <h1>Barangays</h1>
+        <div class="mb-8 d-flex justify-content-between align-items-center">
+            <h1>Manage Barangays</h1>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createBarangayModal">
+                <i class="fas fa-plus"></i> Add Barangay
+            </button>
         </div>
         @if (session('success'))
             <div class="alert alert-success">
@@ -14,10 +17,7 @@
                 {{ session('error') }}
             </div>
         @endif
-        <h4><a href="{{ route('home') }}">Dashboard</a> / Barangay</h4>
-        <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#createBarangayModal">
-            Add Barangay
-        </button>
+        <h5><a href="{{ route('home') }}">Dashboard</a> / Barangay</h5>
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
@@ -107,14 +107,17 @@
         </div>
     </div>
 
-    <!-- Create Barangay Modal -->
     @include('admin.barangays.create_modal')
+    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .card {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+    }
+    </style>
 @endsection
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-
-<!-- Include Bootstrap CSS for pagination styles -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -26,7 +26,7 @@
                                 <label for="medicine_id">Medicine:</label>
                                 <select class="form-control" id="medicine_id" name="medicine_id" required>
                                     @foreach ($medicines as $medicine)
-                                        <option value="{{ $medicine->id }}">{{ $medicine->brand_name }}</option>
+                                        <option value="{{ $medicine->id }}">{{ $medicine->brand_name }} | Stocks: {{ $medicine->stocks }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -34,7 +34,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="stock">Stock:</label>
-                                <input type="number" class="form-control" id="stock" name="stock" required>
+                                <input type="number" class="form-control" id="stock" name="stock" placeholder="Enter the Stocks" required>
                             </div>
                             <div class="form-group">
                                 <label for="schedule_date_time">Date/Time:</label>
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create Schedule</button>
                 </form>
             </div>
         </div>

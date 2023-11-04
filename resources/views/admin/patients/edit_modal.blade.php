@@ -16,11 +16,11 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="first_name">First Name:</label>
-                                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ $patient->first_name }}" required>
+                                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ $patient->first_name }}" placeholder="Enter the First Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Last Name:</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ $patient->last_name }}" required>
+                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ $patient->last_name }}" placeholder="Enter the Last Name"required>
                             </div>
                             <div class="form-group">
                                 <label for="birthdate">Birthdate:</label>
@@ -28,7 +28,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="age">Age:</label>
-                                <input type="number" class="form-control" id="age" name="age" value="{{ $patient->age }}" required>
+                                <input type="number" class="form-control" id="age" name="age" value="{{ $patient->age }}" placeholder="Enter the Age"required>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -37,6 +37,7 @@
                                 <select class="form-control" id="gender" name="gender" required>
                                     <option value="Male" {{ $patient->gender == 'Male' ? 'selected' : '' }}>Male</option>
                                     <option value="Female" {{ $patient->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                                    <option value="N/A" {{ $patient->gender == 'N/A' ? 'selected' : '' }}>N/A</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -49,48 +50,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="diagnose">Diagnose:</label>
-                                <input type="text" class="form-control" id="diagnose" name="diagnose" value="{{ $patient->diagnose }}" required>
+                                <input type="text" class="form-control" id="diagnose" name="diagnose" value="{{ $patient->diagnose }}" placeholder="Enter the Diagnose"required>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<style>
-    /* Add custom CSS styles here */
-    .modal-content {
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-    }
-
-    .modal-title {
-        font-weight: bold;
-        color: #007bff; /* Change title color */
-        margin-bottom: 20px;
-    }
-
-    .modal-body {
-        background-color: #f7f7f7; /* Change modal body background color */
-        padding: 20px;
-    }
-
-    .modal-body label {
-        font-weight: bold;
-    }
-
-    .modal-body input, .modal-body select {
-        border: 1px solid #ccc; /* Add a border to input fields */
-        border-radius: 5px;
-    }
-
-    .modal-footer {
-        background-color: #f7f7f7; /* Change modal footer background color */
-        border-top: 1px solid #ccc;
-        padding: 15px;
-    }
-
-    /* Add transitions or animations as needed */
-</style>

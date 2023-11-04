@@ -11,58 +11,19 @@
                 <!-- Distribution Details -->
                 <div class="row">
                     <div class="col-md-6">
-                        <p><strong>ID:</strong><br>{{ $distribution->id }}</p>
                         <p><strong>Patient:</strong><br>{{ $distribution->patient->first_name }} {{ $distribution->patient->last_name }}</p>
-                    </div>
-                    <div class="col-md-6">
                         <p><strong>Medicine:</strong><br>{{ $distribution->medicine->brand_name }}</p>
-                        <p><strong>Stock:</strong><br>{{ $distribution->stocks }}</p>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-6">
+
+                        <p><strong>Stock:</strong><br>{{ $distribution->stocks }}</p>
                         <p><strong>Checkup Date:</strong><br>{{ $distribution->checkup_date }}</p>
                     </div>
-                    <!-- Add other details as needed -->
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
             </div>
         </div>
     </div>
 </div>
-<style>
-    /* Add custom CSS styles here */
-    .modal-content {
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-    }
-
-    .modal-title {
-        font-weight: bold;
-        color: #007bff; /* Change title color */
-        margin-bottom: 20px;
-    }
-
-    .modal-body {
-        background-color: #f7f7f7; /* Change modal body background color */
-        padding: 20px;
-    }
-
-    .modal-body label {
-        font-weight: bold;
-        display: block;
-    }
-
-    .modal-body input {
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    .modal-footer {
-        background-color: #f7f7f7;
-        border-top: 1px solid #ccc;
-        padding: 15px;
-    }
-</style>

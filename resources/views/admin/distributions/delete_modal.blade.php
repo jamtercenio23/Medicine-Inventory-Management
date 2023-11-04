@@ -8,12 +8,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete the Distribution to {{ $distribution->patient->first_name }}?</p>
+                <p>Are you sure you want to delete the Distribution for <strong>"{{ $distribution->patient->first_name }} {{ $distribution->patient->last_name }}"</strong>?</p>
                 <!-- Distribution Delete Form -->
                 <form action="{{ route('distributions.destroy', $distribution->id) }}" method="post">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
                 </form>
             </div>
         </div>

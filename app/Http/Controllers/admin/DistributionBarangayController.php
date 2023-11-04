@@ -19,9 +19,8 @@ class DistributionBarangayController extends Controller
         $query = $request->input('search');
 
         if ($query) {
-            $distribution_barangays->whereHas('patient', function ($subquery) use ($query) {
-                $subquery->where('first_name', 'like', '%' . $query . '%')
-                    ->orWhere('last_name', 'like', '%' . $query . '%');
+            $distribution_barangays->whereHas('barangay', function ($subquery) use ($query) {
+                $subquery->where('name', 'like', '%' . $query . '%');
             });
         }
 

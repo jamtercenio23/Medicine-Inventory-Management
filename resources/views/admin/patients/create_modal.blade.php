@@ -15,11 +15,11 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="first_name">First Name:</label>
-                                <input type="text" class="form-control" id="first_name" name="first_name" required>
+                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter the First Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Last Name:</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name" required>
+                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter the Last Name"required>
                             </div>
                             <div class="form-group">
                                 <label for="birthdate">Birthdate:</label>
@@ -27,7 +27,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="age">Age:</label>
-                                <input type="number" class="form-control" id="age" name="age" required>
+                                <input type="number" class="form-control" id="age" name="age" placeholder="Enter the Age" required>
                             </div>
 
                         </div>
@@ -37,6 +37,7 @@
                                 <select class="form-control" id="gender" name="gender" required>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
+                                    <option value="N/A">N/A</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -49,54 +50,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="diagnose">Diagnose:</label>
-                                <input type="text" class="form-control" id="diagnose" name="diagnose" required>
+                                <input type="text" class="form-control" id="diagnose" name="diagnose" placeholder="Enter the Diagnose" required>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create Patient</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<style>
-    /* Add custom CSS styles here */
-    .modal-content {
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        /* Add a subtle shadow */
-    }
-
-    .modal-title {
-        font-weight: bold;
-        color: #007bff;
-        /* Change title color */
-        margin-bottom: 20px;
-    }
-
-    .modal-body {
-        background-color: #f7f7f7;
-        /* Change modal body background color */
-        padding: 20px;
-    }
-
-    .modal-body label {
-        font-weight: bold;
-    }
-
-    .modal-body input,
-    .modal-body select {
-        border: 1px solid #ccc;
-        /* Add a border to input fields */
-        border-radius: 5px;
-    }
-
-    .modal-footer {
-        background-color: #f7f7f7;
-        /* Change modal footer background color */
-        border-top: 1px solid #ccc;
-        padding: 15px;
-    }
-
-    /* Add transitions or animations as needed */
-</style>

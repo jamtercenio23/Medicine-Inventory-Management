@@ -2,7 +2,7 @@
 @section('title', 'Medicine Inventory - Expired Medicines')
 @section('content')
     <div class="container">
-        <div class="mb-4">
+        <div class="mb-8">
             <h1>Expired Medicines</h1>
         </div>
         @if (session('success'))
@@ -14,6 +14,7 @@
                 {{ session('error') }}
             </div>
         @endif
+        <h5><a href="{{ route('medicines.index') }}">Medicines</a> / Expired Medicines</h5>
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
@@ -100,11 +101,17 @@
             </div>
         </div>
     </div>
+    <!-- Include Bootstrap CSS for pagination styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+    </style>
+
 @endsection
-
-<!-- Include Bootstrap CSS for pagination styles -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

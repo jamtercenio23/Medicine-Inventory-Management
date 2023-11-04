@@ -16,11 +16,11 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" required>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" placeholder="Enter the User Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" placeholder="Enter the User Email" required>
                             </div>
                             <div class="form-group">
                                 <label for="role">Role</label>
@@ -35,54 +35,19 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="password">Password (Leave empty to keep the current password)</label>
-                                <input type="password" class="form-control" id="password" name="password">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Leave empty to keep the current password">
                             </div>
                             <div class="form-group">
-                                <label for="password_confirmation">Confirm Password (Leave empty to keep the current password)</label>
-                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                                <label for="password_confirmation">Confirm Password</label>
+                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Leave empty to keep the current password">
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update User</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-    /* Add custom CSS styles here */
-    .modal-content {
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-    }
-
-    .modal-title {
-        font-weight: bold;
-        color: #007bff; /* Change title color */
-        margin-bottom: 20px;
-    }
-
-    .modal-body {
-        background-color: #f7f7f7; /* Change modal body background color */
-        padding: 20px;
-    }
-
-    .modal-body label {
-        font-weight: bold;
-    }
-
-    .modal-body input {
-        border: 1px solid #ccc; /* Add a border to input fields */
-        border-radius: 5px;
-    }
-
-    .modal-footer {
-        background-color: #f7f7f7; /* Change modal footer background color */
-        border-top: 1px solid #ccc;
-        padding: 15px;
-    }
-
-    /* Add transitions or animations as needed */
-</style>

@@ -4,9 +4,13 @@
 
 @section('content')
     <div class="container">
-        <div class="mb-4">
+        <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>User Management</h1>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createUserModal">
+                <i class="fas fa-plus"></i> Add User
+            </button>
         </div>
+
         <div>
             @if (session('success'))
                 <div class="alert alert-success">
@@ -17,11 +21,9 @@
                     {{ session('error') }}
                 </div>
             @endif
-            <h4><a href="{{ route('home') }}">Dashboard</a> / Users</h4>
+            <h5><a href="{{ route('home') }}">Dashboard</a> / Users</h5>
         </div>
-        <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#createUserModal">
-            Add User
-        </button>
+
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
@@ -70,10 +72,12 @@
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editUserModal{{ $user->id }}">
-                                                <i class="fas fa-edit"></i> Edit</button>
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#deleteUserModal{{ $user->id }}">
-                                                <i class="fas fa-trash"></i> Delete</button>
+                                                <i class="fas fa-trash"></i> Delete
+                                            </button>
                                         </td>
                                     </tr>
 
@@ -89,7 +93,7 @@
                 </div>
             </div>
             <div class="card-footer text-muted">
-                <div class="float-left">
+                <div class "float-left">
                     <!-- You can add any additional content here if needed -->
                 </div>
                 <div class="float-right">
@@ -107,8 +111,7 @@
                             </li>
                         @endfor
 
-                        <li
-                            class="page-item {{ $users->currentPage() == $users->lastPage() ? 'disabled' : '' }}">
+                        <li class="page-item {{ $users->currentPage() == $users->lastPage() ? 'disabled' : '' }}">
                             <a class="page-link" href="{{ $users->nextPageUrl() }}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
@@ -118,10 +121,19 @@
                 <div class="clearfix"></div>
             </div>
         </div>
+    </div>
 
-        <!-- Create User Modal -->
-        @include('admin.users.create_modal')
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    @endsection
+    <!-- Create User Modal -->
+    @include('admin.users.create_modal')
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+    </style>
+@endsection

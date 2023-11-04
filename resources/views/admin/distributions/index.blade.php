@@ -1,12 +1,16 @@
 @extends('layouts.app')
+
 @section('title', 'Medicine Inventory - Distributions')
+
 @section('content')
     <div class="container">
-        <div class="mb-4">
+        <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Patient Distribution</h1>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createDistributionModal">
+                <i class="fas fa-plus"></i> Add Distribution
+            </button>
         </div>
 
-        <!-- Display alert message if present -->
         <!-- Display alert message if present -->
         @if (session('success'))
             <div class="alert alert-success">
@@ -17,10 +21,9 @@
                 {{ session('error') }}
             </div>
         @endif
-        <h4><a href="{{ route('home') }}">Dashboard</a> / Distributions</h4>
-        <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#createDistributionModal">
-            Add Distribution
-        </button>
+
+        <h5><a href="{{ route('home') }}">Dashboard</a> / Distributions</h5>
+
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
@@ -29,7 +32,7 @@
                             <input type="text" class="form-control" placeholder="Search" name="search"
                                 value="{{ $query }}">
                             <div class="input-group-append">
-                                <button class="btn btn-secondary btn" type="submit">
+                                <button class="btn btn-secondary" type="submit">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
@@ -120,14 +123,15 @@
             </div>
         </div>
     </div>
-
-    <!-- Create Distribution Modal -->
     @include('admin.distributions.create_modal')
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+    </style>
 @endsection
-
-<!-- Include Bootstrap CSS for pagination styles -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -111,7 +111,11 @@
     <header>
         <h1>Welcome to Mabini Health Center</h1>
         <div id="login-container">
-            <a id="login-link" href="{{ route('login') }}">Login</a>
+            @auth
+                <a id="login-link" href="{{ route('home') }}">Dashboard</a>
+            @else
+                <a id="login-link" href="{{ route('login') }}">Login</a>
+            @endauth
         </div>
     </header>
 

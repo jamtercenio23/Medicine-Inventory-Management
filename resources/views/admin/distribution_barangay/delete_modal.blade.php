@@ -8,47 +8,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete the Distribution to Barangay {{ $distribution_barangay->barangay->name }}?</p>
+                <p>Are you sure you want to delete the Distribution to Barangay <strong>"{{ $distribution_barangay->barangay->name }}"</strong>?</p>
                 <form action="{{ route('distribution_barangay.destroy', $distribution_barangay->id) }}" method="post">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<style>
-    /* Add custom CSS styles here */
-    .modal-content {
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-    }
-
-    .modal-title {
-        font-weight: bold;
-        color: #007bff; /* Change title color */
-        margin-bottom: 20px;
-    }
-
-    .modal-body {
-        background-color: #f7f7f7; /* Change modal body background color */
-        padding: 20px;
-    }
-
-    .modal-body label {
-        font-weight: bold;
-        display: block;
-    }
-
-    .modal-body input {
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    .modal-footer {
-        background-color: #f7f7f7;
-        border-top: 1px solid #ccc;
-        padding: 15px;
-    }
-</style>
