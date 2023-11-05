@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\RoleController;
-use App\Http\Controllers\barangay\BarangayDistributionsController;
-use App\Http\Controllers\barangay\BarangayMedicinesController;
-use App\Http\Controllers\barangay\BarangayPatientsController;
+use App\Http\Controllers\barangay\BarangayDistributionController;
+use App\Http\Controllers\barangay\BarangayMedicineController;
+use App\Http\Controllers\barangay\BarangayPatientController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\MedicineController;
@@ -69,13 +69,13 @@ Route::middleware(['auth'])->group(function () {
     });
     // Barangay Route
     Route::group(['middleware' => 'permission:view-barangay_medicines'], function () {
-        Route::resource('barangay/barangay-medicines', BarangayMedicinesController::class);
+        Route::resource('barangay/barangay-medicines', BarangayMedicineController::class);
     });
     Route::group(['middleware' => 'permission:view-barangay_distributions'], function () {
-        Route::resource('barangay/barangay-distributions', BarangayDistributionsController::class);
+        Route::resource('barangay/barangay-distributions', BarangayDistributionController::class);
     });
     Route::group(['middleware' => 'permission:view-barangay_patients'], function () {
-        Route::resource('barangay/barangay-patients', BarangayPatientsController::class);
+        Route::resource('barangay/barangay-patients', BarangayPatientController::class);
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

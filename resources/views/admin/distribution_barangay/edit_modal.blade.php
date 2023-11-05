@@ -18,23 +18,11 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="barangay_id">Barangay:</label>
-                                <select class="form-control" id="barangay_id" name="barangay_id" required>
-                                    @foreach ($barangays as $barangay)
-                                        <option value="{{ $barangay->id }}"
-                                            {{ $distribution_barangay->barangay_id == $barangay->id ? 'selected' : '' }}>
-                                            {{ $barangay->name }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" id="barangay_id" name="barangay_id" value="{{ $distribution_barangay->barangay->name }}" disabled>
                             </div>
                             <div class="form-group">
                                 <label for="medicine_id">Medicine:</label>
-                                <select class="form-control" id="medicine_id" name="medicine_id" required>
-                                    @foreach ($medicines as $medicine)
-                                        <option value="{{ $medicine->id }}"
-                                            {{ $distribution_barangay->medicine_id == $medicine->id ? 'selected' : '' }}>
-                                            {{ $medicine->brand_name }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" id="medicine_id" name="medicine_id" value="{{ $distribution_barangay->medicine->brand_name }}" disabled>
                             </div>
                         </div>
                         <div class="col-md-6">
