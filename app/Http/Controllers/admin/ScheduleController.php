@@ -65,10 +65,15 @@ class ScheduleController extends Controller
             'barangay_id' => 'required|exists:barangays,id',
             'medicine_id' => 'required|exists:medicines,id',
             'stock' => 'required|integer',
-            'schedule_datetime' => 'required|date',
+            'schedule_date_time' => 'required|date',
         ]);
 
-        $schedule->update($request->all());
+        $schedule->update([
+            'barangay_id' => $request->input('barangay_id'), // Correct field name
+            'medicine_id' => $request->input('medicine_id'), // Correct field name
+            'stock' => $request->input('stock'),
+            'schedule_datetime' => $request->input('schedule_date_time'), // Correct field name
+        ]);
 
         return redirect()->route('schedules.index')->with('success', 'Schedule updated successfully');
     }

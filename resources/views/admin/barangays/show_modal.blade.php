@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <p><strong>Name:</strong><br>{{ $barangay->name }}</p>
 
-                <!-- Medicines distributed to this barangay -->
+                <!-- Medicines Distributed to this barangay -->
                 <div style="background-color: #f7f7f7; padding: 10px; margin-top: 20px;">
                     <h5><strong>Medicines Distributed:</strong></h5>
                     @if ($barangay->distributions->isEmpty())
@@ -22,6 +22,24 @@
                                     <p><strong>Medicine Name: </strong> {{ $distribution->medicine->generic_name }} - {{ $distribution->medicine->brand_name }}</p>
                                     <p><strong>Stocks: </strong>{{ $distribution->stocks }}</p>
                                     <p><strong>Distribution Date: </strong>{{ $distribution->distribution_date }}</p>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
+
+                <!-- Schedule for Distribution to this barangay -->
+                <div style="background-color: #f7f7f7; padding: 10px; margin-top: 20px;">
+                    <h5><strong>Schedule for Distribution:</strong></h5>
+                    @if ($barangay->schedules->isEmpty())
+                        <p>No Schedule for Distribution to this barangay.</p>
+                    @else
+                        <ul>
+                            @foreach ($barangay->schedules as $schedule)
+                                <li>
+                                    <p><strong>Medicine Name: </strong>{{ $schedule->medicine->generic_name }} - {{ $schedule->medicine->brand_name }}</p>
+                                    <p><strong>Stocks: </strong>{{ $schedule->stock }}</p>
+                                    <p><strong>Schedule Date and Time: </strong>{{ $schedule->schedule_date_time }}</p>
                                 </li>
                             @endforeach
                         </ul>

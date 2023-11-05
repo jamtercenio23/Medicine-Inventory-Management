@@ -16,7 +16,11 @@ class Barangay extends Model
         return $this->hasMany(Patient::class);
     }
     public function distributions()
-{
-    return $this->hasMany(DistributionBarangay::class);
-}
+    {
+        return $this->hasMany(DistributionBarangay::class);
+    }
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }

@@ -225,7 +225,7 @@
                             @endcan
                         </div>
                     @endcan
-
+                    @can('view-bhw_inventory')
                     <li class="list-group-item list-group-item-action bg-light" id="barangayinventory-toggle">
                         <a href="javascript:void(0)"><i class="fas fa-cubes"></i> Barangay Inventory</a>
                     </li>
@@ -236,6 +236,7 @@
                             </li>
                         @endcan
                     </div>
+                    @endcan
                     <!-- Manage -->
                     @can('view-admin_manage')
                         <li class="list-group-item list-group-item-action bg-light" id="manage-toggle">
