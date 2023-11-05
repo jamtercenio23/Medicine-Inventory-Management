@@ -19,8 +19,9 @@
                         <ul>
                             @foreach ($barangay->distributions as $distribution)
                                 <li>
-                                    {{ $distribution->medicine->generic_name }} - {{ $distribution->medicine->brand_name }} (Stocks: {{ $distribution->stocks }})
-                                    <p>Distribution Date: {{ $distribution->distribution_date }}</p>
+                                    <p><strong>Medicine Name: </strong> {{ $distribution->medicine->generic_name }} - {{ $distribution->medicine->brand_name }}</p>
+                                    <p><strong>Stocks: </strong>{{ $distribution->stocks }}</p>
+                                    <p><strong>Distribution Date: </strong>{{ $distribution->distribution_date }}</p>
                                 </li>
                             @endforeach
                         </ul>

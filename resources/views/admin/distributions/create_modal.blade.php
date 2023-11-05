@@ -34,6 +34,10 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="diagnose">Diagnose:</label>
+                                <input type="text" class="form-control" id="diagnose" name="diagnose" placeholder="Enter the Diagnose" required>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">

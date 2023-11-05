@@ -25,13 +25,12 @@
                                 <label for="birthdate">Birthdate:</label>
                                 <input type="date" class="form-control" id="birthdate" name="birthdate" required>
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="age">Age:</label>
                                 <input type="number" class="form-control" id="age" name="age" placeholder="Enter the Age" required>
                             </div>
-
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="gender">Gender:</label>
                                 <select class="form-control" id="gender" name="gender" required>
@@ -48,10 +47,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="diagnose">Diagnose:</label>
-                                <input type="text" class="form-control" id="diagnose" name="diagnose" placeholder="Enter the Diagnose" required>
-                            </div>
+
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create Patient</button>

@@ -9,7 +9,7 @@ class Distribution extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['patient_id', 'medicine_id', 'stocks', 'checkup_date'];
+    protected $fillable = ['patient_id', 'medicine_id', 'stocks', 'checkup_date', 'diagnose'];
 
     public function patient()
     {

@@ -226,16 +226,16 @@
                         </div>
                     @endcan
 
-                    {{-- <li class="list-group-item list-group-item-action bg-light" id="barangayinventory-toggle">
+                    <li class="list-group-item list-group-item-action bg-light" id="barangayinventory-toggle">
                         <a href="javascript:void(0)"><i class="fas fa-cubes"></i> Barangay Inventory</a>
                     </li>
                     <div id="barangayinventory" style="display: none;">
                         @can('view-barangay_medicines')
                             <li class="list-group-item list-group-item-action bg-light">
-                                <a href="{{ route('barangay-medicines.index') }}"><i class="fas fa-pills"></i> Barangay Medicines</a>
+                                &nbsp; &nbsp;<a href="{{ route('barangay-medicines.index') }}"><i class="fas fa-pills"></i> Medicines</a>
                             </li>
                         @endcan
-                    </div> --}}
+                    </div>
                     <!-- Manage -->
                     @can('view-admin_manage')
                         <li class="list-group-item list-group-item-action bg-light" id="manage-toggle">
@@ -349,6 +349,7 @@
                                     class="sr-only">(current)</span></a>
                         </li>
                         @if (Auth::check())
+                            @can('view-admin_distributions')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('distributions.index') }}"><i
                                         class="fas fa-clipboard-list"></i> Patient Distributions</a>
@@ -357,6 +358,7 @@
                                 <a class="nav-link" href="{{ route('distribution_barangay.index') }}"><i
                                         class="fas fa-chart-bar"></i> Barangay Distributions</a>
                             </li>
+                            @endcan
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                                     role="button" data-toggle="dropdown" aria-haspopup="true"

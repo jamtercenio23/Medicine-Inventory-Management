@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('age');
             $table->string('gender');
             $table->unsignedBigInteger('barangay_id');
-            $table->string('diagnose');
             $table->timestamps();
 
             // Define foreign key constraint

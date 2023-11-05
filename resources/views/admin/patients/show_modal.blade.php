@@ -13,12 +13,12 @@
                         <p><strong>First Name:</strong><br>{{ $patient->first_name }}</p>
                         <p><strong>Last Name:</strong><br>{{ $patient->last_name }}</p>
                         <p><strong>Birthdate:</strong><br>{{ $patient->birthdate }}</p>
-                        <p><strong>Age:</strong><br>{{ $patient->age }}</p>
+
                     </div>
                     <div class="col-md-6">
+                        <p><strong>Age:</strong><br>{{ $patient->age }}</p>
                         <p><strong>Gender:</strong><br>{{ $patient->gender }}</p>
                         <p><strong>Barangay:</strong><br>{{ $patient->barangay->name }}</p>
-                        <p><strong>Diagnose:</strong><br>{{ $patient->diagnose }}</p>
                     </div>
                 </div>
                 <div style="background-color: #f7f7f7; padding: 10px; margin-top: 20px;">
@@ -29,8 +29,10 @@
                         <ul>
                             @foreach ($patient->distributions as $distribution)
                                 <li>
-                                    {{ $distribution->medicine->generic_name }} - {{ $distribution->medicine->brand_name }} (Stock: {{ $distribution->stocks }})
-                                    <p>Checkup Date: {{ $distribution->checkup_date }}</p>
+                                    <p><strong>Medicine Name: </strong> {{ $distribution->medicine->generic_name }} - {{ $distribution->medicine->brand_name }}</p>
+                                    <p><strong>Stocks: </strong>{{ $distribution->stocks }}</p>
+                                    <p><strong>Diagnose: </strong>{{ $distribution->diagnose }}</p>
+                                    <p><strong>Checkup Date: </strong>{{ $distribution->checkup_date }}</p>
                                 </li>
                             @endforeach
                         </ul>

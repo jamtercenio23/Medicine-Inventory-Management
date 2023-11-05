@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('medicine_id');
             $table->integer('stocks');
             $table->date('checkup_date');
+            $table->string('diagnose');
             $table->timestamps();
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
             $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');

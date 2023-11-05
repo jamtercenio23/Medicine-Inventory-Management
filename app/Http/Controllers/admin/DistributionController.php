@@ -66,6 +66,7 @@ class DistributionController extends Controller
                     },
                 ],
                 'checkup_date' => 'required|date',
+                'diagnose' => 'required|string',
             ]);
 
             // Create Distribution
@@ -90,6 +91,7 @@ class DistributionController extends Controller
             'medicine_id' => 'required|exists:medicines,id',
             'stocks' => 'required|integer',
             'checkup_date' => 'required|date',
+            'diagnose' => 'required|string',
         ]);
 
         // Get the original distribution data

@@ -48,10 +48,6 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="diagnose">Diagnose:</label>
-                                <input type="text" class="form-control" id="diagnose" name="diagnose" value="{{ $patient->diagnose }}" placeholder="Enter the Diagnose"required>
-                            </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>

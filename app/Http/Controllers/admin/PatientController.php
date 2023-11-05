@@ -42,7 +42,7 @@ class PatientController extends Controller
             'age' => 'required|integer',
             'gender' => 'required|string',
             'barangay_id' => 'required|exists:barangays,id',
-            'diagnose' => 'required|string',
+
         ]);
 
         Patient::create($request->all());
@@ -66,7 +66,7 @@ class PatientController extends Controller
             'age' => 'required|integer',
             'gender' => 'required|string',
             'barangay_id' => 'required|exists:barangays,id',
-            'diagnose' => 'required|string',
+
         ]);
 
         $patient->update($request->all());

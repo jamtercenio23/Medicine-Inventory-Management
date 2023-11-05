@@ -74,6 +74,9 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $role = Role::create(['name' => 'bhw'])
             ->givePermissionTo([
+                'view-bhw_inventory',
+                'view-bhw_manage',
+                'view-bhw_distributions',
                 'view-barangay_medicines',
                 'view-barangay_distributions',
                 'view-barangay_patients',

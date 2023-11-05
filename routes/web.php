@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\RoleController;
-// use App\Http\Controllers\barangay\BarangayMedicineController;
+use App\Http\Controllers\barangay\BarangayDistributionsController;
+use App\Http\Controllers\barangay\BarangayMedicinesController;
+use App\Http\Controllers\barangay\BarangayPatientsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\MedicineController;
@@ -14,6 +16,7 @@ use App\Http\Controllers\admin\ScheduleController;
 use App\Http\Controllers\admin\DistributionBarangayController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\ProfileController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -64,11 +67,16 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => 'permission:view-distribution-barangay'], function () {
         Route::resource('admin/distribution_barangay', DistributionBarangayController::class);
     });
-// Barangay Route
-    // Route::group(['middleware' => 'permission:view-barangay_medicines'], function () {
-    //     Route::resource('barangay/barangay-medicines', BarangayMedicineController::class);
-    // });
-
+    // Barangay Route
+    Route::group(['middleware' => 'permission:view-barangay_medicines'], function () {
+        Route::resource('barangay/barangay-medicines', BarangayMedicinesController::class);
+    });
+    Route::group(['middleware' => 'permission:view-barangay_distributions'], function () {
+        Route::resource('barangay/barangay-distributions', BarangayDistributionsController::class);
+    });
+    Route::group(['middleware' => 'permission:view-barangay_patients'], function () {
+        Route::resource('barangay/barangay-patients', BarangayPatientsController::class);
+    });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
