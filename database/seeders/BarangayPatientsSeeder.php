@@ -5,12 +5,11 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-class PatientsSeeder extends Seeder
+
+class BarangayPatientsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
@@ -40,7 +39,7 @@ class PatientsSeeder extends Seeder
         ];
 
         foreach ($patientsData as $patient) {
-            DB::table('patients')->insert($patient);
+            DB::table('barangay_patients')->insert($patient);
         }
     }
 }

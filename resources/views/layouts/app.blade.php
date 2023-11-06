@@ -33,6 +33,9 @@
                 $("#manage-categories").slideUp(300);
                 $("#distributions-categories").slideUp(300);
                 $("#access-control-categories").slideUp(300);
+                $("#barangayinventory-categories").slideUp(300);
+                $("#barangaymanage-categories").slideUp(300);
+                $("#barangaydistribution-categories").slideUp(300);
             });
 
             $("#manage-toggle").click(function() {
@@ -40,6 +43,9 @@
                 $("#inventory-categories").slideUp(300);
                 $("#distributions-categories").slideUp(300);
                 $("#access-control-categories").slideUp(300);
+                $("#barangayinventory-categories").slideUp(300);
+                $("#barangaymanage-categories").slideUp(300);
+                $("#barangaydistribution-categories").slideUp(300);
             });
 
             $("#distributions-toggle").click(function() {
@@ -47,6 +53,9 @@
                 $("#inventory-categories").slideUp(300);
                 $("#manage-categories").slideUp(300);
                 $("#access-control-categories").slideUp(300);
+                $("#barangayinventory-categories").slideUp(300);
+                $("#barangaymanage-categories").slideUp(300);
+                $("#barangaydistribution-categories").slideUp(300);
             });
 
             $("#access-control-toggle").click(function() {
@@ -54,9 +63,38 @@
                 $("#inventory-categories").slideUp(300);
                 $("#manage-categories").slideUp(300);
                 $("#distributions-categories").slideUp(300);
+                $("#barangaymanage-categories").slideUp(300);
+                $("#barangaydistribution-categories").slideUp(300);
+                $("#barangayinventory-categories").slideUp(300);
             });
+
             $("#barangayinventory-toggle").click(function() {
-                $("#barangayinventory").slideToggle(300);
+                $("#barangayinventory-categories").slideToggle(300);
+                $("#manage-categories").slideUp(300);
+                $("#distributions-categories").slideUp(300);
+                $("#inventory-categories").slideUp(300);
+                $("#barangaymanage-categories").slideUp(300);
+                $("#barangaydistribution-categories").slideUp(300);
+                $("#access-control-categories").slideUp(300);
+            });
+
+            $("#barangaymanage-toggle").click(function() {
+                $("#barangaymanage-categories").slideToggle(300);
+                $("#manage-categories").slideUp(300);
+                $("#distributions-categories").slideUp(300);
+                $("#inventory-categories").slideUp(300);
+                $("#barangayinventory-categories").slideUp(300);
+                $("#barangaydistribution-categories").slideUp(300);
+                $("#access-control-categories").slideUp(300);
+            });
+            $("#barangaydistribution-toggle").click(function() {
+                $("#barangaydistribution-categories").slideToggle(300);
+                $("#barangayinventory-categories").slideUp(300);
+                $("#barangaymanage-categories").slideUp(300);
+                $("#manage-categories").slideUp(300);
+                $("#distributions-categories").slideUp(300);
+                $("#inventory-categories").slideUp(300);
+                $("#access-control-categories").slideUp(300);
             });
 
         });
@@ -194,7 +232,7 @@
                     <!-- Inventory -->
                     @can('view-admin_inventory')
                         <li class="list-group-item list-group-item-action bg-light" id="inventory-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-cubes"></i> Inventory</a>
+                            <a href="javascript:void(0)"><i class="fas fa-cubes"></i> MHC Inventory</a>
                         </li>
                         <div id="inventory-categories" style="display: none;">
                             @can('view-categories')
@@ -225,22 +263,10 @@
                             @endcan
                         </div>
                     @endcan
-                    @can('view-bhw_inventory')
-                    <li class="list-group-item list-group-item-action bg-light" id="barangayinventory-toggle">
-                        <a href="javascript:void(0)"><i class="fas fa-cubes"></i> Barangay Inventory</a>
-                    </li>
-                    <div id="barangayinventory" style="display: none;">
-                        @can('view-barangay_medicines')
-                            <li class="list-group-item list-group-item-action bg-light">
-                                &nbsp; &nbsp;<a href="{{ route('barangay-medicines.index') }}"><i class="fas fa-pills"></i> Medicines</a>
-                            </li>
-                        @endcan
-                    </div>
-                    @endcan
                     <!-- Manage -->
                     @can('view-admin_manage')
                         <li class="list-group-item list-group-item-action bg-light" id="manage-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-tasks"></i> Manage</a>
+                            <a href="javascript:void(0)"><i class="fas fa-tasks"></i> MHC Manage</a>
                         </li>
                         <div id="manage-categories" style="display: none;">
                             @can('view-patients')
@@ -264,10 +290,11 @@
                         </div>
                     @endcan
 
+
                     <!-- Distributions -->
                     @can('view-admin_distributions')
                         <li class="list-group-item list-group-item-action bg-light" id="distributions-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-truck"></i> Distributions</a>
+                            <a href="javascript:void(0)"><i class="fas fa-truck"></i> MHC Distributions</a>
                         </li>
                         <div id="distributions-categories" style="display: none;">
                             @can('view-distributions')
@@ -286,7 +313,45 @@
                             @endcan
                         </div>
                     @endcan
-
+                    @can('view-bhw_inventory')
+                    <li class="list-group-item list-group-item-action bg-light" id="barangayinventory-toggle">
+                        <a href="javascript:void(0)"><i class="fas fa-cubes"></i> Barangay Inventory</a>
+                    </li>
+                    <div id="barangayinventory-categories" style="display: none;">
+                        @can('view-barangay_medicines')
+                            <li class="list-group-item list-group-item-action bg-light">
+                                &nbsp; &nbsp;<a href="{{ route('barangay-medicines.index') }}"><i class="fas fa-pills"></i>
+                                    Medicines</a>
+                            </li>
+                        @endcan
+                    </div>
+                @endcan
+                @can('view-bhw_manage')
+                    <li class="list-group-item list-group-item-action bg-light" id="barangaymanage-toggle">
+                        <a href="javascript:void(0)"><i class="fas fa-tasks"></i> Barangay Manage</a>
+                    </li>
+                    <div id="barangaymanage-categories" style="display: none;">
+                        @can('view-barangay_patients')
+                            <li class="list-group-item list-group-item-action bg-light">
+                                &nbsp; &nbsp;<a href="{{ route('barangay-patients.index') }}"><i class="fas fa-users"></i>
+                                    Patients</a>
+                            </li>
+                        @endcan
+                    </div>
+                @endcan
+                @can('view-bhw_distributions')
+                    <li class="list-group-item list-group-item-action bg-light" id="barangaydistribution-toggle">
+                        <a href="javascript:void(0)"><i class="fas fa-truck"></i> Barangay Distributions</a>
+                    </li>
+                    <div id="barangaydistribution-categories" style="display: none;">
+                        @can('view-barangay_distributions')
+                            <li class="list-group-item list-group-item-action bg-light">
+                                &nbsp; &nbsp;<a href="{{ route('barangay-distributions.index') }}"><i class="fas fa-users"></i>
+                                    Distributions</a>
+                            </li>
+                        @endcan
+                    </div>
+                @endcan
                     <!-- Access Control -->
                     @can('view-access-control')
                         <li class="list-group-item list-group-item-action bg-light" id="access-control-toggle">
@@ -351,14 +416,14 @@
                         </li>
                         @if (Auth::check())
                             @can('view-admin_distributions')
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('distributions.index') }}"><i
-                                        class="fas fa-clipboard-list"></i> Patient Distributions</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('distribution_barangay.index') }}"><i
-                                        class="fas fa-chart-bar"></i> Barangay Distributions</a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('distributions.index') }}"><i
+                                            class="fas fa-clipboard-list"></i> Patient Distributions</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('distribution_barangay.index') }}"><i
+                                            class="fas fa-chart-bar"></i> Barangay Distributions</a>
+                                </li>
                             @endcan
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"

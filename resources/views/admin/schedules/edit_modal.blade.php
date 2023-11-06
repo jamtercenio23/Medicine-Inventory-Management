@@ -30,7 +30,7 @@
                                     @foreach ($medicines as $medicine)
                                         <option value="{{ $medicine->id }}"
                                             {{ $schedule->medicine_id == $medicine->id ? 'selected' : '' }}>
-                                            {{ $medicine->brand_name }}</option>
+                                            {{ $medicine->generic_name }} - {{ $medicine->brand_name }} | Stocks: {{ $medicine->stocks }}</option>
                                     @endforeach
                                 </select>
                             </div>

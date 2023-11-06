@@ -23,4 +23,8 @@ class Barangay extends Model
     {
         return $this->hasMany(Schedule::class);
     }
+    public function barangaypatients()
+{
+    return $this->hasMany(BarangayPatient::class);
+}
 }

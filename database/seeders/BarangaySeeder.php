@@ -12,29 +12,31 @@ class BarangaySeeder extends Seeder
      */
     public function run()
     {
-        $barangays = [
-            'Bacnit',
-            'Barlo',
-            'Caabiangan',
-            'Cabanaetan',
-            'Cabinuangan',
-            'Calzada',
-            'Caranglaan',
-            'De Guzman',
-            'Luna',
-            'Magalong',
-            'Nibaliw',
-            'Patar',
-            'Poblacion',
-            'San Pedro',
-            'Tagudin',
-            'Villacorta',
-        ];
+        // $barangays = [
+        //     'Bacnit',
+        //     'Barlo',
+        //     'Caabiangan',
+        //     'Cabanaetan',
+        //     'Cabinuangan',
+        //     'Calzada',
+        //     'Caranglaan',
+        //     'De Guzman',
+        //     'Luna',
+        //     'Magalong',
+        //     'Nibaliw',
+        //     'Patar',
+        //     'Poblacion',
+        //     'San Pedro',
+        //     'Tagudin',
+        //     'Villacorta',
+        // ];
 
-        foreach ($barangays as $barangay) {
-            DB::table('barangays')->insert([
-                'name' => $barangay,
-            ]);
-        }
+        // foreach ($barangays as $barangay) {
+        //     DB::table('barangays')->insert([
+        //         'name' => $barangay,
+        //         'created_at' => now(),
+        //         'updated_at' => now(),
+        //     ]);
+        // }
     }
 }

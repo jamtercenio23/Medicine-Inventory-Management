@@ -11,20 +11,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('barangay_medicines', function (Blueprint $table) {
+        Schema::create('barangay_patients', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('barangay_id');
-            $table->unsignedBigInteger('medicine_id');
-            $table->string('generic_name');
-            $table->string('brand_name');
-            $table->string('category');
-            $table->decimal('price', 10, 2);
-            $table->date('expiration_date');
-            $table->integer('stocks');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->date('birthdate');
+            $table->integer('age');
+            $table->string('gender');
             $table->timestamps();
 
             $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
-            $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
         });
     }
 
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('barangay_medicines');
+        Schema::dropIfExists('barangay_patients');
     }
 };

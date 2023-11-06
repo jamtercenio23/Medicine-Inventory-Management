@@ -10,6 +10,9 @@ use Database\Seeders\BarangaySeeder;
 use Database\Seeders\CategoriesSeeder;
 use Database\Seeders\MedicinesSeeder;
 use Database\Seeders\PatientsSeeder;
+use Database\Seeders\BarangayPatientsSeeder;
+
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -23,7 +26,8 @@ class DatabaseSeeder extends Seeder
             BarangaySeeder::class,
             CategoriesSeeder::class,
             MedicinesSeeder::class,
-            PatientsSeeder::class
+            PatientsSeeder::class,
+            BarangayPatientsSeeder::class,
         ]);
     }
 }

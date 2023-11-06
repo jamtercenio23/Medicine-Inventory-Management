@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p><strong>Barangay:</strong><br>{{ $schedule->barangay->name }}</p>
-                        <p><strong>Medicine:</strong><br>{{ $schedule->medicine->brand_name }}</p>
+                        <p><strong>Medicine:</strong><br>{{ $schedule->medicine->generic_name }} - {{ $schedule->medicine->brand_name }}</p>
                     </div>
                     <div class="col-md-6">
                         <p><strong>Stock:</strong><br>{{ $schedule->stock }}</p>

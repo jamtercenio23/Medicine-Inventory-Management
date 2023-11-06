@@ -48,4 +48,12 @@ class User extends Authenticatable
     {
         return $this->hasRole('admin');
     }
+    public function isBarangayUser()
+    {
+        return $this->role === 'barangay';
+    }
+    public function barangay()
+    {
+        return $this->belongsTo(Barangay::class);
+    }
 }

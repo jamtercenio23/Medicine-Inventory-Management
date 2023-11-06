@@ -14,9 +14,11 @@ class BarangayMedicineController extends Controller
         $user = Auth::user();
         $query = $request->input('search', '');
 
-        if ($user->isAdmin()) {
+        if ($user->hasRole('admin')) {
+            // Admin can see all medicines
             $barangayMedicines = BarangayMedicine::query();
-        } else {
+        } elseif ($user->hasRole('bhw')) {
+            // BHW user can see medicines for their own barangay
             $barangayMedicines = BarangayMedicine::where('barangay_id', $user->barangay_id);
         }
 

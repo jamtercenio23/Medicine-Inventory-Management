@@ -22,7 +22,6 @@ class BarangayMedicine extends Model
         'stocks',
     ];
 
-    // Define relationships with the Barangay and Medicine models
     public function barangay()
     {
         return $this->belongsTo(Barangay::class, 'barangay_id');
