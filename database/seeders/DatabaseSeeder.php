@@ -8,6 +8,8 @@ use Database\Seeders\UserSeeder;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Database\Seeders\BarangaySeeder;
 use Database\Seeders\CategoriesSeeder;
+use Database\Seeders\MedicinesSeeder;
+use Database\Seeders\PatientsSeeder;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -20,6 +22,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BarangaySeeder::class,
             CategoriesSeeder::class,
+            MedicinesSeeder::class,
+            PatientsSeeder::class
         ]);
     }
 }

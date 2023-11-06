@@ -13,11 +13,10 @@
                     <div class="col-md-6">
                         <p><strong>Patient:</strong><br>{{ $distribution->patient->first_name }} {{ $distribution->patient->last_name }}</p>
                         <p><strong>Medicine:</strong><br>{{ $distribution->medicine->brand_name }}</p>
-                        <p><strong>Diagnose:</strong><br>{{ $distribution->diagnose }}</p>
+                        <p><strong>Stock:</strong><br>{{ $distribution->stocks }}</p>
                     </div>
                     <div class="col-md-6">
-
-                        <p><strong>Stock:</strong><br>{{ $distribution->stocks }}</p>
+                        <p><strong>Diagnose:</strong><br>{{ $distribution->diagnose }}</p>
                         <p><strong>Checkup Date:</strong><br>{{ $distribution->checkup_date }}</p>
                     </div>
                 </div>

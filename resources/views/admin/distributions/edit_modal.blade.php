@@ -38,15 +38,15 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="diagnose">Diagnose:</label>
-                                <input type="text" class="form-control" id="diagnose" name="diagnose" value="{{ $distribution->diagnose }}" placeholder="Enter the Diagnose" required>
+                                <label for="stocks">Stocks:</label>
+                                <input type="number" name="stocks" id="stocks" class="form-control"
+                                    value="{{ old('stocks', $distribution->stocks) }}" placeholder="Enter the Stocks" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="stocks">Stocks:</label>
-                                <input type="number" name="stocks" id="stocks" class="form-control"
-                                    value="{{ old('stocks', $distribution->stocks) }}" placeholder="Enter the Stocks" required>
+                                <label for="diagnose">Diagnose:</label>
+                                <input type="text" class="form-control" id="diagnose" name="diagnose" value="{{ $distribution->diagnose }}" placeholder="Enter the Diagnose" required>
                             </div>
                             <div class="form-group">
                                 <label for="checkup_date">Checkup Date:</label>
