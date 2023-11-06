@@ -18,7 +18,7 @@
                             value="{{ $permission->name }}" placeholder="Enter the Permission Name" required>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button>
                 </form>
             </div>
         </div>

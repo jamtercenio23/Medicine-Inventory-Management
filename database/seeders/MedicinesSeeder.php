@@ -16,7 +16,7 @@ class MedicinesSeeder extends Seeder
      */
     public function run()
     {
-        $categories = [1, 2, 3]; // Replace with your actual category IDs
+        $categories = [1, 2, 3, 4, 5]; // Replace with your actual category IDs
 
         for ($i = 1; $i <= 100; $i++) {
             $isOutOfStock = $i % 3 == 0; // Every third medicine is out of stock

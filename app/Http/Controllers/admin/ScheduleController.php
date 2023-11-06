@@ -32,7 +32,10 @@ class ScheduleController extends Controller
     public function create()
     {
         $barangays = Barangay::all();
-        $medicines = Medicine::all();
+
+        $medicines = Medicine::where('expiration_date', '>=', now()->toDateString())
+            ->where('stocks', '>', 0)
+            ->get();
 
         return view('schedules.create', compact('barangays', 'medicines'));
     }

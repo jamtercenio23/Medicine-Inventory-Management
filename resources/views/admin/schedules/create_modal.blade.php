@@ -26,7 +26,10 @@
                                 <label for="medicine_id">Medicine:</label>
                                 <select class="form-control" id="medicine_id" name="medicine_id" required>
                                     @foreach ($medicines as $medicine)
-                                        <option value="{{ $medicine->id }}">{{ $medicine->brand_name }} | Stocks: {{ $medicine->stocks }}</option>
+                                        @if ($medicine->stocks > 0 && $medicine->expiration_date > now()->toDateString())
+                                            <option value="{{ $medicine->id }}">{{ $medicine->generic_name }} -
+                                                {{ $medicine->brand_name }} | Stocks: {{ $medicine->stocks }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -44,6 +47,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create Schedule</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button>
                 </form>
             </div>
         </div>
