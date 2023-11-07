@@ -56,4 +56,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Barangay::class);
     }
+    public function isBHW()
+    {
+        return $this->hasRole('bhw');
+    }
 }

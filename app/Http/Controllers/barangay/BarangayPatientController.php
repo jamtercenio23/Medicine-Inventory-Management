@@ -13,20 +13,22 @@ class BarangayPatientController extends Controller
     public function index(Request $request)
     {
         $query = $request->input('search');
-        // Check if the user is authenticated and is a barangay user
-        if (Auth::check() && Auth::user()->isBarangayUser()) {
-            // Get the authenticated user's barangay
-            $userBarangayId = Auth::user()->barangay_id;
+        $user = Auth::user();
 
-            // Retrieve only the patients belonging to the authenticated user's barangay
-            $barangayPatients = BarangayPatient::where('barangay_id', $userBarangayId)->get();
+        if ($user && $user->isBHW()) {
+            // If the user is a BHW, retrieve patients from their barangay
+            $barangayPatients = BarangayPatient::where('barangay_id', $user->barangay_id);
+        } elseif ($user && $user->isAdmin()) {
+            // If the user is an Admin, retrieve patients from all barangays
+            $barangayPatients = BarangayPatient::query();
         } else {
-            // If the user is not a barangay user or not authenticated, show all patients
-            $barangayPatients = BarangayPatient::all();
+            // For all other users or unauthenticated users, don't allow access to patient data
+            abort(403, 'Unauthorized');
         }
 
         $barangays = Barangay::all();
-        $barangayPatients = BarangayPatient::with('barangay')
+
+        $barangayPatients = $barangayPatients
             ->when($query, function ($query) use ($request) {
                 $query->where('first_name', 'like', '%' . $request->input('search') . '%')
                     ->orWhere('last_name', 'like', '%' . $request->input('search') . '%');
@@ -38,7 +40,8 @@ class BarangayPatientController extends Controller
 
     public function create()
     {
-        $barangays = Barangay::all();
+        $user = Auth::user();
+        $barangays = ($user && $user->isAdmin()) ? Barangay::all() : [$user->barangay];
 
         return view('barangay.barangay_patients.create', compact('barangays'));
     }
@@ -54,11 +57,17 @@ class BarangayPatientController extends Controller
             'gender' => 'required|in:Male,Female',
         ]);
 
+        $user = Auth::user();
+
+        if ($user->isBHW()) {
+            // If the user is a BHW, set the patient's barangay to the BHW's barangay
+            $request['barangay_id'] = $user->barangay_id;
+        }
+
         BarangayPatient::create($request->all());
 
         return redirect()->route('barangay-patients.index')->with('success', 'Patient created successfully');
     }
-
     public function edit($id)
     {
         $barangayPatient = BarangayPatient::findOrFail($id);
@@ -80,7 +89,7 @@ class BarangayPatientController extends Controller
 
         $barangayPatient->update($request->all());
 
-        return redirect()->route('barangay-patients.index')->with('success', 'Patient updated successfully');
+        return redirect()->route('barangay_patients.index')->with('success', 'Patient updated successfully');
     }
 
     public function destroy(BarangayPatient $barangayPatient)

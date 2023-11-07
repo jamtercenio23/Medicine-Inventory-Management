@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
-                    <form action="{{ route('patients.index') }}" method="GET" class="form-inline">
+                    <form action="{{ route('barangay-patients.index') }}" method="GET" class="form-inline">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="search"
                                 value="{{ $query }}">
@@ -59,28 +59,28 @@
                                         <td>{{ $barangayPatient->first_name }} {{ $barangayPatient->last_name }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showPatientModal{{ $barangayPatient->id }}">
+                                                data-target="#showBarangayPatientModal{{ $barangayPatient->id }}">
                                                 <i class="fas fa-eye"></i> Show
                                             </button>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editPatientModal{{ $barangayPatient->id }}">
+                                                data-target="#editBarangayPatientModal{{ $barangayPatient->id }}">
                                                 <i class="fas fa-edit"></i> Edit
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deletePatientModal{{ $barangayPatient->id }}">
+                                                data-target="#deleteBarangayPatientModal{{ $barangayPatient->id }}">
                                                 <i class="fas fa-trash"></i> Delete
                                             </button>
                                         </td>
                                     </tr>
 
                                     <!-- Show Patient Modal -->
-                                    @include('barangay.barangay_patients.show_modal', ['patient' => $barangayPatient])
+                                    @include('barangay.barangay_patients.show_modal', ['barangayPatient' => $barangayPatient])
 
                                     <!-- Edit Patient Modal -->
-                                    @include('barangay.barangay_patients.edit_modal', ['patient' => $barangayPatient])
+                                    @include('barangay.barangay_patients.edit_modal', ['barangayPatient' => $barangayPatient])
 
                                     <!-- Delete Patient Modal -->
-                                    @include('barangay.barangay_patients.delete_modal', ['patient' => $barangayPatient])
+                                    @include('barangay.barangay_patients.delete_modal', ['barangayPatient' => $barangayPatient])
                                 @endforeach
                             </tbody>
                         </table>

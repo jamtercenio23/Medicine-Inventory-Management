@@ -19,7 +19,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Last Name:</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter the Last Name"required>
+                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter the Last Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="birthdate">Birthdate:</label>
@@ -42,12 +42,15 @@
                             <div class="form-group">
                                 <label for="barangay_id">Barangay:</label>
                                 <select class="form-control" id="barangay_id" name="barangay_id" required>
-                                    @foreach ($barangays as $barangay)
-                                        <option value="{{ $barangay->id }}">{{ $barangay->name }}</option>
-                                    @endforeach
+                                    @if (Auth::user()->isBarangayUser() || Auth::user()->isAdmin())
+                                        @foreach ($barangays as $barangay)
+                                            <option value="{{ $barangay->id }}">{{ $barangay->name }}</option>
+                                        @endforeach
+                                    @else
+                                        <option value="{{ Auth::user()->barangay->id }}">{{ Auth::user()->barangay->name }}</option>
+                                    @endif
                                 </select>
                             </div>
-
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create Patient</button>
