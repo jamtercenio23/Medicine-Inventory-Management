@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mabini Health Center Medicine Inventory Management</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         body {
             font-family: 'Nunito', sans-serif;
@@ -20,7 +24,7 @@
             background-color: rgba(44, 62, 80, 0.7);
             color: #ecf0f1;
             text-align: center;
-            padding: 10px 0;
+            padding: 3px 0;
         }
 
         #login-container {
@@ -109,7 +113,7 @@
 
 <body>
     <header>
-        <h1>Welcome to Mabini Health Center</h1>
+        <h1 >Welcome to Mabini Health Center</h1>
         <div id="login-container">
             @auth
                 <a id="login-link" href="{{ route('home') }}">Dashboard</a>
@@ -129,10 +133,10 @@
         <p>
             Explore our services and experience healthcare like never before. We offer:
         <ul>
-            <li>Comprehensive medical care</li>
-            <li>Experienced healthcare professionals</li>
-            <li>Well-equipped facilities</li>
-            <li>Personalized treatment plans</li>
+            <p><strong>Comprehensive medical care</strong></p>
+            <p><strong>Experienced healthcare professionals</strong></p>
+            <p><strong>Well-equipped facilities</strong></p>
+            <p><strong>Personalized treatment plans</strong></p>
         </ul>
         </p>
 

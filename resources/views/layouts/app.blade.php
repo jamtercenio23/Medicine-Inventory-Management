@@ -146,7 +146,7 @@
         }
 
         #page-content-wrapper {
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.4);
             min-width: 100vw;
             height: 100vh;
             overflow: auto;
@@ -204,13 +204,23 @@
         }
 
         /* Style for the footer */
-        footer {
+        /* footer {
             position: absolute;
             bottom: 0;
             width: 100%;
             background-color: #f8f9fa;
             text-align: center;
             padding: 10px 0;
+        } */
+        .sidebar-logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .sidebar-logo img {
+            max-width: 80px;
+            height: auto;
+            border-radius: 50%
         }
     </style>
 
@@ -222,8 +232,12 @@
     </div>
     <div class="d-flex" id="wrapper">
         @if (Auth::check())
-        <div class="bg-light border-right fixed-sidebar" id="sidebar-wrapper">
-                <div class="sidebar-heading">Mabini Health Center</div>
+            <div class="bg-light border-right fixed-sidebar" id="sidebar-wrapper">
+                <div class="sidebar-logo">
+                    <img src="{{ asset('images/logo.png') }}" alt="Mabini Health Center Logo">
+                </div>
+                <div class="text-center">Mabini Health Center</div>
+                <br>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-item-action bg-light">
                         <a href="{{ url('/home') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
@@ -382,10 +396,10 @@
                         <a href="{{ route('profile.edit') }}"><i class="fas fa-user"></i> Profile</a>
                     </li>
                 </ul>
-                {{-- <div style="padding: 10px; margin-top: 50px">
+                <div style="padding: 10px; margin-top: 50px">
                     <a href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal"
                         class="btn btn-danger btn-block text-white">Logout</a>
-                </div> --}}
+                </div>
             </div>
         @endif
         <div id="page-content-wrapper">

@@ -48,7 +48,7 @@
                     @if ($barangayDistributions->isEmpty())
                         <p>No distributions found.</p>
                     @else
-                    <table class="table table-hover table-sm">
+                        <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -152,7 +152,8 @@
                             <a class="page-link">...</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="{{ $barangayDistributions->url($lastPage) }}">{{ $lastPage }}</a>
+                            <a class="page-link"
+                                href="{{ $barangayDistributions->url($lastPage) }}">{{ $lastPage }}</a>
                         </li>
                     @endif
 
@@ -177,6 +178,105 @@
         .card {
             border: 1px solid #ccc;
             border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            /* Smaller font size */
+        }
+
+        .table th {
+            background-color: #343a40;
+            color: #fff;
+            padding: 8px;
+            /* Reduced padding */
+        }
+
+        .table th,
+        .table td {
+            padding: 6px;
+            /* Reduced padding */
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        .pagination {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .pagination li {
+            display: inline;
+            margin-right: 5px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
+
+        .pagination a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn {
+            margin-right: 5px;
+        }
+
+        .btn-primary {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-primary:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
+
+        .form-control {
+            border-radius: 5px;
+        }
+
+        .btn-secondary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .alert-success {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .alert-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        /* Style the breadcrumb */
+        .breadcrumb {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
     </style>
 @endsection

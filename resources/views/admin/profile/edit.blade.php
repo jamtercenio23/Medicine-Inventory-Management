@@ -20,8 +20,6 @@
             <h5><a href="{{ route('home') }}">Dashboard</a> / Edit Profile</h5>
         </div>
         <div class="card">
-
-
             <div class="card-body">
                 @if (session('success'))
                     <div class="alert alert-success">

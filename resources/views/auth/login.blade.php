@@ -50,7 +50,6 @@
     <style>
         body {
             background-image: url('{{ asset('images/bg1.png') }}');
-            /* Replace 'your-background-image.jpg' with your image file path */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
