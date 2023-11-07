@@ -113,8 +113,6 @@
         });
     </script>
 
-
-
     <style>
         body {
             overflow: hidden;
@@ -138,7 +136,17 @@
             width: 15rem;
         }
 
+        #sidebar-wrapper .list-group-item a {
+            color: black;
+            transition: color 0.3s;
+        }
+
+        #sidebar-wrapper .list-group-item a:hover {
+            color: #3498db;
+        }
+
         #page-content-wrapper {
+            background-color: rgba(255, 255, 255, 0.8);
             min-width: 100vw;
             height: 100vh;
             overflow: auto;
@@ -204,15 +212,6 @@
             text-align: center;
             padding: 10px 0;
         }
-
-        #sidebar-wrapper .list-group-item a {
-            color: black;
-            transition: color 0.3s;
-        }
-
-        #sidebar-wrapper .list-group-item a:hover {
-            color: #3498db;
-        }
     </style>
 
 </head>
@@ -223,7 +222,7 @@
     </div>
     <div class="d-flex" id="wrapper">
         @if (Auth::check())
-            <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="bg-light border-right fixed-sidebar" id="sidebar-wrapper">
                 <div class="sidebar-heading">Mabini Health Center</div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-item-action bg-light">
@@ -314,44 +313,45 @@
                         </div>
                     @endcan
                     @can('view-bhw_inventory')
-                    <li class="list-group-item list-group-item-action bg-light" id="barangayinventory-toggle">
-                        <a href="javascript:void(0)"><i class="fas fa-cubes"></i> Barangay Inventory</a>
-                    </li>
-                    <div id="barangayinventory-categories" style="display: none;">
-                        @can('view-barangay_medicines')
-                            <li class="list-group-item list-group-item-action bg-light">
-                                &nbsp; &nbsp;<a href="{{ route('barangay-medicines.index') }}"><i class="fas fa-pills"></i>
-                                    Medicines</a>
-                            </li>
-                        @endcan
-                    </div>
-                @endcan
-                @can('view-bhw_manage')
-                    <li class="list-group-item list-group-item-action bg-light" id="barangaymanage-toggle">
-                        <a href="javascript:void(0)"><i class="fas fa-tasks"></i> Barangay Manage</a>
-                    </li>
-                    <div id="barangaymanage-categories" style="display: none;">
-                        @can('view-barangay_patients')
-                            <li class="list-group-item list-group-item-action bg-light">
-                                &nbsp; &nbsp;<a href="{{ route('barangay-patients.index') }}"><i class="fas fa-users"></i>
-                                    Patients</a>
-                            </li>
-                        @endcan
-                    </div>
-                @endcan
-                @can('view-bhw_distributions')
-                    <li class="list-group-item list-group-item-action bg-light" id="barangaydistribution-toggle">
-                        <a href="javascript:void(0)"><i class="fas fa-truck"></i> Barangay Distributions</a>
-                    </li>
-                    <div id="barangaydistribution-categories" style="display: none;">
-                        @can('view-barangay_distributions')
-                            <li class="list-group-item list-group-item-action bg-light">
-                                &nbsp; &nbsp;<a href="{{ route('barangay-distributions.index') }}"><i class="fas fa-users"></i>
-                                    Distributions</a>
-                            </li>
-                        @endcan
-                    </div>
-                @endcan
+                        <li class="list-group-item list-group-item-action bg-light" id="barangayinventory-toggle">
+                            <a href="javascript:void(0)"><i class="fas fa-cubes"></i> Barangay Inventory</a>
+                        </li>
+                        <div id="barangayinventory-categories" style="display: none;">
+                            @can('view-barangay_medicines')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    &nbsp; &nbsp;<a href="{{ route('barangay-medicines.index') }}"><i class="fas fa-pills"></i>
+                                        Medicines</a>
+                                </li>
+                            @endcan
+                        </div>
+                    @endcan
+                    @can('view-bhw_manage')
+                        <li class="list-group-item list-group-item-action bg-light" id="barangaymanage-toggle">
+                            <a href="javascript:void(0)"><i class="fas fa-tasks"></i> Barangay Manage</a>
+                        </li>
+                        <div id="barangaymanage-categories" style="display: none;">
+                            @can('view-barangay_patients')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    &nbsp; &nbsp;<a href="{{ route('barangay-patients.index') }}"><i class="fas fa-users"></i>
+                                        Patients</a>
+                                </li>
+                            @endcan
+                        </div>
+                    @endcan
+                    @can('view-bhw_distributions')
+                        <li class="list-group-item list-group-item-action bg-light" id="barangaydistribution-toggle">
+                            <a href="javascript:void(0)"><i class="fas fa-truck"></i> Barangay Distributions</a>
+                        </li>
+                        <div id="barangaydistribution-categories" style="display: none;">
+                            @can('view-barangay_distributions')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    &nbsp; &nbsp;<a href="{{ route('barangay-distributions.index') }}"><i
+                                            class="fas fa-users"></i>
+                                        Distributions</a>
+                                </li>
+                            @endcan
+                        </div>
+                    @endcan
                     <!-- Access Control -->
                     @can('view-access-control')
                         <li class="list-group-item list-group-item-action bg-light" id="access-control-toggle">

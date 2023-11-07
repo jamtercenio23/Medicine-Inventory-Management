@@ -22,7 +22,9 @@
             </div>
         @endif
 
-        <h5><a href="{{ route('home') }}">Dashboard</a> / Distributions</h5>
+        <div class="breadcrumb">
+            <h5><a href="{{ route('home') }}">Dashboard</a> / Distribution for Patients</h5>
+        </div>
 
         <div class="card">
             <div class="card-header">
@@ -46,87 +48,126 @@
                     <p>No distributions found.</p>
                 @else
                     <!-- Distribution Table -->
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Patient</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($distributions as $distribution)
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm">
+                            <thead>
                                 <tr>
-                                    <td>{{ $distribution->id }}</td>
-                                    <td>{{ $distribution->patient->first_name }} {{ $distribution->patient->last_name }}
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                            data-target="#showDistributionModal{{ $distribution->id }}">
-                                            <i class="fas fa-eye"></i> Show</button>
-                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                            data-target="#editDistributionModal{{ $distribution->id }}">
-                                            <i class="fas fa-edit"></i> Edit</button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#deleteDistributionModal{{ $distribution->id }}">
-                                            <i class="fas fa-trash"></i> Delete</button>
-                                    </td>
+                                    <th>ID</th>
+                                    <th>Patient</th>
+                                    <th>Actions</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($distributions as $distribution)
+                                    <tr>
+                                        <td>{{ $distribution->id }}</td>
+                                        <td>{{ $distribution->patient->first_name }} {{ $distribution->patient->last_name }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                data-target="#showDistributionModal{{ $distribution->id }}">
+                                                <i class="fas fa-eye"></i> Show</button>
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                data-target="#editDistributionModal{{ $distribution->id }}">
+                                                <i class="fas fa-edit"></i> Edit</button>
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                data-target="#deleteDistributionModal{{ $distribution->id }}">
+                                                <i class="fas fa-trash"></i> Delete</button>
+                                        </td>
+                                    </tr>
 
-                                <!-- Show Distribution Modal -->
-                                @include('admin.distributions.show_modal', [
-                                    'distribution' => $distribution,
-                                ])
+                                    <!-- Show Distribution Modal -->
+                                    @include('admin.distributions.show_modal', [
+                                        'distribution' => $distribution,
+                                    ])
 
-                                <!-- Edit Distribution Modal -->
-                                @include('admin.distributions.edit_modal', [
-                                    'distribution' => $distribution,
-                                ])
+                                    <!-- Edit Distribution Modal -->
+                                    @include('admin.distributions.edit_modal', [
+                                        'distribution' => $distribution,
+                                    ])
 
-                                <!-- Delete Distribution Modal -->
-                                @include('admin.distributions.delete_modal', [
-                                    'distribution' => $distribution,
-                                ])
-                            @endforeach
-                        </tbody>
-                    </table>
+                                    <!-- Delete Distribution Modal -->
+                                    @include('admin.distributions.delete_modal', [
+                                        'distribution' => $distribution,
+                                    ])
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 @endif
             </div>
-            <div class="card-footer text-muted">
-                <div class="float-left">
-                    <!-- You can add any additional content here if needed -->
-                </div>
-                <div class="float-right">
-                    <!-- Bootstrap Pagination -->
-                    <ul class="pagination">
-                        <li class="page-item {{ $distributions->currentPage() == 1 ? 'disabled' : '' }}">
-                            <a class="page-link" href="{{ $distributions->previousPageUrl() }}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
+        </div>
 
-                        @for ($i = 1; $i <= $distributions->lastPage(); $i++)
-                            <li class="page-item {{ $i == $distributions->currentPage() ? 'active' : '' }}">
-                                <a class="page-link" href="{{ $distributions->url($i) }}">{{ $i }}</a>
-                            </li>
-                        @endfor
+        <div class="my-4 text-muted">
+            <div class="float-left"></div>
+            <div class="float-right">
+                <!-- Bootstrap Pagination -->
+                <ul class="pagination">
+                    <li class="page-item {{ $distributions->currentPage() == 1 ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $distributions->previousPageUrl() }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
 
-                        <li
-                            class="page-item {{ $distributions->currentPage() == $distributions->lastPage() ? 'disabled' : '' }}">
-                            <a class="page-link" href="{{ $distributions->nextPageUrl() }}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
+                    @php
+                        $currentPage = $distributions->currentPage();
+                        $lastPage = $distributions->lastPage();
+                        $showFirstDots = false;
+                        $showLastDots = false;
+
+                        // Determine the range of page numbers to display
+                        $startPage = max(1, $currentPage - 2);
+                        $endPage = min($lastPage, $currentPage + 2);
+
+                        if ($startPage > 1) {
+                            $showFirstDots = true;
+                            $startPage++;
+                        }
+
+                        if ($endPage < $lastPage) {
+                            $showLastDots = true;
+                            $endPage--;
+                        }
+                    @endphp
+
+                    @if ($showFirstDots)
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $distributions->url(1) }}">1</a>
                         </li>
-                    </ul>
-                </div>
-                <div class="clearfix"></div>
+                        <li class="page-item disabled">
+                            <a class="page-link">...</a>
+                        </li>
+                    @endif
+
+                    @for ($i = $startPage; $i <= $endPage; $i++)
+                        <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $distributions->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+
+                    @if ($showLastDots)
+                        <li class="page-item disabled">
+                            <a class="page-link">...</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $distributions->url($lastPage) }}">{{ $lastPage }}</a>
+                        </li>
+                    @endif
+
+                    <li class="page-item {{ $distributions->currentPage() == $lastPage ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $distributions->nextPageUrl() }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
+            <div class="clearfix"></div>
         </div>
     </div>
     @include('admin.distributions.create_modal')
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .card {

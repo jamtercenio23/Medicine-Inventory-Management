@@ -19,7 +19,9 @@
                 {{ session('error') }}
             </div>
         @endif
-        <h5><a href="{{ route('home') }}">Dashboard</a> / Patients</h5>
+        <div class="breadcrumb">
+            <h5><a href="{{ route('home') }}">Dashboard</a> / Health Center Patients</h5>
+        </div>
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
@@ -42,10 +44,11 @@
                     @if ($patients->isEmpty())
                         <p>No patients found.</p>
                     @else
-                        <table class="table table-hover">
+                    <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Barangay</th>
                                     <th>Name</th>
                                     <th>Actions</th>
                                 </tr>
@@ -54,13 +57,14 @@
                                 @foreach ($patients as $patient)
                                     <tr>
                                         <td>{{ $patient->id }}</td>
+                                        <td>{{ $patient->barangay->name }}</td>
                                         <td>{{ $patient->first_name }} {{ $patient->last_name }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showPatientModal{{ $patient->id }}">
                                                 <i class="fas fa-eye"></i> Show
                                             </button>
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                            <button type of="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editPatientModal{{ $patient->id }}">
                                                 <i class="fas fa-edit"></i> Edit
                                             </button>
@@ -85,46 +89,80 @@
                     @endif
                 </div>
             </div>
-            <div class="card-footer text-muted">
-                <div class="float-left">
-                    <!-- You can add any additional content here if needed -->
-                </div>
-                <div class="float-right">
-                    <!-- Bootstrap Pagination -->
-                    <ul class="pagination">
-                        <li class="page-item {{ $patients->currentPage() == 1 ? 'disabled' : '' }}">
-                            <a class="page-link" href="{{ $patients->previousPageUrl() }}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
+        </div>
+        <div class="my-4 text-muted">
+            <div class="float-left"></div>
+            <div class="float-right">
+                <!-- Bootstrap Pagination -->
+                <ul class="pagination">
+                    <li class="page-item {{ $patients->onFirstPage() ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $patients->previousPageUrl() }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
 
-                        @for ($i = 1; $i <= $patients->lastPage(); $i++)
-                            <li class="page-item {{ $i == $patients->currentPage() ? 'active' : '' }}">
-                                <a class="page-link" href="{{ $patients->url($i) }}">{{ $i }}</a>
-                            </li>
-                        @endfor
+                    @php
+                        $currentPage = $patients->currentPage();
+                        $lastPage = $patients->lastPage();
+                        $showFirstDots = false;
+                        $showLastDots = false;
 
-                        <li class="page-item {{ $patients->currentPage() == $patients->lastPage() ? 'disabled' : '' }}">
-                            <a class="page-link" href="{{ $patients->nextPageUrl() }}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
+                        // Determine the range of page numbers to display
+                        $startPage = max(1, $currentPage - 2);
+                        $endPage = min($lastPage, $currentPage + 2);
+
+                        if ($startPage > 1) {
+                            $showFirstDots = true;
+                            $startPage++;
+                        }
+
+                        if ($endPage < $lastPage) {
+                            $showLastDots = true;
+                            $endPage--;
+                        }
+                    @endphp
+
+                    @if ($showFirstDots)
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $patients->url(1) }}">1</a>
                         </li>
-                    </ul>
-                </div>
-                <div class="clearfix"></div>
+                        <li class="page-item disabled">
+                            <a class="page-link">...</a>
+                        </li>
+                    @endif
+
+                    @for ($i = $startPage; $i <= $endPage; $i++)
+                        <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $patients->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+
+                    @if ($showLastDots)
+                        <li class="page-item disabled">
+                            <a class="page-link">...</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $patients->url($lastPage) }}">{{ $lastPage }}</a>
+                        </li>
+                    @endif
+
+                    <li class="page-item {{ $patients->currentPage() == $lastPage ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $patients->nextPageUrl() }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
+            <div class="clearfix"></div>
         </div>
     </div>
 
     <!-- Create Patient Modal -->
     @include('admin.patients.create_modal')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-
-    <!-- Include Bootstrap CSS for pagination styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .card {

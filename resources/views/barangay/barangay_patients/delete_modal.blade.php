@@ -9,7 +9,8 @@
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to delete the Patient <strong>"{{ $barangayPatient->first_name }} {{ $barangayPatient->last_name }}"</strong>?</p>
-                <form action="{{ route('medicines.destroy', $barangayPatient->id) }}" method="post">
+                <!-- Patient Delete Form -->
+                <form action="{{ route('barangay-patients.destroy', $barangayPatient->id) }}" method="post">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>

@@ -89,7 +89,7 @@ class BarangayPatientController extends Controller
 
         $barangayPatient->update($request->all());
 
-        return redirect()->route('barangay_patients.index')->with('success', 'Patient updated successfully');
+        return redirect()->route('barangay-patients.index')->with('success', 'Patient updated successfully');
     }
 
     public function destroy(BarangayPatient $barangayPatient)

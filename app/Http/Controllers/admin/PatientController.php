@@ -24,7 +24,17 @@ class PatientController extends Controller
         return view('admin.patients.index', compact('patients', 'barangays', 'query'));
     }
 
-
+    // public function index(Request $request)
+    // {
+    //     $barangays = Barangay::all();
+    //     $query = $request->input('search');
+    //     $sort = $request->input('sort', 'id');
+    //     $order = $request->input('order', 'asc');
+    //     $patients = Patient::with('barangay')->when($query, function ($query) use ($request) {
+    //         $query->where('first_name', 'like', '%' . $request->input('search') . '%')->orWhere('last_name', 'like', '%' . $request->input('search') . '%');
+    //     })->orderBy($sort === 'barangay' ? 'barangay_id' : $sort, $order)->paginate($request->input('entries', 10));
+    //     return view('admin.patients.index', compact('patients', 'barangays', 'query', 'sort', 'order'));
+    // }
 
     public function create()
     {

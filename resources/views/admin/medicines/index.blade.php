@@ -1,5 +1,7 @@
 @extends('layouts.app')
+
 @section('title', 'Medicine Inventory - Medicines')
+
 @section('content')
     <div class="container">
         <div class="mb-8 d-flex justify-content-between align-items-center">
@@ -8,25 +10,24 @@
                 <i class="fas fa-plus"></i> Add Medicine
             </button>
         </div>
-        <div>
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @elseif (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-            @endif
-            <h5><a href="{{ route('home') }}">Dashboard</a> / Medicines</h5>
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @elseif (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+        <div class="breadcrumb">
+            <h5><a href="{{ route('home') }}">Dashboard</a> / Health Center Medicines</h5>
         </div>
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
                     <form action="{{ route('medicines.index') }}" method="GET" class="form-inline">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="search"
-                                value="{{ $query }}">
+                            <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
                             <div class="input-group-append">
                                 <button class="btn btn-secondary btn" type="submit">
                                     <i class="fas fa-search"></i>
@@ -42,7 +43,7 @@
                     @if ($medicines->isEmpty())
                         <p>No medicines found.</p>
                     @else
-                        <table class="table table-hover">
+                        <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -85,44 +86,86 @@
                     @endif
                 </div>
             </div>
-            <div class="card-footer text-muted">
-                <div class="float-left"> <!-- You can add any additional content here if needed --> </div>
-                <div class="float-right"> <!-- Bootstrap Pagination -->
-                    <ul class="pagination">
-                        <li class="page-item {{ $medicines->currentPage() == 1 ? 'disabled' : '' }}"> <a class="page-link"
-                                href="{{ $medicines->previousPageUrl() }}" aria-label="Previous"> <span
-                                    aria-hidden="true">&laquo;</span> </a> </li>
-                        @for ($i = 1; $i <= $medicines->lastPage(); $i++)
-                            <li class="page-item {{ $i == $medicines->currentPage() ? 'active' : '' }}"> <a
-                                    class="page-link" href="{{ $medicines->url($i) }}">{{ $i }}</a> </li>
-                        @endfor
-                        <li class="page-item {{ $medicines->currentPage() == $medicines->lastPage() ? 'disabled' : '' }}">
-                            <a class="page-link" href="{{ $medicines->nextPageUrl() }}" aria-label="Next"> <span
-                                    aria-hidden="true">&raquo;</span> </a>
+        </div>
+        <div class="my-4 text-muted">
+            <div class="float-left"></div>
+            <div class="float-right">
+                <!-- Bootstrap Pagination -->
+                <ul class="pagination">
+                    <li class="page-item {{ $medicines->currentPage() == 1 ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $medicines->previousPageUrl() }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    @php
+                        $currentPage = $medicines->currentPage();
+                        $lastPage = $medicines->lastPage();
+                        $showFirstDots = false;
+                        $showLastDots = false;
+
+                        $startPage = max(1, $currentPage - 2);
+                        $endPage = min($lastPage, $currentPage + 2);
+
+                        if ($startPage > 1) {
+                            $showFirstDots = true;
+                            $startPage++;
+                        }
+
+                        if ($endPage < $lastPage) {
+                            $showLastDots = true;
+                            $endPage--;
+                        }
+                    @endphp
+
+                    @if ($showFirstDots)
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $medicines->url(1) }}">1</a>
                         </li>
-                    </ul>
-                </div>
-                <div class="clearfix"></div>
+                        <li class="page-item disabled">
+                            <a class="page-link">...</a>
+                        </li>
+                    @endif
+
+                    @for ($i = $startPage; $i <= $endPage; $i++)
+                        <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $medicines->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+
+                    @if ($showLastDots)
+                        <li class="page-item disabled">
+                            <a class="page-link">...</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $medicines->url($lastPage) }}">{{ $lastPage }}</a>
+                        </li>
+                    @endif
+
+                    <li class="page-item {{ $medicines->currentPage() == $lastPage ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $medicines->nextPageUrl() }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
+            <div class="clearfix"></div>
         </div>
     </div>
 
     <!-- Create Medicine Modal -->
     @include('admin.medicines.create_modal')
+</div>
 
-    <!-- Include Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-
-    <!-- Include Bootstrap CSS for pagination styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        .card {
-            border: 1px solid #ccc;
-            border-radius: 10px;
-        }
-    </style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<style>
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+    }
+</style>
 @endsection
