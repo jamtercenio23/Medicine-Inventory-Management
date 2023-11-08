@@ -223,28 +223,8 @@
             margin-right: 5px;
         }
 
-        .btn-primary {
-            background-color: #28a745;
-            border-color: #28a745;
-        }
-
-        .btn-primary:hover {
-            background-color: #218838;
-            border-color: #218838;
-        }
-
         .form-control {
             border-radius: 5px;
-        }
-
-        .btn-secondary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-
-        .btn-secondary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
         }
 
         .alert-success {

@@ -6,7 +6,6 @@
             <h1>Dashboard</h1>
         </div>
         <div class="card">
-
             <div class="card-body">
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
@@ -80,26 +79,7 @@
         .list-group-item:hover {
             background-color: #f0f0f0;
         }
-        .btn-primary {
-            background-color: #28a745;
-            border-color: #28a745;
-        }
 
-        .btn-primary:hover {
-            background-color: #218838;
-            border-color: #218838;
-        }
-
-
-        .btn-secondary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-
-        .btn-secondary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
     </style>
 
     </script>
