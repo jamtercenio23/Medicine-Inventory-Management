@@ -236,16 +236,16 @@
                 <div class="sidebar-logo">
                     <img src="{{ asset('images/logo.png') }}" alt="Mabini Health Center Logo">
                 </div>
-                <div class="text-center">Mabini Health Center</div>
+                <div class="text-center" style="font-size: 20px; font-weight: 500;">Mabini Health Center</div>
                 <br>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ url('/home') }}"><i class="fas fa-tachometer-alt" style="margin-right: 30px;"></i> Dashboard</a>
+                        <a href="{{ url('/home') }}"><i class="fas fa-tachometer-alt" style="margin-right: 31px; padding-top:5px; padding-bottom: 5px"></i> Dashboard</a>
                     </li>
                     <!-- Inventory -->
                     @can('view-admin_inventory')
                         <li class="list-group-item list-group-item-action bg-light" id="inventory-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-cubes" style="margin-right: 30px;"></i> MHC Inventory</a>
+                            <a href="javascript:void(0)"><i class="fas fa-cubes" style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> MHC Inventory</a>
                         </li>
                         <div id="inventory-categories" style="display: none;">
                             @can('view-categories')
@@ -279,7 +279,7 @@
                     <!-- Manage -->
                     @can('view-admin_manage')
                         <li class="list-group-item list-group-item-action bg-light" id="manage-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-tasks" style="margin-right: 30px;"></i> MHC Manage</a>
+                            <a href="javascript:void(0)"><i class="fas fa-tasks" style="margin-right: 32px; padding-top:5px; padding-bottom: 5px"></i> MHC Manage</a>
                         </li>
                         <div id="manage-categories" style="display: none;">
                             @can('view-patients')
@@ -306,7 +306,7 @@
                     <!-- Distributions -->
                     @can('view-admin_distributions')
                         <li class="list-group-item list-group-item-action bg-light" id="distributions-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-truck" style="margin-right: 30px;"></i> MHC Distributions</a>
+                            <a href="javascript:void(0)"><i class="fas fa-truck" style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> MHC Distributions</a>
                         </li>
                         <div id="distributions-categories" style="display: none;">
                             @can('view-distributions')
@@ -327,7 +327,7 @@
                     @endcan
                     @can('view-bhw_inventory')
                         <li class="list-group-item list-group-item-action bg-light" id="barangayinventory-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-cubes"style="margin-right: 30px;"></i> Barangay Inventory</a>
+                            <a href="javascript:void(0)"><i class="fas fa-cubes"style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> Barangay Inventory</a>
                         </li>
                         <div id="barangayinventory-categories" style="display: none;">
                             @can('view-barangay_medicines')
@@ -340,7 +340,7 @@
                     @endcan
                     @can('view-bhw_manage')
                         <li class="list-group-item list-group-item-action bg-light" id="barangaymanage-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-tasks" style="margin-right: 30px;"></i> Barangay Manage</a>
+                            <a href="javascript:void(0)"><i class="fas fa-tasks" style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> Barangay Manage</a>
                         </li>
                         <div id="barangaymanage-categories" style="display: none;">
                             @can('view-barangay_patients')
@@ -353,7 +353,7 @@
                     @endcan
                     @can('view-bhw_distributions')
                         <li class="list-group-item list-group-item-action bg-light" id="barangaydistribution-toggle">
-                            <a href="javascript:void(0)" style="font-size: 14.5px"><i class="fas fa-truck" style="margin-right: 30px;"></i> Barangay Distributions</a>
+                            <a href="javascript:void(0)" style="font-size: 14.5px"><i class="fas fa-truck" style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> Barangay Distributions</a>
                         </li>
                         <div id="barangaydistribution-categories" style="display: none;">
                             @can('view-barangay_distributions')
@@ -368,7 +368,7 @@
                     <!-- Access Control -->
                     @can('view-access-control')
                         <li class="list-group-item list-group-item-action bg-light" id="access-control-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-lock"style="margin-right: 30px;"></i> Access Control</a>
+                            <a href="javascript:void(0)"><i class="fas fa-lock"style="margin-right: 32px; padding-top:5px; padding-bottom: 5px"></i> Access Control</a>
                         </li>
                         <div id="access-control-categories" style="display: none;">
                             @can('view-permissions')
@@ -388,14 +388,14 @@
 
                     @can('view-users')
                         <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('users.index') }}"><i class="fas fa-users" style="margin-right: 23px;"></i> Users</a>
+                            <a href="{{ route('users.index') }}"><i class="fas fa-users" style="margin-right: 25px; padding-top:5px; padding-bottom: 5px"></i> Users</a>
                         </li>
                     @endcan
                     <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('profile.edit') }}"><i class="fas fa-user" style="margin-right: 30px;"></i> Profile</a>
+                        <a href="{{ route('profile.edit') }}"><i class="fas fa-user" style="margin-right: 33px; padding-top:5px; padding-bottom: 5px"></i> Profile</a>
                     </li>
                 </ul>
-                <div style="padding: 10px; margin-top: 50px">
+                <div style="padding: 10px; margin-top: 15px">
                     <a href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal"
                         class="btn btn-danger btn-block text-white">Logout</a>
                 </div>
