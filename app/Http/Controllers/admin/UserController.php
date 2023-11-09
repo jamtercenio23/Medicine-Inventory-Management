@@ -13,12 +13,13 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $query = $request->input('search');
-        $users = User::all();
-        $roles = Role::all();
         $users = User::where('name', 'like', '%' . $query . '%')
-        ->orWhere('email', 'like', '%' . $query . '%')
-        ->with('roles')
-        ->paginate(10);
+            ->orWhere('email', 'like', '%' . $query . '%')
+            ->with('roles')
+            ->paginate(10);
+
+        $roles = Role::all();
+
         return view('admin.users.index', compact('users', 'roles', 'query'));
     }
 
@@ -41,6 +42,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'is_active' => $request->filled('is_active') && $request->input('is_active') == 'on',
         ]);
 
         $user->assignRole($request->role);
@@ -52,6 +54,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $roles = Role::all();
+
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
@@ -65,13 +68,32 @@ class UserController extends Controller
             'role' => 'required',
         ]);
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
+        // Check if the authenticated user is an admin
+        if (auth()->user()->hasRole('admin')) {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'is_active' => $request->has('is_active') && $request->input('is_active') == '1',
+            ]);
+        } else {
+            // For non-admin users, update other fields but not is_active
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+        }
 
         $user->syncRoles([$request->role]);
 
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
+    }
+
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

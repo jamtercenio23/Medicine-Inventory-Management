@@ -20,8 +20,7 @@ return new class extends Migration
             $table->string('gender');
             $table->unsignedBigInteger('barangay_id');
             $table->timestamps();
-
-            // Define foreign key constraint
+            $table->softDeletes();
             $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
         });
     }

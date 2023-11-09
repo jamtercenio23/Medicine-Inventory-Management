@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('expiration_date');
             $table->integer('stocks');
             $table->timestamps();
-
+            $table->softDeletes();
             $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
         });

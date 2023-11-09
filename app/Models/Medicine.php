@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Medicine extends Model
 {
     use HasFactory;
-
+    use SoftDeletes;
     protected $fillable = [
         'generic_name', 'brand_name', 'category_id', 'price', 'stocks', 'expiration_date'
     ];

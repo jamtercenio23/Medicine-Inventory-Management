@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('checkup_date');
             $table->string('diagnose');
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
             $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
         });

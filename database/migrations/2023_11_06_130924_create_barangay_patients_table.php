@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('age');
             $table->string('gender');
             $table->timestamps();
-
+            $table->softDeletes();
             $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
         });
     }

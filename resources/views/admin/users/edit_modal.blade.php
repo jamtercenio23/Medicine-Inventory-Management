@@ -42,6 +42,13 @@
                                 <label for="password_confirmation">Confirm Password</label>
                                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Leave empty to keep the current password">
                             </div>
+                            <div class="form-group">
+                                <label for="is_active">Status</label>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="is_active{{ $user->id }}" name="is_active" {{ $user->is_active ? 'checked' : '' }} value="1">
+                                    <label class="custom-control-label" for="is_active{{ $user->id }}">Active</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>

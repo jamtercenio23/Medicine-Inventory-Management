@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('stocks');
             $table->date('distribution_date');
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');
             $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
         });

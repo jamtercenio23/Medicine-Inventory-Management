@@ -39,6 +39,14 @@
                                 <label for="password_confirmation">Confirm Password</label>
                                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm the Password"required>
                             </div>
+                            <div class="form-group">
+                                <label for="is_active">Status</label>
+                                <div class="custom-control custom-switch">
+                                    <input type="hidden" name="is_active" value="0">
+                                    <input type="checkbox" class="custom-control-input" id="is_active" name="is_active" checked>
+                                    <label class="custom-control-label" for="is_active">Active</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create User</button>

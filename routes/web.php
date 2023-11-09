@@ -24,7 +24,7 @@ Route::get('/', function () {
 
 Auth::routes();
 // Admin Route
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'is_active'])->group(function () {
     Route::group(['middleware' => 'permission:view-users'], function () {
         Route::resource('admin/users', UserController::class);
     });

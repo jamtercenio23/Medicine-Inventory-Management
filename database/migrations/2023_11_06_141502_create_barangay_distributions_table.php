@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('barangay_medicine_id')->references('id')->on('barangay_medicines')->onDelete('cascade');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

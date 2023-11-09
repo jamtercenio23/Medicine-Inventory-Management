@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
         'name' => "Admin",
         'email' => "admin@example.com",
         'password' => Hash::make('admin'),
+        'is_active' => '1',
     ]);
     $user->assignRole('admin');
 
@@ -29,6 +30,7 @@ class UserSeeder extends Seeder
         'name' => "Pharmacist",
         'email' => "pharmacist@example.com",
         'password' => Hash::make('admin'),
+        'is_active' => '1',
     ]);
     $user->assignRole('pharmacist');
 
@@ -41,13 +43,13 @@ class UserSeeder extends Seeder
         'Cabinuangan',
         'Calzada',
         'Caranglaan',
-        'De Guzman',
+        'De-Guzman',
         'Luna',
         'Magalong',
         'Nibaliw',
         'Patar',
         'Poblacion',
-        'San Pedro',
+        'San-Pedro',
         'Tagudin',
         'Villacorta',
     ];
@@ -59,6 +61,7 @@ class UserSeeder extends Seeder
             'name' => $barangayName . ' BHW',
             'email' => strtolower($barangayName) . "@example.com",
             'password' => Hash::make('admin'),
+            'is_active' => '1',
             'barangay_id' => $barangay->id,
         ]);
 
