@@ -3,16 +3,16 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-5">
-                <div class="card" style="background-color: rgba(255, 255, 255, 0.8); border-radius: 10px;">
-                    <div class="card-header text-center">
-                        <h2>{{ __('Mabini Health Center Login') }}</h2>
+            <div class="col-md-8 col-lg-6 col-xl-5">
+                <div class="card">
+                    <div class="card-header text-center" style="border-bottom: none; margin-bottom: 0;">
+
                         <img src="{{ asset('images/logo.png') }}" alt="Mabini Health Center Logo"
                             style="max-width: 200px; margin-top: 20px; border-radius: 50%;">
+                            <h2>{{ __('Mabini Health Center') }}</h2>
                     </div>
 
-                    <div class="card-body"
-                        style="background-color: rgba(255, 255, 255, 0.9); border-radius: 10px; padding: 40px;">
+                    <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
@@ -48,28 +48,39 @@
     </div>
 
     <style>
-        body {
-            background-image: url('{{ asset('images/bg1.png') }}');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+
+        .card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
         }
 
         .card-header {
             text-align: center;
             padding: 20px;
+            border-bottom: none;
+            margin-bottom: 0;
         }
 
         .card-header h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 30px;
         }
 
         .card-header img {
             max-width: 200px;
+            border-radius: 50%;
+        }
+
+        .card-body {
+            border-radius: 10px;
+            padding: 40px;
         }
     </style>
+
 
     <script>
         const passwordField = document.getElementById('password');
@@ -90,5 +101,5 @@
         });
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    </style>
+
 @endsection

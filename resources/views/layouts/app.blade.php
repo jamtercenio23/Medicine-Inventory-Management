@@ -117,6 +117,21 @@
         body {
             /* overflow: hidden; */
         }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('{{ asset('images/bg1.png') }}');
+            background-size: cover;
+            filter: blur(5px);
+            @if(Auth::check())
+                display: none;
+            @endif
+        }
 
         #sidebar-wrapper {
             min-height: 100vh;
