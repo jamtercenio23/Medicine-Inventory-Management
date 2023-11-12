@@ -30,7 +30,6 @@ class PatientsSeeder extends Seeder
                     'gender' => $faker->randomElement(['Male', 'Female']),
                     'barangay_id' => $barangayId,
                     'created_at' => now(),
-                    'updated_at' => now(),
                 ];
             }
         }

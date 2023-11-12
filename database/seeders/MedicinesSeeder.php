@@ -26,6 +26,7 @@ class MedicinesSeeder extends Seeder
 
             $stock = $isOutOfStock ? 0 : rand(10, 100);
             $expirationDate = $isExpired ? now()->subDays(rand(1, 365)) : now()->addDays(rand(1, 365));
+            $createdDate = $faker->dateTimeBetween('-2 years', 'now');
 
             DB::table('medicines')->insert([
                 'generic_name' => $faker->word,
@@ -34,8 +35,7 @@ class MedicinesSeeder extends Seeder
                 'price' => rand(10, 100),
                 'stocks' => $stock,
                 'expiration_date' => $expirationDate,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $createdDate,
             ]);
         }
     }

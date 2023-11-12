@@ -117,6 +117,7 @@
         body {
             /* overflow: hidden; */
         }
+
         body::before {
             content: "";
             position: fixed;
@@ -128,7 +129,8 @@
             background-image: url('{{ asset('images/bg1.png') }}');
             background-size: cover;
             filter: blur(5px);
-            @if(Auth::check())
+
+            @if (Auth::check())
                 display: none;
             @endif
         }
@@ -237,6 +239,22 @@
             height: auto;
             border-radius: 50%
         }
+
+        @media (min-width: 768px) {
+            .nav-link .nav-text {
+                display: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .nav-link .nav-text {
+                display: inline;
+            }
+        }
+
+        .nav-link i {
+            font-size: 22px;
+        }
     </style>
 
 </head>
@@ -255,23 +273,27 @@
                 <br>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ url('/home') }}"><i class="fas fa-tachometer-alt" style="margin-right: 31px; padding-top:5px; padding-bottom: 5px"></i> Dashboard</a>
+                        <a href="{{ url('/home') }}"><i class="fas fa-tachometer-alt"
+                                style="margin-right: 31px; padding-top:5px; padding-bottom: 5px"></i> Dashboard</a>
                     </li>
                     <!-- Inventory -->
                     @can('view-admin_inventory')
                         <li class="list-group-item list-group-item-action bg-light" id="inventory-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-cubes" style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> MHC Inventory</a>
+                            <a href="javascript:void(0)"><i class="fas fa-cubes"
+                                    style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> MHC Inventory</a>
                         </li>
                         <div id="inventory-categories" style="display: none;">
                             @can('view-categories')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('categories.index') }}"><i class="fas fa-th-large" style="margin-right: 20px;"></i>
+                                    &nbsp; &nbsp;<a href="{{ route('categories.index') }}"><i class="fas fa-th-large"
+                                            style="margin-right: 20px;"></i>
                                         Categories</a>
                                 </li>
                             @endcan
                             @can('view-medicines')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('medicines.index') }}"><i class="fas fa-pills" style="margin-right: 20px;"></i>
+                                    &nbsp; &nbsp;<a href="{{ route('medicines.index') }}"><i class="fas fa-pills"
+                                            style="margin-right: 20px;"></i>
                                         Medicines</a>
                                 </li>
                             @endcan
@@ -284,8 +306,8 @@
                             @endcan
                             @can('view-expired')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('medicines.expired') }}"><i
-                                            class="fas fa-calendar-times" style="margin-right: 20px;"></i> Expired
+                                    &nbsp; &nbsp;<a href="{{ route('medicines.expired') }}"><i class="fas fa-calendar-times"
+                                            style="margin-right: 20px;"></i> Expired
                                         Medicines</a>
                                 </li>
                             @endcan
@@ -294,24 +316,28 @@
                     <!-- Manage -->
                     @can('view-admin_manage')
                         <li class="list-group-item list-group-item-action bg-light" id="manage-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-tasks" style="margin-right: 32px; padding-top:5px; padding-bottom: 5px"></i> MHC Manage</a>
+                            <a href="javascript:void(0)"><i class="fas fa-tasks"
+                                    style="margin-right: 32px; padding-top:5px; padding-bottom: 5px"></i> MHC Manage</a>
                         </li>
                         <div id="manage-categories" style="display: none;">
                             @can('view-patients')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('patients.index') }}"><i class="fas fa-users" style="margin-right: 20px;"></i>
+                                    &nbsp; &nbsp;<a href="{{ route('patients.index') }}"><i class="fas fa-users"
+                                            style="margin-right: 20px;"></i>
                                         Patients</a>
                                 </li>
                             @endcan
                             @can('view-barangays')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('barangays.index') }}"><i class="fas fa-map-marked-alt" style="margin-right: 20px;"></i>
+                                    &nbsp; &nbsp;<a href="{{ route('barangays.index') }}"><i class="fas fa-map-marked-alt"
+                                            style="margin-right: 20px;"></i>
                                         Barangays</a>
                                 </li>
                             @endcan
                             @can('view-schedules')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('schedules.index') }}"><i class="fas fa-clock" style="margin-right: 23px;"></i>
+                                    &nbsp; &nbsp;<a href="{{ route('schedules.index') }}"><i class="fas fa-clock"
+                                            style="margin-right: 23px;"></i>
                                         Schedules</a>
                                 </li>
                             @endcan
@@ -321,7 +347,9 @@
                     <!-- Distributions -->
                     @can('view-admin_distributions')
                         <li class="list-group-item list-group-item-action bg-light" id="distributions-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-truck" style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> MHC Distributions</a>
+                            <a href="javascript:void(0)"><i class="fas fa-truck"
+                                    style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> MHC
+                                Distributions</a>
                         </li>
                         <div id="distributions-categories" style="display: none;">
                             @can('view-distributions')
@@ -333,8 +361,8 @@
                             @endcan
                             @can('view-distribution-barangay')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('distribution_barangay.index') }}" style="font-size: 14.5px"><i
-                                            class="fas fa-chart-bar" style="margin-right: 20px;"></i>
+                                    &nbsp; &nbsp;<a href="{{ route('distribution_barangay.index') }}"
+                                        style="font-size: 14.5px"><i class="fas fa-chart-bar" style="margin-right: 20px;"></i>
                                         Barangay Distributions</a>
                                 </li>
                             @endcan
@@ -342,12 +370,15 @@
                     @endcan
                     @can('view-bhw_inventory')
                         <li class="list-group-item list-group-item-action bg-light" id="barangayinventory-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-cubes"style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> Barangay Inventory</a>
+                            <a href="javascript:void(0)"><i
+                                    class="fas fa-cubes"style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i>
+                                Barangay Inventory</a>
                         </li>
                         <div id="barangayinventory-categories" style="display: none;">
                             @can('view-barangay_medicines')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('barangay-medicines.index') }}"><i class="fas fa-pills" style="margin-right: 20px;"></i>
+                                    &nbsp; &nbsp;<a href="{{ route('barangay-medicines.index') }}"><i class="fas fa-pills"
+                                            style="margin-right: 20px;"></i>
                                         Medicines</a>
                                 </li>
                             @endcan
@@ -355,12 +386,15 @@
                     @endcan
                     @can('view-bhw_manage')
                         <li class="list-group-item list-group-item-action bg-light" id="barangaymanage-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-tasks" style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> Barangay Manage</a>
+                            <a href="javascript:void(0)"><i class="fas fa-tasks"
+                                    style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> Barangay
+                                Manage</a>
                         </li>
                         <div id="barangaymanage-categories" style="display: none;">
                             @can('view-barangay_patients')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('barangay-patients.index') }}"><i class="fas fa-users" style="margin-right: 20px;"></i>
+                                    &nbsp; &nbsp;<a href="{{ route('barangay-patients.index') }}"><i class="fas fa-users"
+                                            style="margin-right: 20px;"></i>
                                         Patients</a>
                                 </li>
                             @endcan
@@ -368,7 +402,9 @@
                     @endcan
                     @can('view-bhw_distributions')
                         <li class="list-group-item list-group-item-action bg-light" id="barangaydistribution-toggle">
-                            <a href="javascript:void(0)" style="font-size: 14.5px"><i class="fas fa-truck" style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> Barangay Distributions</a>
+                            <a href="javascript:void(0)" style="font-size: 14.5px"><i class="fas fa-truck"
+                                    style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> Barangay
+                                Distributions</a>
                         </li>
                         <div id="barangaydistribution-categories" style="display: none;">
                             @can('view-barangay_distributions')
@@ -383,18 +419,22 @@
                     <!-- Access Control -->
                     @can('view-access-control')
                         <li class="list-group-item list-group-item-action bg-light" id="access-control-toggle">
-                            <a href="javascript:void(0)"><i class="fas fa-lock"style="margin-right: 32px; padding-top:5px; padding-bottom: 5px"></i> Access Control</a>
+                            <a href="javascript:void(0)"><i
+                                    class="fas fa-lock"style="margin-right: 32px; padding-top:5px; padding-bottom: 5px"></i>
+                                Access Control</a>
                         </li>
                         <div id="access-control-categories" style="display: none;">
                             @can('view-permissions')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('permissions.index') }}"><i class="fas fa-lock" style="margin-right: 25px;"></i>
+                                    &nbsp; &nbsp;<a href="{{ route('permissions.index') }}"><i class="fas fa-lock"
+                                            style="margin-right: 25px;"></i>
                                         Permissions</a>
                                 </li>
                             @endcan
                             @can('view-roles')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('roles.index') }}"><i class="fas fa-user-shield" style="margin-right: 20px;"></i>
+                                    &nbsp; &nbsp;<a href="{{ route('roles.index') }}"><i class="fas fa-user-shield"
+                                            style="margin-right: 20px;"></i>
                                         Roles</a>
                                 </li>
                             @endcan
@@ -403,11 +443,13 @@
 
                     @can('view-users')
                         <li class="list-group-item list-group-item-action bg-light">
-                            <a href="{{ route('users.index') }}"><i class="fas fa-users" style="margin-right: 25px; padding-top:5px; padding-bottom: 5px"></i> Users</a>
+                            <a href="{{ route('users.index') }}"><i class="fas fa-users"
+                                    style="margin-right: 25px; padding-top:5px; padding-bottom: 5px"></i> Users</a>
                         </li>
                     @endcan
                     <li class="list-group-item list-group-item-action bg-light">
-                        <a href="{{ route('profile.edit') }}"><i class="fas fa-user" style="margin-right: 33px; padding-top:5px; padding-bottom: 5px"></i> Profile</a>
+                        <a href="{{ route('profile.edit') }}"><i class="fas fa-user"
+                                style="margin-right: 33px; padding-top:5px; padding-bottom: 5px"></i> Profile</a>
                     </li>
                 </ul>
                 <div style="padding: 10px; margin-top: 15px">
@@ -431,26 +473,29 @@
                     <span class="navbar-toggler-icon"></span>
                 </button> --}}
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="/"><i class="fas fa-home"></i> Home <span
-                                    class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/"><i class="fas fa-home"></i> <span
+                                    class="nav-text">Home</span> <span class="sr-only">(current)</span></a>
+
                         </li>
                         @if (Auth::check())
                             @can('view-admin_distributions')
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('distributions.index') }}"><i
-                                            class="fas fa-clipboard-list"></i> Patient Distributions</a>
+                                            class="fas fa-clipboard-list"></i> <span class="nav-text">Patient
+                                            Distributions</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('distribution_barangay.index') }}"><i
-                                            class="fas fa-chart-bar"></i> Barangay Distributions</a>
+                                            class="fas fa-chart-bar"></i> <span class="nav-text">Barangay
+                                            Distributions</span></a>
                                 </li>
                             @endcan
                             <li class="nav-item dropdown">

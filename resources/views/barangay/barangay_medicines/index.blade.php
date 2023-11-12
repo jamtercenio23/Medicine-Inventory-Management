@@ -49,7 +49,9 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Barangay</th>
-                                    <th>Medicine Name</th>
+                                    <th>Generic Name</th>
+                                    <th>Brand Name</th>
+                                    <th>Category</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -58,8 +60,9 @@
                                     <tr>
                                         <td>{{ $barangayMedicine->id }}</td>
                                         <td>{{ $barangayMedicine->barangay->name }}</td>
-                                        <td>{{ $barangayMedicine->medicine->generic_name }} -
-                                            {{ $barangayMedicine->medicine->brand_name }}</td>
+                                        <td>{{ $barangayMedicine->medicine->generic_name }}</td>
+                                        <td>{{ $barangayMedicine->medicine->brand_name }}</td>
+                                        <td>{{ $barangayMedicine->medicine->category->name }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showbarangayMedicineModal{{ $barangayMedicine->id }}">
@@ -76,71 +79,77 @@
                     @endif
                 </div>
             </div>
-            <div class="card-footer text-muted">
-                <div class="float-right">
-                    <!-- Bootstrap Pagination -->
-                    <ul class="pagination">
-                        <li class="page-item {{ $barangayMedicines->currentPage() == 1 ? 'disabled' : '' }}">
-                            <a class="page-link" href="{{ $barangayMedicines->previousPageUrl() }}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
+        </div>
 
-                        @php
-                            $currentPage = $barangayMedicines->currentPage();
-                            $lastPage = $barangayMedicines->lastPage();
-                            $showFirstDots = false;
-                            $showLastDots = false;
-
-                            // Determine the range of page numbers to display
-                            $startPage = max(1, $currentPage - 2);
-                            $endPage = min($lastPage, $currentPage + 2);
-
-                            if ($startPage > 1) {
-                                $showFirstDots = true;
-                                $startPage++;
-                            }
-
-                            if ($endPage < $lastPage) {
-                                $showLastDots = true;
-                                $endPage--;
-                            }
-                        @endphp
-
-                        @if ($showFirstDots)
-                            <li class="page-item">
-                                <a class="page-link" href="{{ $barangayMedicines->url(1) }}">1</a>
-                            </li>
-                            <li class="page-item disabled">
-                                <a class="page-link">...</a>
-                            </li>
-                        @endif
-
-                        @for ($i = $startPage; $i <= $endPage; $i++)
-                            <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
-                                <a class="page-link" href="{{ $barangayMedicines->url($i) }}">{{ $i }}</a>
-                            </li>
-                        @endfor
-
-                        @if ($showLastDots)
-                            <li class="page-item disabled">
-                                <a class="page-link">...</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link"
-                                    href="{{ $barangayMedicines->url($lastPage) }}">{{ $lastPage }}</a>
-                            </li>
-                        @endif
-
-                        <li class="page-item {{ $barangayMedicines->currentPage() == $lastPage ? 'disabled' : '' }}">
-                            <a class="page-link" href="{{ $barangayMedicines->nextPageUrl() }}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
+        <div class="my-4 text-muted">
+            <div class="float-left">
+                <div class="credits">
+                    <p>Mabini Health Center</p>
                 </div>
-                <div class="clearfix"></div>
             </div>
+            <div class="float-right">
+                <!-- Bootstrap Pagination -->
+                <ul class="pagination">
+                    <li class="page-item {{ $barangayMedicines->currentPage() == 1 ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $barangayMedicines->previousPageUrl() }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    @php
+                        $currentPage = $barangayMedicines->currentPage();
+                        $lastPage = $barangayMedicines->lastPage();
+                        $showFirstDots = false;
+                        $showLastDots = false;
+
+                        // Determine the range of page numbers to display
+                        $startPage = max(1, $currentPage - 2);
+                        $endPage = min($lastPage, $currentPage + 2);
+
+                        if ($startPage > 1) {
+                            $showFirstDots = true;
+                            $startPage++;
+                        }
+
+                        if ($endPage < $lastPage) {
+                            $showLastDots = true;
+                            $endPage--;
+                        }
+                    @endphp
+
+                    @if ($showFirstDots)
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $barangayMedicines->url(1) }}">1</a>
+                        </li>
+                        <li class="page-item disabled">
+                            <a class="page-link">...</a>
+                        </li>
+                    @endif
+
+                    @for ($i = $startPage; $i <= $endPage; $i++)
+                        <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $barangayMedicines->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endfor
+
+                    @if ($showLastDots)
+                        <li class="page-item disabled">
+                            <a class="page-link">...</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link"
+                                href="{{ $barangayMedicines->url($lastPage) }}">{{ $lastPage }}</a>
+                        </li>
+                    @endif
+
+                    <li class="page-item {{ $barangayMedicines->currentPage() == $lastPage ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $barangayMedicines->nextPageUrl() }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
         </div>
     </div>
     </div>

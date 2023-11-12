@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Exports\MedicineReportExport;
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Models\Medicine;
 use App\Models\Category;
+use Maatwebsite\Excel\Excel;
+use Illuminate\Support\Facades\Response;
+
 
 class MedicineController extends Controller
 {
@@ -35,29 +40,29 @@ class MedicineController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'generic_name' => 'required|string',
-        'brand_name' => 'required|string',
-        'category_id' => 'required|exists:categories,id',
-        'price' => 'required|numeric',
-        'stocks' => 'required|integer',
-        'expiration_date' => 'required|date|after_or_equal:tomorrow', // Ensure expiration_date is not before tomorrow
-    ]);
+    {
+        $request->validate([
+            'generic_name' => 'required|string',
+            'brand_name' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric',
+            'stocks' => 'required|integer',
+            'expiration_date' => 'required|date|after_or_equal:tomorrow', // Ensure expiration_date is not before tomorrow
+        ]);
 
-    $medicine = Medicine::create($request->all());
+        $medicine = Medicine::create($request->all());
 
-    // Check if the medicine is already expired
-    if ($medicine->expiration_date < now()->toDateString()) {
-        // If expired, set stocks to 0
-        $medicine->update(['stocks' => 0]);
-    } else {
-        // If not expired, proceed with normal stocks
-        $medicine->update(['stocks' => $request->input('stocks')]);
+        // Check if the medicine is already expired
+        if ($medicine->expiration_date < now()->toDateString()) {
+            // If expired, set stocks to 0
+            $medicine->update(['stocks' => 0]);
+        } else {
+            // If not expired, proceed with normal stocks
+            $medicine->update(['stocks' => $request->input('stocks')]);
+        }
+
+        return redirect()->route('medicines.index')->with('success', 'Medicine created successfully');
     }
-
-    return redirect()->route('medicines.index')->with('success', 'Medicine created successfully');
-}
 
     public function edit(Medicine $medicine)
     {
@@ -90,19 +95,19 @@ class MedicineController extends Controller
     }
 
     public function outOfStock(Request $request)
-{
-    $query = $request->input('search', ''); // Default to an empty string if not provided
-    $outOfStockMedicines = Medicine::where('stocks', 0)
-        ->where('expiration_date', '>=', now()) // Exclude expired medicines
-        ->when($query, function ($query) use ($request) {
-            $query->where('generic_name', 'like', '%' . $request->input('search') . '%')
-                ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
-        })
-        ->paginate(10); // You can adjust the pagination size as needed
+    {
+        $query = $request->input('search', ''); // Default to an empty string if not provided
+        $outOfStockMedicines = Medicine::where('stocks', 0)
+            ->where('expiration_date', '>=', now()) // Exclude expired medicines
+            ->when($query, function ($query) use ($request) {
+                $query->where('generic_name', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
+            })
+            ->paginate(10); // You can adjust the pagination size as needed
 
-    return view('admin.medicines.out-of-stock', compact('outOfStockMedicines', 'query'))
-        ->with('success', 'Out of stock medicines retrieved successfully');
-}
+        return view('admin.medicines.out-of-stock', compact('outOfStockMedicines', 'query'))
+            ->with('success', 'Out of stock medicines retrieved successfully');
+    }
 
     public function editOutOfStock(Medicine $medicine)
     {
@@ -124,23 +129,191 @@ class MedicineController extends Controller
     }
 
     public function expired(Request $request)
-{
-    $query = $request->input('search', '');
-    $expiredMedicines = Medicine::where('expiration_date', '<', now())->paginate(10);
+    {
+        $query = $request->input('search', '');
+        $expiredMedicines = Medicine::where('expiration_date', '<', now())->paginate(10);
 
-    return view('admin.medicines.expired', compact('expiredMedicines', 'query'))
-        ->with('success', 'Expired medicines retrieved successfully');
-}
-
-public function deleteExpired(Request $request)
-{
-    $expiredMedicine = Medicine::where('expiration_date', '<', now())->first();
-
-    if ($expiredMedicine) {
-        $expiredMedicine->delete();
-        return redirect()->route('medicines.expired')->with('success', 'Expired medicine deleted successfully');
+        return view('admin.medicines.expired', compact('expiredMedicines', 'query'))
+            ->with('success', 'Expired medicines retrieved successfully');
     }
 
-    return redirect()->route('medicines.expired')->with('error', 'No expired medicines found to delete');
-}
+    public function deleteExpired(Request $request)
+    {
+        $expiredMedicine = Medicine::where('expiration_date', '<', now())->first();
+
+        if ($expiredMedicine) {
+            $expiredMedicine->delete();
+            return redirect()->route('medicines.expired')->with('success', 'Expired medicine deleted successfully');
+        }
+
+        return redirect()->route('medicines.expired')->with('error', 'No expired medicines found to delete');
+    }
+
+    public function generateMedicineReport(Request $request)
+    {
+        // If the request is GET, show the form
+        if ($request->isMethod('get')) {
+            return view('admin.medicines.generate_medicine_report');
+        }
+
+        // If the request is POST, handle the form submission
+
+        $fromDate = $request->input('from');
+        $toDate = $request->input('to');
+
+        // Validate the input
+        $request->validate([
+            'from' => 'required|date',
+            'to' => 'required|date|after_or_equal:from',
+            'exportFormat' => 'required|in:pdf,excel',
+        ]);
+
+        // Get data for the report within the date range
+        $reportData = Medicine::with('category')
+            ->whereBetween('created_at', [$fromDate, $toDate])
+            ->get();
+
+        // Check if there is data for the report
+        if ($reportData->isEmpty()) {
+            return redirect()->back()->with('error', 'No data available for the selected date range');
+        }
+
+        // Export to PDF or Excel based on the selected format
+        if ($request->input('exportFormat') === 'pdf') {
+            $pdfFileName = 'medicine_report_' . now()->format('YmdHis') . '.pdf';
+            $pdfPath = public_path('reports') . '/' . $pdfFileName;
+
+            // Generate and save the PDF file
+            $pdf = PDF::loadView('admin.medicines.medicine-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->save($pdfPath);
+
+            // Download the PDF file
+            return response()->download($pdfPath, $pdfFileName);
+        }
+
+        // Export to Excel
+        if ($request->input('exportFormat') === 'excel') {
+            $excelFileName = 'medicine_report_' . now()->format('YmdHis') . '.xlsx';
+
+            // Generate the Excel file and return it as a download
+            return (new MedicineReportExport($reportData, $fromDate, $toDate))->download($excelFileName);
+        }
+
+        return redirect()->back()
+            ->with('success', 'Medicine report generated successfully')
+            ->with('pdfFileName', $pdfFileName ?? null)
+            ->with('excelFileName', $excelFileName ?? null);
+    }
+
+    public function generateOutOfStockReport(Request $request)
+    {
+        // If the request is GET, show the form
+        if ($request->isMethod('get')) {
+            return view('admin.medicines.generate_out_of_stock_report');
+        }
+
+        // If the request is POST, handle the form submission
+
+        $fromDate = $request->input('from');
+        $toDate = $request->input('to');
+
+        // Validate the input
+        $request->validate([
+            'from' => 'required|date',
+            'to' => 'required|date|after_or_equal:from',
+            'exportFormat' => 'required|in:pdf,excel',
+        ]);
+
+        // Get data for the out-of-stock report within the date range
+        $reportData = Medicine::where('stocks', 0)
+            ->whereBetween('created_at', [$fromDate, $toDate])
+            ->get();
+
+        // Check if there is data for the report
+        if ($reportData->isEmpty()) {
+            return redirect()->back()->with('error', 'No out-of-stock data available for the selected date range');
+        }
+
+        // Export to PDF
+        if ($request->input('exportFormat') === 'pdf') {
+            $pdfFileName = 'out_of_stock_report_' . now()->format('YmdHis') . '.pdf';
+            $pdfPath = public_path('reports') . '/' . $pdfFileName;
+
+            // Generate and save the PDF file
+            $pdf = PDF::loadView('admin.medicines.out-of-stock-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->save($pdfPath);
+
+            // Download the PDF file
+            return response()->download($pdfPath, $pdfFileName);
+        }
+
+        // Export to Excel
+        if ($request->input('exportFormat') === 'excel') {
+            $excelFileName = 'out_of_stock_report_' . now()->format('YmdHis') . '.xlsx';
+
+            // Generate the Excel file and return it as a download
+            return (new MedicineReportExport($reportData, $fromDate, $toDate))->download($excelFileName);
+        }
+
+        return redirect()->back()
+            ->with('success', 'Out-of-stock report generated successfully')
+            ->with('pdfFileName', $pdfFileName ?? null)
+            ->with('excelFileName', $excelFileName ?? null);
+    }
+
+    public function generateExpiredReport(Request $request)
+    {
+        // If the request is GET, show the form
+        if ($request->isMethod('get')) {
+            return view('admin.medicines.generate_expired_report');
+        }
+
+        // If the request is POST, handle the form submission
+
+        $fromDate = $request->input('from');
+        $toDate = $request->input('to');
+
+        // Validate the input
+        $request->validate([
+            'from' => 'required|date',
+            'to' => 'required|date|after_or_equal:from',
+            'exportFormat' => 'required|in:pdf,excel',
+        ]);
+
+        // Get data for the expired report within the date range
+        $reportData = Medicine::where('expiration_date', '<', now())
+            ->whereBetween('created_at', [$fromDate, $toDate])
+            ->get();
+
+        // Check if there is data for the report
+        if ($reportData->isEmpty()) {
+            return redirect()->back()->with('error', 'No expired data available for the selected date range');
+        }
+
+        // Export to PDF
+        if ($request->input('exportFormat') === 'pdf') {
+            $pdfFileName = 'expired_report_' . now()->format('YmdHis') . '.pdf';
+            $pdfPath = public_path('reports') . '/' . $pdfFileName;
+
+            // Generate and save the PDF file
+            $pdf = PDF::loadView('admin.medicines.expired-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->save($pdfPath);
+
+            // Download the PDF file
+            return response()->download($pdfPath, $pdfFileName);
+        }
+
+        // Export to Excel
+        if ($request->input('exportFormat') === 'excel') {
+            $excelFileName = 'expired_report_' . now()->format('YmdHis') . '.xlsx';
+
+            // Generate the Excel file and return it as a download
+            return (new MedicineReportExport($reportData, $fromDate, $toDate))->download($excelFileName);
+        }
+
+        return redirect()->back()
+            ->with('success', 'Expired report generated successfully')
+            ->with('pdfFileName', $pdfFileName ?? null)
+            ->with('excelFileName', $excelFileName ?? null);
+    }
 }

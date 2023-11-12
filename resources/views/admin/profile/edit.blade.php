@@ -21,18 +21,6 @@
         </div>
         <div class="card">
             <div class="card-body">
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
-                @if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
-
                 <form action="{{ route('profile.update') }}" method="POST">
                     @csrf
                     @method('PUT')
@@ -153,6 +141,18 @@
         .card {
             border: 1px solid #ccc;
             border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+        .alert-success {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .alert-danger {
+            background-color: #dc3545;
+            color: #fff;
         }
     </style>
 @endsection

@@ -6,6 +6,44 @@
     <div class="container">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Out of Stock Medicines</h1>
+            <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal" data-target="#generateOutOfStockReportModal">
+                <i class="fas fa-file-export"></i> Generate Report
+            </button>
+        </div>
+
+        <!-- Generate Out of Stock Report Modal -->
+        <div class="modal fade" id="generateOutOfStockReportModal" tabindex="-1" role="dialog" aria-labelledby="generateOutOfStockReportModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="generateOutOfStockReportModalLabel">Generate Out of Stock Report</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Add your form elements for selecting date range and export format here -->
+                        <form action="{{ route('medicines.generateOutOfStockReport') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="from">From Date</label>
+                                <input type="date" class="form-control" id="from" name="from" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="to">To Date</label>
+                                <input type="date" class="form-control" id="to" name="to" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exportFormat">Export Format</label>
+                                <select class="form-control" id="exportFormat" name="exportFormat" required>
+                                    <option value="pdf">PDF</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Generate Report</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         @if (session('success'))
             <div class="alert alert-success">
@@ -45,7 +83,11 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Medicine Name</th>
+                                    <th>Generic Name</th>
+                                    <th>Brand Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Expiration Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -53,11 +95,15 @@
                                 @foreach ($outOfStockMedicines as $medicine)
                                     <tr>
                                         <td>{{ $medicine->id }}</td>
-                                        <td>{{ $medicine->generic_name }} - {{ $medicine->brand_name }}</td>
+                                        <td>{{ $medicine->generic_name }}</td>
+                                        <td>{{ $medicine->brand_name }}</td>
+                                        <td>{{ $medicine->category->name }}</td>
+                                        <td>₱ {{ $medicine->price }}</td>
+                                        <td>{{ $medicine->expiration_date }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editOutOfStockModal{{ $medicine->id }}">
-                                                <i class="fas fa-edit"></i> Edit
+                                                <i class="fas fa-edit"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -73,7 +119,11 @@
             </div>
         </div>
         <div class="my-4 text-muted">
-            <div class="float-left"></div>
+            <div class="float-left">
+                <div class="credits">
+                    <p>Mabini Health Center</p>
+                </div>
+            </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">

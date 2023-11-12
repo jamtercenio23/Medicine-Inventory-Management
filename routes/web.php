@@ -83,3 +83,19 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 });
+// Medicines
+Route::post('/medicines/generate-medicine-report', [MedicineController::class, 'generateMedicineReport'])
+    ->name('medicines.generateMedicineReport');
+Route::post('/medicines/generate-out-of-stock-report', [MedicineController::class, 'generateOutOfStockReport'])
+    ->name('medicines.generateOutOfStockReport');
+Route::post('/medicines/generate-expired-report', [MedicineController::class, 'generateExpiredReport'])
+    ->name('medicines.generateExpiredReport');
+// Patients
+Route::post('/patients/generate-patient-report', [PatientController::class, 'generatePatientReport'])
+    ->name('patients.generatePatientReport');
+// Distributions
+Route::post('/distributions/generate-distribution-report', [DistributionController::class, 'generateDistributionReport'])
+    ->name('distributions.generateDistributionReport');
+// DistributionBarangay
+Route::post('/distribution_barangay/generate-distribution-barangay-report', [DistributionBarangayController::class, 'generateDistributionBarangayReport'])
+    ->name('distribution_barangay.generateDistributionBarangayReport');

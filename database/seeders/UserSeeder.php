@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
         'email' => "admin@example.com",
         'password' => Hash::make('admin'),
         'is_active' => '1',
+        'created_at' => now(),
     ]);
     $user->assignRole('admin');
 
@@ -31,6 +32,7 @@ class UserSeeder extends Seeder
         'email' => "pharmacist@example.com",
         'password' => Hash::make('admin'),
         'is_active' => '1',
+        'created_at' => now(),
     ]);
     $user->assignRole('pharmacist');
 

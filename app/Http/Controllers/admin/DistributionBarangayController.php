@@ -10,7 +10,9 @@ use App\Models\DistributionBarangay;
 use App\Models\Medicine;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\DistributionBarangayReportExport;
+use Illuminate\Support\Facades\Response;
 class DistributionBarangayController extends Controller
 {
     public function index(Request $request)
@@ -177,5 +179,52 @@ class DistributionBarangayController extends Controller
         } elseif ($operation === 'decrement') {
             $medicine->decrement('stocks', $quantity);
         }
+    }
+
+    public function generateDistributionBarangayReport(Request $request)
+    {
+        // Validate the input
+        $request->validate([
+            'from' => 'required|date',
+            'to' => 'required|date|after_or_equal:from',
+            'exportFormat' => 'required|in:pdf,excel',
+        ]);
+
+        $fromDate = $request->input('from');
+        $toDate = $request->input('to');
+        $exportFormat = $request->input('exportFormat');
+
+        // Get data for the distribution barangay report within the date range
+        $reportData = DistributionBarangay::with(['barangay', 'medicine'])
+            ->whereBetween('created_at', [$fromDate, $toDate])
+            ->get();
+
+        // Check if there is data for the report
+        if ($reportData->isEmpty()) {
+            return redirect()->back()->with('error', 'No distribution barangay data available for the selected date range');
+        }
+
+        // Export to PDF or Excel based on the selected format
+        if ($exportFormat === 'pdf') {
+            $pdfFileName = 'distribution_barangay_report_' . now()->format('YmdHis') . '.pdf';
+            $pdfPath = public_path('reports') . '/' . $pdfFileName;
+
+            // Generate and save the PDF file
+            $pdf = Pdf::loadView('admin.distribution_barangay.distribution-barangay-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->save($pdfPath);
+
+            // Download the PDF file
+            return response()->download($pdfPath, $pdfFileName);
+        } elseif ($exportFormat === 'excel') {
+            $excelFileName = 'distribution_barangay_report_' . now()->format('YmdHis') . '.xlsx';
+
+            // Generate the Excel file and return it as a download
+            return (new DistributionBarangayReportExport($reportData, $fromDate, $toDate))->download($excelFileName);
+        }
+
+        return redirect()->back()
+            ->with('success', 'Distribution barangay report generated successfully')
+            ->with('pdfFileName', $pdfFileName ?? null)
+            ->with('excelFileName', $excelFileName ?? null);
     }
 }

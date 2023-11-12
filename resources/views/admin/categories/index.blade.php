@@ -50,6 +50,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
+                                    <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -58,14 +59,15 @@
                                     <tr>
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
+                                        <td>{{ $category->created_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editCategoryModal{{ $category->id }}">
-                                                <i class="fas fa-edit"></i> Edit
+                                                <i class="fas fa-edit"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#deleteCategoryModal{{ $category->id }}">
-                                                <i class="fas fa-trash"></i> Delete
+                                                <i class="fas fa-trash"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -80,6 +82,9 @@
         </div>
         <div class="my-4 text-muted">
             <div class="float-left">
+                <div class="credits">
+                    <p>Mabini Health Center</p>
+                </div>
             </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->

@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p><strong>Patient:</strong><br>{{ $distribution->patient->first_name }} {{ $distribution->patient->last_name }}</p>
-                        <p><strong>Medicine:</strong><br>{{ $distribution->medicine->brand_name }}</p>
+                        <p><strong>Medicine:</strong><br>{{ $distribution->medicine->generic_name }} - {{ $distribution->medicine->brand_name }}</p>
                         <p><strong>Stock:</strong><br>{{ $distribution->stocks }}</p>
                     </div>
                     <div class="col-md-6">

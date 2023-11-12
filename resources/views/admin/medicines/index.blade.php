@@ -6,10 +6,52 @@
     <div class="container">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Medicine Inventory</h1>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createMedicineModal">
-                <i class="fas fa-plus"></i> Add Medicine
-            </button>
+            <div class="d-flex">
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createMedicineModal">
+                    <i class="fas fa-plus"></i> Add Medicine
+                </button>
+
+                <!-- New Button for Generating Reports -->
+                <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
+                    data-target="#generateMedicineReportModal">
+                    <i class="fas fa-file-export"></i> Generate Report
+                </button>
+            </div>
         </div>
+        <div class="modal fade" id="generateMedicineReportModal" tabindex="-1" role="dialog"
+            aria-labelledby="generateMedicineReportModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="generateMedicineReportModalLabel">Generate Report</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('medicines.generateMedicineReport') }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <label for="fromDate">From Date:</label>
+                                <input type="date" class="form-control" id="fromDate" name="from" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="toDate">To Date:</label>
+                                <input type="date" class="form-control" id="toDate" name="to" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exportFormat">Export Format</label>
+                                <select class="form-control" id="exportFormat" name="exportFormat" required>
+                                    <option value="pdf">PDF</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Generate</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -48,7 +90,10 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Medicine Name</th>
+                                    <th>Generic Name</th>
+                                    <th>Brand Name</th>
+                                    <th>Category</th>
+                                    <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -56,19 +101,22 @@
                                 @foreach ($medicines as $medicine)
                                     <tr>
                                         <td>{{ $medicine->id }}</td>
-                                        <td>{{ $medicine->generic_name }} - {{ $medicine->brand_name }}</td>
+                                        <td>{{ $medicine->generic_name }}</td>
+                                        <td>{{ $medicine->brand_name }}</td>
+                                        <td>{{ $medicine->category->name }}</td>
+                                        <td>{{ $medicine->created_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showMedicineModal{{ $medicine->id }}">
-                                                <i class="fas fa-eye"></i> Show
+                                                <i class="fas fa-eye"></i>
                                             </button>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editMedicineModal{{ $medicine->id }}">
-                                                <i class="fas fa-edit"></i> Edit
+                                                <i class="fas fa-edit"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#deleteMedicineModal{{ $medicine->id }}">
-                                                <i class="fas fa-trash"></i> Delete
+                                                <i class="fas fa-trash"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -89,7 +137,11 @@
             </div>
         </div>
         <div class="my-4 text-muted">
-            <div class="float-left"></div>
+            <div class="float-left">
+                <div class="credits">
+                    <p>Mabini Health Center</p>
+                </div>
+            </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
@@ -151,6 +203,7 @@
                 </ul>
             </div>
             <div class="clearfix"></div>
+
         </div>
     </div>
 
@@ -248,4 +301,5 @@
             margin-bottom: 20px;
         }
     </style>
+
 @endsection

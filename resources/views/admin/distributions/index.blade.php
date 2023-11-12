@@ -6,12 +6,49 @@
     <div class="container">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Patient Distribution</h1>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createDistributionModal">
-                <i class="fas fa-plus"></i> Add Distribution
-            </button>
+            <div class="d-flex">
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createDistributionModal">
+                    <i class="fas fa-plus"></i> Add Distribution
+                </button>
+                <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
+                    data-target="#generateDistributionReportModal">
+                    <i class="fas fa-file-export"></i> Generate Report
+                </button>
+            </div>
         </div>
-
-        <!-- Display alert message if present -->
+        <div class="modal fade" id="generateDistributionReportModal" tabindex="-1" role="dialog"
+            aria-labelledby="generateDistributionReportModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="generateDistributionReportModalLabel">Generate Report</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('distributions.generateDistributionReport') }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <label for="fromDate">From Date:</label>
+                                <input type="date" class="form-control" id="fromDate" name="from" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="toDate">To Date:</label>
+                                <input type="date" class="form-control" id="toDate" name="to" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exportFormat">Export Format</label>
+                                <select class="form-control" id="exportFormat" name="exportFormat" required>
+                                    <option value="pdf">PDF</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Generate</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -54,6 +91,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Patient</th>
+                                    <th>Checkup Date</th>
+                                    <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -62,16 +101,18 @@
                                     <tr>
                                         <td>{{ $distribution->id }}</td>
                                         <td>{{ $distribution->patient->first_name }} {{ $distribution->patient->last_name }}</td>
+                                        <td>{{ $distribution->checkup_date }}</td>
+                                        <td>{{ $distribution->created_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showDistributionModal{{ $distribution->id }}">
-                                                <i class="fas fa-eye"></i> Show</button>
+                                                <i class="fas fa-eye"></i> </button>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editDistributionModal{{ $distribution->id }}">
-                                                <i class="fas fa-edit"></i> Edit</button>
+                                                <i class="fas fa-edit"></i> </button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#deleteDistributionModal{{ $distribution->id }}">
-                                                <i class="fas fa-trash"></i> Delete</button>
+                                                <i class="fas fa-trash"></i> </button>
                                         </td>
                                     </tr>
 
@@ -98,7 +139,11 @@
         </div>
 
         <div class="my-4 text-muted">
-            <div class="float-left"></div>
+            <div class="float-left">
+                <div class="credits">
+                    <p>Mabini Health Center</p>
+                </div>
+            </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">

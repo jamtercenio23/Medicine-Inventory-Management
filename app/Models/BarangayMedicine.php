@@ -32,4 +32,7 @@ class BarangayMedicine extends Model
     {
         return $this->belongsTo(Medicine::class, 'medicine_id');
     }
+    public function distribution_barangay(){
+        return $this->belongsTo(DistributionBarangay::class,'distribution_barangay');
+    }
 }

@@ -51,6 +51,10 @@ class User extends Authenticatable
     {
         return $this->hasRole('admin');
     }
+    public function isPharmacist()
+    {
+        return $this->hasRole('pharmacist');
+    }
     public function isBarangayUser()
     {
         return $this->role === 'barangay';

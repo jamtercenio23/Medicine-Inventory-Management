@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Exports\PatientReportExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Models\Barangay;
-
+use Maatwebsite\Excel\Excel;
+use Illuminate\Support\Facades\Response;
+use Barryvdh\DomPDF\Facade\Pdf;
 class PatientController extends Controller
 {
     public function index(Request $request)
@@ -89,5 +92,54 @@ class PatientController extends Controller
         $patient->delete();
 
         return redirect()->route('patients.index')->with('success', 'Patient deleted successfully');
+    }
+
+    public function generatePatientReport(Request $request)
+    {
+        // Validate the input
+        $request->validate([
+            'from' => 'required|date',
+            'to' => 'required|date|after_or_equal:from',
+            'exportFormat' => 'required|in:pdf,excel',
+        ]);
+
+        $fromDate = $request->input('from');
+        $toDate = $request->input('to');
+        $exportFormat = $request->input('exportFormat');
+
+        // Get data for the patient report within the date range
+        $reportData = Patient::whereBetween('created_at', [$fromDate, $toDate])
+            ->get();
+
+        // Check if there is data for the report
+        if ($reportData->isEmpty()) {
+            return redirect()->back()->with('error', 'No patient data available for the selected date range');
+        }
+
+        // Export to PDF or Excel based on the selected format
+        if ($exportFormat === 'pdf') {
+            $pdfFileName = 'patient_report_' . now()->format('YmdHis') . '.pdf';
+            $pdfPath = public_path('reports') . '/' . $pdfFileName;
+
+            // Generate and save the PDF file
+            $pdf = PDF::loadView('admin.patients.patient-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->save($pdfPath);
+
+            // Download the PDF file
+            return response()->download($pdfPath, $pdfFileName);
+        } elseif ($exportFormat === 'excel') {
+            $excelFileName = 'patient_report_' . now()->format('YmdHis') . '.xlsx';
+
+            // Generate the Excel file and return it as a download
+            // Example: Excel::store(new PatientReportExport($reportData, $fromDate, $toDate), 'reports/' . $excelFileName, 'public');
+
+            // Provide the file download link
+            return response()->download(public_path('reports/' . $excelFileName))->deleteFileAfterSend(true);
+        }
+
+        return redirect()->back()
+            ->with('success', 'Patient report generated successfully')
+            ->with('pdfFileName', $pdfFileName ?? null)
+            ->with('excelFileName', $excelFileName ?? null);
     }
 }

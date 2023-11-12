@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Models\Distribution;
 use App\Models\Patient;
 use App\Models\Medicine;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Exports\DistributionReportExport;
+use Illuminate\Support\Facades\Response;
 
 class DistributionController extends Controller
 {
@@ -142,5 +145,52 @@ class DistributionController extends Controller
         } elseif ($operation === 'decrement') {
             $medicine->decrement('stocks', $quantity);
         }
+    }
+
+    public function generateDistributionReport(Request $request)
+    {
+        // Validate the input
+        $request->validate([
+            'from' => 'required|date',
+            'to' => 'required|date|after_or_equal:from',
+            'exportFormat' => 'required|in:pdf,excel',
+        ]);
+
+        $fromDate = $request->input('from');
+        $toDate = $request->input('to');
+        $exportFormat = $request->input('exportFormat');
+
+        // Get data for the distribution report within the date range
+        $reportData = Distribution::with(['patient', 'medicine'])
+            ->whereBetween('created_at', [$fromDate, $toDate])
+            ->get();
+
+        // Check if there is data for the report
+        if ($reportData->isEmpty()) {
+            return redirect()->back()->with('error', 'No distribution data available for the selected date range');
+        }
+
+        // Export to PDF or Excel based on the selected format
+        if ($exportFormat === 'pdf') {
+            $pdfFileName = 'distribution_report_' . now()->format('YmdHis') . '.pdf';
+            $pdfPath = public_path('reports') . '/' . $pdfFileName;
+
+            // Generate and save the PDF file
+            $pdf = Pdf::loadView('admin.distributions.distribution-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->save($pdfPath);
+
+            // Download the PDF file
+            return response()->download($pdfPath, $pdfFileName);
+        } elseif ($exportFormat === 'excel') {
+            $excelFileName = 'distribution_report_' . now()->format('YmdHis') . '.xlsx';
+
+            // Generate the Excel file and return it as a download
+            return (new DistributionReportExport($reportData, $fromDate, $toDate))->download($excelFileName);
+        }
+
+        return redirect()->back()
+            ->with('success', 'Distribution report generated successfully')
+            ->with('pdfFileName', $pdfFileName ?? null)
+            ->with('excelFileName', $excelFileName ?? null);
     }
 }

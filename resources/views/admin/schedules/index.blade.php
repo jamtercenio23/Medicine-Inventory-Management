@@ -49,6 +49,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Barangay</th>
+                                    <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -57,18 +58,19 @@
                                     <tr>
                                         <td>{{ $schedule->id }}</td>
                                         <td>{{ $schedule->barangay->name }}</td>
+                                        <td>{{ $schedule->created_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showScheduleModal{{ $schedule->id }}">
-                                                <i class="fas fa-eye"></i> Show
+                                                <i class="fas fa-eye"></i>
                                             </button>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editScheduleModal{{ $schedule->id }}">
-                                                <i class="fas fa-edit"></i> Edit
+                                                <i class="fas fa-edit"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#deleteScheduleModal{{ $schedule->id }}">
-                                                <i class="fas fa-trash"></i> Delete
+                                                <i class="fas fa-trash"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -90,7 +92,11 @@
         </div>
 
         <div class="my-4 text-muted">
-            <div class="float-left"></div>
+            <div class="float-left">
+                <div class="credits">
+                    <p>Mabini Health Center</p>
+                </div>
+            </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
