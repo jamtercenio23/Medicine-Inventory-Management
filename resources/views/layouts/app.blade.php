@@ -115,7 +115,7 @@
 
     <style>
         body {
-            /* overflow: hidden; */
+            overflow: auto;
         }
 
         body::before {
