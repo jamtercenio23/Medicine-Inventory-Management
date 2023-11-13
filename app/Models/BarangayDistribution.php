@@ -10,9 +10,12 @@ class BarangayDistribution extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     protected $table = 'barangay_distributions';
 
     protected $fillable = [
+        'barangay_id',
+        'bhw_id',
         'barangay_patient_id',
         'barangay_medicine_id',
         'stocks',
@@ -20,14 +23,17 @@ class BarangayDistribution extends Model
         'diagnose',
     ];
 
-
-    public function patient()
+    public function barangayPatient()
     {
         return $this->belongsTo(BarangayPatient::class, 'barangay_patient_id');
     }
 
-    public function medicine()
+    public function barangayMedicine()
     {
         return $this->belongsTo(BarangayMedicine::class, 'barangay_medicine_id');
+    }
+    public function bhw()
+    {
+        return $this->belongsTo(User::class, 'bhw_id');
     }
 }

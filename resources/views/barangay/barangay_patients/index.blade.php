@@ -6,9 +6,11 @@
     <div class="container">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Manage Patients</h1>
+            @if (auth()->user()->isBHW())
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createBarangayPatientModal">
                 <i class="fas fa-plus"></i> Add Patient
             </button>
+            @endif
         </div>
         @if (session('success'))
             <div class="alert alert-success">
@@ -62,10 +64,12 @@
                                         <td>{{ $barangayPatient->first_name }} {{ $barangayPatient->last_name }}</td>
                                         <td>{{ $barangayPatient->created_at }}</td>
                                         <td>
+
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showBarangayPatientModal{{ $barangayPatient->id }}">
                                                 <i class="fas fa-eye"></i>
                                             </button>
+                                            @if (auth()->user()->isBHW())
                                             <button type of="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editBarangayPatientModal{{ $barangayPatient->id }}">
                                                 <i class="fas fa-edit"></i>
@@ -74,6 +78,7 @@
                                                 data-target="#deleteBarangayPatientModal{{ $barangayPatient->id }}">
                                                 <i class="fas fa-trash"></i>
                                             </button>
+                                            @endif
                                         </td>
                                     </tr>
 

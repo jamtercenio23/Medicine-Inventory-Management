@@ -15,11 +15,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="patient_id">Patient:</label>
-                                <select class="form-control" id="patient_id" name="patient_id" required>
+                                <label for="barangay_patient_id">Barangay Patient:</label>
+                                <select class="form-control" id="barangay_patient_id" name="barangay_patient_id" required>
                                     @foreach ($barangayPatients as $barangayPatient)
-                                        <option value="{{ $barangayPatient->id }}">{{ $barangayPatient->first_name }}
-                                            {{ $barangayPatient->last_name }}</option>
+                                        @if (auth()->user()->isBHW() && $barangayPatient->barangay_id !== auth()->user()->barangay_id)
+                                            @continue
+                                        @endif
+                                        <option value="{{ $barangayPatient->id }}">{{ $barangayPatient->first_name }} {{ $barangayPatient->last_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -28,8 +30,10 @@
                                 <select class="form-control" id="medicine_id" name="medicine_id" required>
                                     @foreach ($barangayMedicines as $barangayMedicine)
                                         @if ($barangayMedicine->stocks > 0 && $barangayMedicine->expiration_date > now()->toDateString())
-                                            <option value="{{ $barangayMedicine->id }}">{{ $barangayMedicine->generic_name }} -
-                                                {{ $barangayMedicine->brand_name }} | Stocks: {{ $barangayMedicine->stocks }}</option>
+                                            @if (auth()->user()->isBHW() && $barangayMedicine->barangay_id !== auth()->user()->barangay_id)
+                                                @continue
+                                            @endif
+                                            <option value="{{ $barangayMedicine->id }}">{{ $barangayMedicine->generic_name }} - {{ $barangayMedicine->brand_name }} | Stocks: {{ $barangayMedicine->stocks }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -46,8 +50,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="checkup_date">Checkup Date:</label>
-                                <input type="date" class="form-control" id="checkup_date" name="checkup_date"
-                                    required>
+                                <input type="date" class="form-control" id="checkup_date" name="checkup_date" required>
                             </div>
                         </div>
                     </div>

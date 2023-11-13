@@ -6,9 +6,12 @@
     <div class="container">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Manage Distributions</h1>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createDistributionModal">
-                <i class="fas fa-plus"></i> Add Distribution
-            </button>
+            @if (auth()->user()->isBHW())
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                    data-target="#createDistributionModal">
+                    <i class="fas fa-plus"></i> Add Distribution
+                </button>
+            @endif
         </div>
 
         <!-- Display alert message if present -->
@@ -53,32 +56,47 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Patient</th>
+                                    <th>Checkup Date</th>
+                                    <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($barangayDistributions as $barangayDistribution)
+                                    @if (auth()->user()->isBHW() && $barangayDistribution->bhw_id != auth()->user()->id)
+                                        {{-- Skip displaying distributions created by other BHWs --}}
+                                        @continue
+                                    @endif
+
                                     <tr>
                                         <td>{{ $barangayDistribution->id }}</td>
-                                        <td>{{ $barangayDistribution->patient->first_name }}
-                                            {{ $barangayDistribution->patient->last_name }}
+                                        <td>
+                                            @if ($barangayDistribution->barangayPatient)
+                                                {{ $barangayDistribution->barangayPatient->first_name }}
+                                                {{ $barangayDistribution->barangayPatient->last_name }}
+                                            @else
+                                                N/A
+                                            @endif
                                         </td>
+                                        <td>{{ $barangayDistribution->checkup_date }}</td>
+                                        <td>{{ $barangayDistribution->created_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showDistributionModal{{ $barangayDistribution->id }}">
-                                                <i class="fas fa-eye"></i> Show
+                                                <i class="fas fa-eye"></i>
                                             </button>
-                                            <button type of="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                            @if (auth()->user()->isBHW())
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editDistributionModal{{ $barangayDistribution->id }}">
-                                                <i class="fas fa-edit"></i> Edit
+                                                <i class="fas fa-edit"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#deleteDistributionModal{{ $barangayDistribution->id }}">
-                                                <i class="fas fa-trash"></i> Delete
+                                                <i class="fas fa-trash"></i>
                                             </button>
+                                            @endif
                                         </td>
                                     </tr>
-
                                     <!-- Show Distribution Modal -->
                                     @include('barangay.barangay_distributions.show_modal', [
                                         'barangayDistribution' => $barangayDistribution,

@@ -66,7 +66,7 @@
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showbarangayMedicineModal{{ $barangayMedicine->id }}">
-                                                <i class="fas fa-eye"></i> Show
+                                                <i class="fas fa-eye"></i>
                                             </button>
                                         </td>
                                     </tr>

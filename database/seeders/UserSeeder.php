@@ -63,7 +63,7 @@ class UserSeeder extends Seeder
             'name' => $barangayName . ' BHW',
             'email' => strtolower($barangayName) . "@example.com",
             'password' => Hash::make('admin'),
-            'is_active' => '0',
+            'is_active' => '1',
             'barangay_id' => $barangay->id,
         ]);
 

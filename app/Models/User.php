@@ -57,7 +57,7 @@ class User extends Authenticatable
     }
     public function isBarangayUser()
     {
-        return $this->role === 'barangay';
+        return $this->hasRole('barangay');
     }
     public function barangay()
     {

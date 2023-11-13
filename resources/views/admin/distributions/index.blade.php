@@ -7,7 +7,8 @@
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Patient Distribution</h1>
             <div class="d-flex">
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createDistributionModal">
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                    data-target="#createDistributionModal">
                     <i class="fas fa-plus"></i> Add Distribution
                 </button>
                 <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
@@ -100,7 +101,8 @@
                                 @foreach ($distributions as $distribution)
                                     <tr>
                                         <td>{{ $distribution->id }}</td>
-                                        <td>{{ $distribution->patient->first_name }} {{ $distribution->patient->last_name }}</td>
+                                        <td>{{ $distribution->patient->first_name }} {{ $distribution->patient->last_name }}
+                                        </td>
                                         <td>{{ $distribution->checkup_date }}</td>
                                         <td>{{ $distribution->created_at }}</td>
                                         <td>
@@ -214,6 +216,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
     <style>
         .card {
             border: 1px solid #ccc;

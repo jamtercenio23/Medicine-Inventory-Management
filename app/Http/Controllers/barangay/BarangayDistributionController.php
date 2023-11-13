@@ -12,28 +12,105 @@ use Illuminate\Support\Facades\DB;
 
 class BarangayDistributionController extends Controller
 {
+    // public function index(Request $request)
+    // {
+    //     $query = $request->input('search');
+    //     $user = Auth::user();
+
+    //     if ($user->isBarangayUser()) {
+    //         $barangayDistributions = BarangayDistribution::where('barangay_id', $user->barangay_id);
+
+    //         // For BHW users, include distributions created by any BHW in the same barangay
+    //         if ($user->isBHW()) {
+    //             $barangayDistributions->where(function ($query) use ($user) {
+    //                 $query->where('bhw_id', $user->id)
+    //                     ->orWhere(function ($query) use ($user) {
+    //                         $query->where('barangay_id', $user->barangay_id)
+    //                             ->whereNull('bhw_id');
+    //                     });
+    //             });
+    //         }
+    //     } else {
+    //         // Show all distributions for admin users
+    //         $barangayDistributions = BarangayDistribution::query();
+    //     }
+
+    //     $barangayDistributions = $barangayDistributions
+    //         ->with(['barangayPatient', 'barangayMedicine'])
+    //         ->when($query, function ($queryBuilder) use ($query) {
+    //             $queryBuilder->whereHas('barangayPatient', function ($subquery) use ($query) {
+    //                 $subquery->where('first_name', 'like', '%' . $query . '%')
+    //                     ->orWhere('last_name', 'like', '%' . $query . '%');
+    //             });
+    //         })
+    //         ->paginate($request->input('entries', 10));
+
+    //     // Loop through the results and handle null values
+    //     $barangayDistributions->each(function ($distribution) {
+    //         $distribution->barangayPatient; // Access the relationship to trigger loading
+
+    //         // Check if the relationship is not null before accessing its properties
+    //         if ($distribution->barangayPatient) {
+    //             $distribution->patient_first_name = $distribution->barangayPatient->first_name;
+    //             // Add other properties as needed
+    //         } else {
+    //             $distribution->patient_first_name = null; // or set a default value
+    //         }
+    //     });
+
+    //     // Define $barangayPatients and $barangayMedicines
+    //     $barangayPatients = BarangayPatient::all();
+    //     $barangayMedicines = BarangayMedicine::where('stocks', '>', 0)
+    //         ->where('expiration_date', '>=', now()->toDateString())
+    //         ->get();
+
+    //     return view('barangay.barangay_distributions.index', compact('barangayDistributions', 'barangayPatients', 'barangayMedicines', 'query'));
+    // }
+
     public function index(Request $request)
     {
         $query = $request->input('search');
         $user = Auth::user();
 
-        // Get barangay-specific distributions if the user is a barangay user
         if ($user->isBarangayUser()) {
             $barangayDistributions = BarangayDistribution::where('barangay_id', $user->barangay_id);
+
+            // For BHW users, include only distributions created by the same BHW in the same barangay
+            if ($user->isBHW()) {
+                $barangayDistributions->orWhere(function ($query) use ($user) {
+                    $query->where('bhw_id', $user->id)
+                        ->where('barangay_id', $user->barangay_id);
+                });
+            }
         } else {
             // Show all distributions for admin users
             $barangayDistributions = BarangayDistribution::query();
         }
 
-        $barangayDistributions = $barangayDistributions->with(['patient', 'medicine'])
+        $barangayDistributions = $barangayDistributions
+            ->with(['barangayPatient', 'barangayMedicine'])
             ->when($query, function ($queryBuilder) use ($query) {
-                $queryBuilder->whereHas('patient', function ($subquery) use ($query) {
+                $queryBuilder->whereHas('barangayPatient', function ($subquery) use ($query) {
                     $subquery->where('first_name', 'like', '%' . $query . '%')
                         ->orWhere('last_name', 'like', '%' . $query . '%');
                 });
             })
             ->paginate($request->input('entries', 10));
 
+        // Loop through the results and handle null values
+        $barangayDistributions->each(function ($distribution) {
+            $distribution->barangayPatient; // Access the relationship to trigger loading
+
+            // Check if the relationship is not null before accessing its properties
+            if ($distribution->barangayPatient) {
+                $distribution->patient_first_name = $distribution->barangayPatient->first_name;
+                // Add other properties as needed
+            } else {
+                $distribution->patient_first_name = null; // or set a default value
+            }
+        });
+
+        // Define $barangayPatients and $barangayMedicines
         $barangayPatients = BarangayPatient::all();
         $barangayMedicines = BarangayMedicine::where('stocks', '>', 0)
             ->where('expiration_date', '>=', now()->toDateString())
@@ -44,89 +121,100 @@ class BarangayDistributionController extends Controller
 
     public function create()
     {
-        $barangayPatients = BarangayPatient::all();
-        $barangayMedicines = BarangayMedicine::where('stocks', '>', 0)
-            ->where('expiration_date', '>=', now()->toDateString())
-            ->get();
+        $user = auth()->user();
+        dd($user->getRoleNames());
+        // Check if the user is a barangay user or admin
+        if ($user->hasRole('barangay') || $user->hasRole('admin')) {
+            // Fetch patients and medicines related to the user's barangay
+            $barangayPatients = BarangayPatient::where('barangay_id', $user->barangay_id)->get();
+            $barangayMedicines = BarangayMedicine::where('stocks', '>', 0)
+                ->where('expiration_date', '>=', now()->toDateString())
+                ->where('barangay_id', $user->barangay_id)
+                ->get();
 
-        return view('barangay.barangay_distributions.create', compact('barangayPatients', 'barangayMedicines'));
+            return view('barangay.barangay_distributions.create', compact('barangayPatients', 'barangayMedicines'));
+        } else {
+            // User is not authorized
+            return redirect()->route('barangay-distributions.index')->with('error', 'Unauthorized to create distribution');
+        }
     }
-
-
     public function store(Request $request)
     {
-        $request->validate([
-            'barangay_patient_id' => 'required|exists:barangay_patients,id',
-            'barangay_medicine_id' => [
-                'required',
-                'exists:barangay_medicines,id',
-                function ($attribute, $value, $fail) use ($request) {
-                    $barangayMedicine = BarangayMedicine::find($value);
+        try {
+            $user = Auth::user();
 
-                    // Check if medicine is not expired
-                    if (!$barangayMedicine || $barangayMedicine->expiration_date < now()->toDateString()) {
-                        $fail('The selected medicine is expired.');
-                    }
-                },
-            ],
-            'stocks' => [
-                'required',
-                'integer',
-                function ($attribute, $value, $fail) use ($request) {
-                    $barangayMedicine = BarangayMedicine::find($request->input('barangay_medicine_id'));
+            // Check if the user is a BHW or admin
+            if ($user->isBHW() || $user->isAdmin()) {
+                // Associate with the user's barangay_id if it's a BHW user
+                $barangayId = $user->isBHW() ? $user->barangay_id : null;
 
-                    // Check if the requested stocks are available
-                    if (!$barangayMedicine || $barangayMedicine->stocks < $value) {
-                        $fail('The selected medicine does not have enough stocks.');
-                    }
-                },
-            ],
-            'checkup_date' => 'required|date',
-            'diagnose' => 'required|string',
-        ]);
+                // Create BarangayDistribution
+                $barangayDistribution = new BarangayDistribution([
+                    'barangay_patient_id' => $request->input('barangay_patient_id'),
+                    'barangay_medicine_id' => $request->input('medicine_id'),
+                    'stocks' => $request->input('stocks'),
+                    'checkup_date' => $request->input('checkup_date'),
+                    'diagnose' => $request->input('diagnose'),
+                    'bhw_id' => $user->isBHW() ? $user->id : null,
+                    'barangay_id' => $barangayId,
+                ]);
 
-        // Create BarangayDistribution
-        $barangayDistribution = BarangayDistribution::create($request->all());
+                // Save the distribution
+                $barangayDistribution->save();
 
-        // Update BarangayMedicine stock
-        $this->updateBarangayMedicineStock($barangayDistribution, 'decrement', $request->input('stocks'));
+                // Update BarangayMedicine stock
+                $this->updateBarangayMedicineStock($barangayDistribution, 'decrement', $request->input('stocks'));
 
-        return redirect()->route('barangay-distributions.index')->with('success', 'Distribution created successfully');
+                return redirect()->route('barangay-distributions.index')->with('success', 'Distribution created successfully');
+            } else {
+                return redirect()->route('barangay-distributions.index')->with('error', 'Unauthorized to create distribution');
+            }
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
-
-
     public function update(Request $request, BarangayDistribution $barangayDistribution)
     {
         $request->validate([
-            'barangay_id' => 'required|exists:barangays,id',
-            'barangay_patient_id' => 'required|exists:barangay_patients,id',
-            'barangay_medicine_id' => 'required|exists:barangay_medicines,id',
+            'patient_id' => 'required|exists:barangay_patients,id',
+            'medicine_id' => 'required|exists:barangay_medicines,id',
             'stocks' => 'required|integer',
             'checkup_date' => 'required|date',
             'diagnose' => 'required|string',
         ]);
 
-        // Get the original barangay distribution data
-        $originalBarangayDistribution = $barangayDistribution->fresh();
+        try {
+            // Get the original barangay distribution data
+            $originalBarangayDistribution = $barangayDistribution->fresh();
 
-        // Update BarangayDistribution
-        $barangayDistribution->update($request->all());
+            // Update BarangayDistribution
+            $barangayDistribution->update([
+                'barangay_patient_id' => $request->input('patient_id'),
+                'barangay_medicine_id' => $request->input('medicine_id'),
+                'stocks' => $request->input('stocks'),
+                'checkup_date' => $request->input('checkup_date'),
+                'diagnose' => $request->input('diagnose'),
+            ]);
 
-        // Calculate the stock change
-        $stockChange = $request->input('stocks') - $originalBarangayDistribution->stocks;
+            // Calculate the stock change
+            $stockChange = $request->input('stocks') - $originalBarangayDistribution->stocks;
 
-        // Update BarangayMedicine stock
-        if ($stockChange != 0) {
-            if ($stockChange > 0) {
-                // Increase stock in inventory
-                $this->updateBarangayMedicineStock($barangayDistribution, 'decrement', abs($stockChange));
-            } else {
-                // Decrease stock in inventory
-                $this->updateBarangayMedicineStock($barangayDistribution, 'increment', abs($stockChange));
+            // Update BarangayMedicine stock
+            if ($stockChange != 0) {
+                if ($stockChange > 0) {
+                    // Increase stock in inventory
+                    $this->updateBarangayMedicineStock($barangayDistribution, 'decrement', abs($stockChange));
+                } else {
+                    // Decrease stock in inventory
+                    $this->updateBarangayMedicineStock($barangayDistribution, 'increment', abs($stockChange));
+                }
             }
-        }
 
-        return redirect()->route('barangay-distributions.index')->with('success', 'Distribution updated successfully');
+            return redirect()->route('barangay-distributions.index')->with('success', 'Distribution updated successfully');
+        } catch (\Exception $e) {
+            // Handle the exception, you might want to log it or return an error message
+            return redirect()->route('barangay-distributions.index')->with('error', 'Failed to update distribution');
+        }
     }
 
     public function destroy(BarangayDistribution $barangayDistribution)

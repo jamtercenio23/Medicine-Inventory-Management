@@ -36,6 +36,7 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     });
     Route::group(['middleware' => 'permission:view-medicines'], function () {
         Route::resource('admin/medicines', MedicineController::class);
+        Route::get('/medicines/autocomplete', [MedicineController::class, 'autocomplete'])->name('medicines.autocomplete');
     });
     Route::group(['middleware' => 'permission:view-out-of-stock'], function () {
         Route::get('/medicines/out-of-stock/{medicine}/edit', [MedicineController::class, 'editOutOfStock'])->name('out-of-stock.edit');
@@ -54,6 +55,7 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     });
     Route::group(['middleware' => 'permission:view-patients'], function () {
         Route::resource('admin/patients', PatientController::class);
+        Route::get('/patients/autocomplete', [PatientController::class, 'autocomplete'])->name('patients.autocomplete');
     });
     Route::group(['middleware' => 'permission:view-barangays'], function () {
         Route::resource('admin/barangays', BarangayController::class);

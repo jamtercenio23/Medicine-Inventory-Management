@@ -19,6 +19,9 @@
                                 <label for="patient_id">Patient:</label>
                                 <select class="form-control" id="patient_id" name="patient_id" required>
                                     @foreach ($barangayPatients as $barangayPatient)
+                                        @if (auth()->user()->isBHW() && $barangayPatient->barangay_id !== auth()->user()->barangay_id)
+                                            @continue
+                                        @endif
                                         <option value="{{ $barangayPatient->id }}"
                                             {{ $barangayDistribution->barangayPatient->id == $barangayPatient->id ? 'selected' : '' }}>
                                             {{ $barangayPatient->first_name }} {{ $barangayPatient->last_name }}
@@ -30,6 +33,9 @@
                                 <label for="medicine_id">Medicine:</label>
                                 <select class="form-control" id="medicine_id" name="medicine_id" required>
                                     @foreach ($barangayMedicines as $barangayMedicine)
+                                        @if (auth()->user()->isBHW() && $barangayMedicine->barangay_id !== auth()->user()->barangay_id)
+                                            @continue
+                                        @endif
                                         <option value="{{ $barangayMedicine->id }}"
                                             {{ $barangayDistribution->barangayMedicine->id == $barangayMedicine->id ? 'selected' : '' }}>
                                             {{ $barangayMedicine->brand_name }}
@@ -62,4 +68,3 @@
         </div>
     </div>
 </div>
-

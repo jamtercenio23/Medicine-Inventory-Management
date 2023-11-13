@@ -28,7 +28,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('distribution_barangay.generateDistributionBarangayReport') }}" method="post">
+                        <form action="{{ route('distribution_barangay.generateDistributionBarangayReport') }}"
+                            method="post">
                             @csrf
                             <div class="form-group">
                                 <label for="fromDate">From Date:</label>
@@ -107,9 +108,6 @@
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showDistributionBarangayModal{{ $distribution_barangay->id }}">
                                                 <i class="fas fa-eye"></i> </button>
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editDistributionBarangayModal{{ $distribution_barangay->id }}">
-                                                <i class="fas fa-edit"></i> </button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#deleteDistributionBarangayModal{{ $distribution_barangay->id }}">
                                                 <i class="fas fa-trash"></i> </button>
@@ -118,11 +116,6 @@
 
                                     <!-- Show Distribution to Barangay Modal -->
                                     @include('admin.distribution_barangay.show_modal', [
-                                        'distribution' => $distribution_barangay,
-                                    ])
-
-                                    <!-- Edit Distribution to Barangay Modal -->
-                                    @include('admin.distribution_barangay.edit_modal', [
                                         'distribution' => $distribution_barangay,
                                     ])
 
@@ -217,6 +210,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
     <style>
         .card {
             border: 1px solid #ccc;

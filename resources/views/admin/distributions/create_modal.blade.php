@@ -16,7 +16,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="patient_id">Patient:</label>
-                                <select class="form-control" id="patient_id" name="patient_id" required>
+                                <select class="form-control select2" id="patient_id" name="patient_id" required>
                                     @foreach ($patients as $patient)
                                         <option value="{{ $patient->id }}">{{ $patient->first_name }}
                                             {{ $patient->last_name }}</option>
@@ -25,7 +25,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="medicine_id">Medicine:</label>
-                                <select class="form-control" id="medicine_id" name="medicine_id" required>
+                                <select class="form-control select2" id="medicine_id" name="medicine_id" required>
                                     @foreach ($medicines as $medicine)
                                         @if ($medicine->stocks > 0 && $medicine->expiration_date > now()->toDateString())
                                             <option value="{{ $medicine->id }}">{{ $medicine->generic_name }} -
@@ -58,3 +58,12 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        // Initialize Select2 for patient and medicine selects
+        $(document).ready(function () {
+            $('.select2').select2();
+        });
+    </script>
+@endpush
