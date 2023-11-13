@@ -20,17 +20,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="last_name">Last Name:</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ $patient->last_name }}" placeholder="Enter the Last Name"required>
+                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ $patient->last_name }}" placeholder="Enter the Last Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="birthdate">Birthdate:</label>
                                 <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{ $patient->birthdate }}" required>
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="age">Age:</label>
-                                <input type="number" class="form-control" id="age" name="age" value="{{ $patient->age }}" placeholder="Enter the Age"required>
+                                <input type="number" class="form-control" id="age" name="age" value="{{ $patient->age }}" placeholder="Enter the Age" required>
                             </div>
                             <div class="form-group">
                                 <label for="gender">Gender:</label>
@@ -40,6 +38,8 @@
                                     <option value="N/A" {{ $patient->gender == 'N/A' ? 'selected' : '' }}>N/A</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="barangay_id">Barangay:</label>
                                 <select class="form-control" id="barangay_id" name="barangay_id" required>
@@ -47,6 +47,22 @@
                                         <option value="{{ $barangay->id }}" {{ $patient->barangay_id == $barangay->id ? 'selected' : '' }}>{{ $barangay->name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="blood_pressure">Blood Pressure:</label>
+                                <input type="text" class="form-control" id="blood_pressure" name="blood_pressure" value="{{ $patient->blood_pressure }}" placeholder="Enter Blood Pressure">
+                            </div>
+                            <div class="form-group">
+                                <label for="heart_rate">Heart Rate:</label>
+                                <input type="number" class="form-control" id="heart_rate" name="heart_rate" value="{{ $patient->heart_rate }}" placeholder="Enter Heart Rate">
+                            </div>
+                            <div class="form-group">
+                                <label for="weight">Weight:</label>
+                                <input type="number" class="form-control" id="weight" name="weight" value="{{ $patient->weight }}" placeholder="Enter Weight">
+                            </div>
+                            <div class="form-group">
+                                <label for="height">Height:</label>
+                                <input type="number" class="form-control" id="height" name="height" value="{{ $patient->height }}" placeholder="Enter Height">
                             </div>
                         </div>
                     </div>

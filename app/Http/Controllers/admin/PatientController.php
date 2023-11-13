@@ -10,6 +10,7 @@ use App\Models\Barangay;
 use Maatwebsite\Excel\Excel;
 use Illuminate\Support\Facades\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
+
 class PatientController extends Controller
 {
     public function index(Request $request)
@@ -55,13 +56,17 @@ class PatientController extends Controller
             'age' => 'required|integer',
             'gender' => 'required|string',
             'barangay_id' => 'required|exists:barangays,id',
-
+            'blood_pressure' => 'nullable|string',
+            'heart_rate' => 'nullable|integer',
+            'weight' => 'nullable|numeric',
+            'height' => 'nullable|numeric',
         ]);
 
         Patient::create($request->all());
 
         return redirect()->route('patients.index')->with('success', 'Patient created successfully');
     }
+
 
     public function edit(Patient $patient)
     {
@@ -79,7 +84,10 @@ class PatientController extends Controller
             'age' => 'required|integer',
             'gender' => 'required|string',
             'barangay_id' => 'required|exists:barangays,id',
-
+            'blood_pressure' => 'nullable|string',
+            'heart_rate' => 'nullable|integer',
+            'weight' => 'nullable|numeric',
+            'height' => 'nullable|numeric',
         ]);
 
         $patient->update($request->all());

@@ -1,4 +1,5 @@
-<div class="modal fade" id="showPatientModal{{ $patient->id }}" tabindex="-1" role="dialog" aria-labelledby="showPatientModalLabel{{ $patient->id }}" aria-hidden="true">
+<div class="modal fade" id="showPatientModal{{ $patient->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="showPatientModalLabel{{ $patient->id }}" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,12 +14,17 @@
                         <p><strong>First Name:</strong><br>{{ $patient->first_name }}</p>
                         <p><strong>Last Name:</strong><br>{{ $patient->last_name }}</p>
                         <p><strong>Birthdate:</strong><br>{{ $patient->birthdate }}</p>
-
-                    </div>
-                    <div class="col-md-6">
                         <p><strong>Age:</strong><br>{{ $patient->age }}</p>
                         <p><strong>Gender:</strong><br>{{ $patient->gender }}</p>
+                    </div>
+                    <div class="col-md-6">
                         <p><strong>Barangay:</strong><br>{{ $patient->barangay->name }}</p>
+                        <p><strong>Blood Pressure:</strong><br>{{ $patient->blood_pressure }} -
+                            {{ $patient->getBloodPressureStatus() }}</p>
+                        <p><strong>Heart Rate:</strong><br>{{ $patient->heart_rate }} -
+                            {{ $patient->getHeartRateStatus() }}</p>
+                        <p><strong>Weight:</strong><br>{{ $patient->weight }} kg</p>
+                        <p><strong>Height:</strong><br>{{ $patient->height }} cm</p>
                     </div>
                 </div>
                 <div style="background-color: #f7f7f7; padding: 10px; margin-top: 20px;">
@@ -29,7 +35,8 @@
                         <ul>
                             @foreach ($patient->distributions as $distribution)
                                 <li>
-                                    <p><strong>Medicine Name: </strong> {{ $distribution->medicine->generic_name }} - {{ $distribution->medicine->brand_name }}</p>
+                                    <p><strong>Medicine Name: </strong> {{ $distribution->medicine->generic_name }} -
+                                        {{ $distribution->medicine->brand_name }}</p>
                                     <p><strong>Stocks: </strong>{{ $distribution->stocks }}</p>
                                     <p><strong>Diagnose: </strong>{{ $distribution->diagnose }}</p>
                                     <p><strong>Checkup Date: </strong>{{ $distribution->checkup_date }}</p>
@@ -40,7 +47,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i>
+                    Close</button>
             </div>
         </div>
     </div>
