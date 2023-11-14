@@ -25,4 +25,8 @@ class BarangayPatient extends Model
     {
         return $this->belongsTo(Barangay::class);
     }
+    public function barangayDistributions()
+    {
+        return $this->hasMany(BarangayDistribution::class);
+    }
 }

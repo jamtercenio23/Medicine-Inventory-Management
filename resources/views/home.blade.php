@@ -141,7 +141,7 @@
                                     <h5 class="card-title">Distributions</h5>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Total Barangay Distributions:
-                                            {{ $totalBarangayDistributions }}</li>
+                                            {{ $totalDistributionBarangay }}</li>
                                         <li class="list-group-item">Total Patient Distributions:
                                             {{ $totalPatientDistributions }}</li>
                                     </ul>

@@ -21,15 +21,15 @@
                         <p><strong>Barangay:</strong><br>{{ $barangayPatient->barangay->name }}</p>
                     </div>
                 </div>
-                {{-- <div style="background-color: #f7f7f7; padding: 10px; margin-top: 20px;">
+                <div style="background-color: #f7f7f7; padding: 10px; margin-top: 20px;">
                     <h5><strong>Medicines Distributed:</strong></h5>
-                    @if ($barangayPatient->barangayDistribution->isEmpty())
+                    @if ($barangayPatient->barangayDistributions->isEmpty())
                         <p>No medicines distributed to this patient.</p>
                     @else
                         <ul>
-                            @foreach ($barangayPatients->barangayDistributions as $barangayDistribution)
+                            @foreach ($barangayPatient->barangayDistributions as $barangayDistribution)
                                 <li>
-                                    <p><strong>Medicine Name: </strong> {{ $barangayDistribution->medicine->generic_name }} - {{ $barangayDistribution->medicine->brand_name }}</p>
+                                    <p><strong>Medicine Name: </strong>{{ $barangayDistribution->barangayMedicine->generic_name }} - {{ $barangayDistribution->barangayMedicine->brand_name }}</p>
                                     <p><strong>Stocks: </strong>{{ $barangayDistribution->stocks }}</p>
                                     <p><strong>Diagnose: </strong>{{ $barangayDistribution->diagnose }}</p>
                                     <p><strong>Checkup Date: </strong>{{ $barangayDistribution->checkup_date }}</p>
@@ -38,7 +38,7 @@
                         </ul>
                     @endif
                 </div>
-            </div> --}}
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
             </div>
