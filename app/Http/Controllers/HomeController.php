@@ -14,6 +14,7 @@ use App\Models\BarangayPatient;
 use Charts;
 use Chartisan\PHP\Chartisan;
 use ConsoleTVs\Charts\Classes\Chart;
+use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     /**
@@ -33,18 +34,64 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Fetch total counts
-        $totalMedicines = Medicine::count();
-        $totalPatients = Patient::count();
-        $totalBarangay = Barangay::count();
-        $totalDistributionBarangay = DistributionBarangay::count();
-        $totalPatientDistributions = Distribution::count();
-        $totalOutOfStockMedicines = Medicine::where('stocks', 0)->count();
-        $totalExpiredMedicines = Medicine::where('expiration_date', '<', now())->count();
-        $totalBarangayMedicines = BarangayMedicine::count();
-        $totalBarangayPatients = Patient::count();
-        $totalBarangayDistributions = BarangayDistribution::count();
-        // Pass counts to the view
-        return view('home', compact('totalMedicines', 'totalPatients', 'totalBarangay', 'totalDistributionBarangay', 'totalPatientDistributions', 'totalOutOfStockMedicines', 'totalExpiredMedicines', 'totalBarangayMedicines', 'totalBarangayPatients', 'totalBarangayDistributions'));
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Check user role and filter data accordingly
+        if ($user->isAdmin()) {
+            // Admin Dashboard logic
+            $totalMedicines = Medicine::count();
+            $totalPatients = Patient::count();
+            $totalBarangay = Barangay::count();
+            $totalDistributionBarangay = DistributionBarangay::count();
+            $totalPatientDistributions = Distribution::count();
+            $totalOutOfStockMedicines = Medicine::where('stocks', 0)->count();
+            $totalExpiredMedicines = Medicine::where('expiration_date', '<', now())->count();
+
+            return view('home', compact(
+                'totalMedicines',
+                'totalPatients',
+                'totalBarangay',
+                'totalDistributionBarangay',
+                'totalPatientDistributions',
+                'totalOutOfStockMedicines',
+                'totalExpiredMedicines'
+            ));
+        } elseif ($user->isBHW()) {
+            // BHW Dashboard
+            $barangayId = $user->barangay->id;
+
+            $totalBarangayMedicines = BarangayMedicine::where('barangay_id', $barangayId)->count();
+            $totalBarangayPatients = BarangayPatient::where('barangay_id', $barangayId)->count();
+            $totalBarangayDistributions = BarangayDistribution::where('barangay_id', $barangayId)->count();
+
+            return view('home', compact(
+                'totalBarangayMedicines',
+                'totalBarangayPatients',
+                'totalBarangayDistributions'
+            ));
+        } elseif ($user->isPharmacist()) {
+            // Pharmacist Dashboard logic
+            $totalMedicines = Medicine::count();
+            $totalPatients = Patient::count();
+            $totalBarangay = Barangay::count();
+            $totalDistributionBarangay = DistributionBarangay::count();
+            $totalPatientDistributions = Distribution::count();
+            $totalOutOfStockMedicines = Medicine::where('stocks', 0)->count();
+            $totalExpiredMedicines = Medicine::where('expiration_date', '<', now())->count();
+
+            return view('home', compact(
+                'totalMedicines',
+                'totalPatients',
+                'totalBarangay',
+                'totalDistributionBarangay',
+                'totalPatientDistributions',
+                'totalOutOfStockMedicines',
+                'totalExpiredMedicines'
+            ));
+        } else {
+            // Default logic for other user roles
+            return view('home'); // Adjust the default view as needed
+        }
     }
 }
