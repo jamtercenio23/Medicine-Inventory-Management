@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\BarangayDistribution;
+use App\Models\BarangayMedicine;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Support\Collection;
@@ -31,11 +31,12 @@ class MedicineReportExport implements FromCollection, WithHeadings
         return [
             'ID',
             'barangay_id',
-            'patient_id',
-            'medicine_id',
+            'generic_name',
+            'brand_name',
+            'category_id',
+            'price',
             'stocks',
-            'checkup_date',
-            'diagnose',
+            'expiration_date',
             'Created At',
             'Updated At',
         ];

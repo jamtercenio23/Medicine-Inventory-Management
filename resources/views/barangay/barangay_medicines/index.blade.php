@@ -6,6 +6,48 @@
     <div class="container">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Barangay Medicines</h1>
+            <div class="d-flex">
+                @if (auth()->user()->isBHW())
+                    <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
+                        data-target="#generateBarangayMedicineReportModal">
+                        <i class="fas fa-file-export"></i> Generate Report
+                    </button>
+                @endif
+            </div>
+        </div>
+        <div class="modal fade" id="generateBarangayMedicineReportModal" tabindex="-1" role="dialog"
+            aria-labelledby="generateBarangayMedicineReportModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="generateBarangayMedicineReportModalLabel">Generate Report</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('barangay-medicines.generateBarangayMedicineReport') }}"
+                            method="post">
+                            @csrf
+                            <div class="form-group">
+                                <label for="fromDate">From Date:</label>
+                                <input type="date" class="form-control" id="fromDate" name="from" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="toDate">To Date:</label>
+                                <input type="date" class="form-control" id="toDate" name="to" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exportFormat">Export Format</label>
+                                <select class="form-control" id="exportFormat" name="exportFormat" required>
+                                    <option value="pdf">PDF</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Generate</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
         @if (session('success'))

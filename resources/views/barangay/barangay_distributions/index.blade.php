@@ -8,15 +8,15 @@
             <h1>Manage Distributions</h1>
             <div class="d-flex">
                 @if (auth()->user()->isBHW())
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                    data-target="#createDistributionModal">
-                    <i class="fas fa-plus"></i> Add Distribution
-                </button>
-                <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
-                    data-target="#generateBarangayDistributionReportModal">
-                    <i class="fas fa-file-export"></i> Generate Report
-                </button>
-            @endif
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#createDistributionModal">
+                        <i class="fas fa-plus"></i> Add Distribution
+                    </button>
+                    <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
+                        data-target="#generateBarangayDistributionReportModal">
+                        <i class="fas fa-file-export"></i> Generate Report
+                    </button>
+                @endif
             </div>
         </div>
         <div class="modal fade" id="generateBarangayDistributionReportModal" tabindex="-1" role="dialog"
@@ -30,7 +30,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('barangay-distributions.generateBarangayDistributionReport') }}" method="post">
+                        <form action="{{ route('barangay-distributions.generateBarangayDistributionReport') }}"
+                            method="post">
                             @csrf
                             <div class="form-group">
                                 <label for="fromDate">From Date:</label>
@@ -122,14 +123,14 @@
                                                 <i class="fas fa-eye"></i>
                                             </button>
                                             @if (auth()->user()->isBHW())
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editDistributionModal{{ $barangayDistribution->id }}">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteDistributionModal{{ $barangayDistribution->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                    data-target="#editDistributionModal{{ $barangayDistribution->id }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#deleteDistributionModal{{ $barangayDistribution->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
                                             @endif
                                         </td>
                                     </tr>

@@ -105,3 +105,6 @@ Route::post('/distribution_barangay/generate-distribution-barangay-report', [Dis
 // BarangayDistribution
 Route::post('/barangay-distributions/generate-barangay-distribution-report', [BarangayDistributionController::class, 'generateBarangayDistributionReport'])
     ->name('barangay-distributions.generateBarangayDistributionReport');
+// BarangayMedicine
+    Route::post('/barangay-medicines/generate-barangay-medicine-report', [BarangayMedicineController::class, 'generateBarangayMedicineReport'])
+    ->name('barangay-medicines.generateBarangayMedicineReport');
