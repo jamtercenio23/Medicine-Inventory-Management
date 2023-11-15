@@ -36,4 +36,8 @@ class BarangayDistribution extends Model
     {
         return $this->belongsTo(User::class, 'bhw_id');
     }
+    public function barangay()
+    {
+        return $this->belongsTo(Barangay::class);
+    }
 }

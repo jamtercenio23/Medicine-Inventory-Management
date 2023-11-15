@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Barangay;
 use App\Models\BarangayPatient;
 use Illuminate\Support\Facades\Auth;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Exports\BarangayPatientReportExport;
 use Illuminate\Support\Facades\Response;
+
 class BarangayPatientController extends Controller
 {
     public function index(Request $request)
@@ -28,14 +29,17 @@ class BarangayPatientController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        $barangays = Barangay::all();
-
         $barangayPatients = $barangayPatients
-            ->when($query, function ($query) use ($request) {
-                $query->where('first_name', 'like', '%' . $request->input('search') . '%')
-                    ->orWhere('last_name', 'like', '%' . $request->input('search') . '%');
+            ->when(!$user->isAdmin(), function ($query) use ($request, $user) {
+                // Only apply the search condition if the user is not an admin
+                $query->where(function ($query) use ($request) {
+                    $query->where('first_name', 'like', '%' . $request->input('search') . '%')
+                        ->orWhere('last_name', 'like', '%' . $request->input('search') . '%');
+                });
             })
             ->paginate($request->input('entries', 10));
+
+        $barangays = Barangay::all();
 
         return view('barangay.barangay_patients.index', compact('barangayPatients', 'barangays', 'query'));
     }

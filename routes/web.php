@@ -36,7 +36,6 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     });
     Route::group(['middleware' => 'permission:view-medicines'], function () {
         Route::resource('admin/medicines', MedicineController::class);
-        Route::get('/medicines/autocomplete', [MedicineController::class, 'autocomplete'])->name('medicines.autocomplete');
     });
     Route::group(['middleware' => 'permission:view-out-of-stock'], function () {
         Route::get('/medicines/out-of-stock/{medicine}/edit', [MedicineController::class, 'editOutOfStock'])->name('out-of-stock.edit');
@@ -55,7 +54,6 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     });
     Route::group(['middleware' => 'permission:view-patients'], function () {
         Route::resource('admin/patients', PatientController::class);
-        Route::get('/patients/autocomplete', [PatientController::class, 'autocomplete'])->name('patients.autocomplete');
     });
     Route::group(['middleware' => 'permission:view-barangays'], function () {
         Route::resource('admin/barangays', BarangayController::class);
@@ -72,6 +70,15 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     // Barangay Route
     Route::group(['middleware' => 'permission:view-barangay_medicines'], function () {
         Route::resource('barangay/barangay-medicines', BarangayMedicineController::class);
+    });
+    Route::group(['middleware' => 'permission:view-barangay_out-of-stock'], function () {
+        Route::get('/barangay-medicines/out-of-stock/{medicine}/edit', [BarangayMedicineController::class, 'editOutOfStock'])->name('barangay-medicines.out-of-stock.edit');
+        Route::put('/barangay-medicines/out-of-stock/{medicine}', [BarangayMedicineController::class, 'updateOutOfStock'])->name('barangay-medicines.out-of-stock.update');
+        Route::get('/barangay-medicines/out-of-stock', [BarangayMedicineController::class, 'outOfStock'])->name('barangay-medicines.out-of-stock');
+    });
+    Route::group(['middleware' => 'permission:view-barangay_expired'], function () {
+        Route::get('/barangay-medicines/expired', [BarangayMedicineController::class, 'expired'])->name('barangay-medicines.expired');
+        Route::delete('/barangay-medicines/expired/{medicine}', [BarangayMedicineController::class, 'deleteExpired'])->name('barangay-medicines.delete-expired');
     });
     Route::group(['middleware' => 'permission:view-barangay_distributions'], function () {
         Route::resource('barangay/barangay-distributions', BarangayDistributionController::class);
@@ -103,10 +110,13 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     // BarangayMedicine
     Route::post('/barangay-medicines/generate-barangay-medicine-report', [BarangayMedicineController::class, 'generateBarangayMedicineReport'])
         ->name('barangay-medicines.generateBarangayMedicineReport');
+    Route::post('/barangay-medicines/generate-barangay-out-of-stock-report', [BarangayMedicineController::class, 'generateBarangayOutOfStockReport'])
+        ->name('barangay-medicines.generateBarangayOutOfStockReport');
+    Route::post('/barangay-medicines/generate-barangay-expired-report', [BarangayMedicineController::class, 'generateBarangayExpiredReport'])
+        ->name('barangay-medicines.generateBarangayExpiredReport');
     // BarangayPatient
     Route::post('/barangay-patients/generate-barangay-patient-report', [BarangayPatientController::class, 'generateBarangayPatientReport'])
         ->name('barangay-patients.generateBarangayPatientReport');
-
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

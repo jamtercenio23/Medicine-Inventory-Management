@@ -89,6 +89,7 @@
                                     <th>ID</th>
                                     <th>Barangay</th>
                                     <th>Name</th>
+                                    <th>Gender</th>
                                     <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
@@ -99,6 +100,7 @@
                                         <td>{{ $patient->id }}</td>
                                         <td>{{ $patient->barangay->name }}</td>
                                         <td>{{ $patient->first_name }} {{ $patient->last_name }}</td>
+                                        <td>{{ $patient->gender }}</td>
                                         <td>{{ $patient->created_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"

@@ -25,12 +25,16 @@ class Barangay extends Model
     {
         return $this->hasMany(Schedule::class);
     }
-    public function barangaypatients()
+    public function barangayPatients()
     {
         return $this->hasMany(BarangayPatient::class);
     }
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+    public function barangayDistributions()
+    {
+        return $this->hasMany(BarangayDistribution::class);
     }
 }

@@ -90,8 +90,11 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    @if (auth()->user()->isAdmin())
                                     <th>Barangay</th>
+                                    @endif
                                     <th>Name</th>
+                                    <th>Gender</th>
                                     <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
@@ -100,8 +103,11 @@
                                 @foreach ($barangayPatients as $barangayPatient)
                                     <tr>
                                         <td>{{ $barangayPatient->id }}</td>
+                                        @if (auth()->user()->isAdmin())
                                         <td>{{ $barangayPatient->barangay->name }}</td>
+                                        @endif
                                         <td>{{ $barangayPatient->first_name }} {{ $barangayPatient->last_name }}</td>
+                                        <td>{{ $barangayPatient->gender }}</td>
                                         <td>{{ $barangayPatient->created_at }}</td>
                                         <td>
 

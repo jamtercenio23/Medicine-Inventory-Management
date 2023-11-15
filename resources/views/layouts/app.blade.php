@@ -384,9 +384,16 @@
                             @endcan
                             @can('view-barangay_out-of-stock')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="#"><i
+                                    &nbsp; &nbsp;<a href="{{ route('barangay-medicines.out-of-stock') }}"><i
                                             class="fas fa-exclamation-triangle" style="margin-right: 20px;"></i>
                                         Out of Stock</a>
+                                </li>
+                            @endcan
+                            @can('view-barangay_expired')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    &nbsp; &nbsp;<a href="{{ route('barangay-medicines.expired') }}"><i class="fas fa-calendar-times"
+                                            style="margin-right: 20px;"></i> Expired
+                                        Medicines</a>
                                 </li>
                             @endcan
                         </div>

@@ -94,6 +94,9 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    @if (auth()->user()->isAdmin())
+                                    <th>Barangay</th>
+                                    @endif
                                     <th>Patient</th>
                                     <th>Checkup Date</th>
                                     <th>Created At</th>
@@ -107,6 +110,9 @@
                                     @endif
                                     <tr>
                                         <td>{{ $barangayDistribution->id }}</td>
+                                        @if (auth()->user()->isAdmin())
+                                        <td>{{ $barangayDistribution->barangay->name }}</td>
+                                        @endif
                                         <td>
                                             @if ($barangayDistribution->barangayPatient)
                                                 {{ $barangayDistribution->barangayPatient->first_name }}

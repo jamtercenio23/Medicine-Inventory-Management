@@ -1,41 +1,42 @@
 @extends('layouts.app')
 
-@section('title', 'Medicine Inventory - Barangay Medicines')
+@section('title', 'Medicine Inventory - Barangay Out of Stock Medicines')
 
 @section('content')
     <div class="container">
         <div class="mb-8 d-flex justify-content-between align-items-center">
-            <h1>Barangay Medicines</h1>
-            <div class="d-flex">
-                @if (auth()->user()->isBHW())
-                    <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
-                        data-target="#generateBarangayMedicineReportModal">
-                        <i class="fas fa-file-export"></i> Generate Report
-                    </button>
-                @endif
-            </div>
+            <h1>Barangay Out of Stock Medicines</h1>
+            @if (auth()->user()->isBHW())
+                <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
+                    data-target="#generateBarangayOutOfStockReportModal">
+                    <i class="fas fa-file-export"></i> Generate Report
+                </button>
+            @endif
         </div>
-        <div class="modal fade" id="generateBarangayMedicineReportModal" tabindex="-1" role="dialog"
-            aria-labelledby="generateBarangayMedicineReportModalLabel" aria-hidden="true">
+
+        <!-- Generate Out of Stock Report Modal -->
+        <div class="modal fade" id="generateBarangayOutOfStockReportModal" tabindex="-1" role="dialog"
+            aria-labelledby="generateBarangayOutOfStockReportModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="generateBarangayMedicineReportModalLabel">Generate Report</h5>
+                        <h5 class="modal-title" id="generateBarangayOutOfStockReportModalLabel">Generate Out of Stock Report
+                        </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('barangay-medicines.generateBarangayMedicineReport') }}"
-                            method="post">
+                        <!-- Add your form elements for selecting date range and export format here -->
+                        <form action="{{ route('barangay-medicines.generateBarangayOutOfStockReport') }}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label for="fromDate">From Date:</label>
-                                <input type="date" class="form-control" id="fromDate" name="from" required>
+                                <label for="from">From Date</label>
+                                <input type="date" class="form-control" id="from" name="from" required>
                             </div>
                             <div class="form-group">
-                                <label for="toDate">To Date:</label>
-                                <input type="date" class="form-control" id="toDate" name="to" required>
+                                <label for="to">To Date</label>
+                                <input type="date" class="form-control" id="to" name="to" required>
                             </div>
                             <div class="form-group">
                                 <label for="exportFormat">Export Format</label>
@@ -43,13 +44,12 @@
                                     <option value="pdf">PDF</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Generate</button>
+                            <button type="submit" class="btn btn-primary">Generate Report</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -59,20 +59,18 @@
                 {{ session('error') }}
             </div>
         @endif
-
         <div class="breadcrumb">
-            <h5><a href="{{ route('home') }}">Dashboard</a> / Barangay Medicines</h5>
+            <h5><a href="{{ route('home') }}">Dashboard</a> / Out of Stock Medicines</h5>
         </div>
-
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
-                    <form action="{{ route('barangay-medicines.index') }}" method="GET" class="form-inline">
+                    <form action="{{ route('barangay-medicines.out-of-stock') }}" method="GET" class="form-inline">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="search"
                                 value="{{ $query }}">
                             <div class="input-group-append">
-                                <button class="btn btn-secondary" type="submit">
+                                <button class="btn btn-secondary btn" type="submit">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
@@ -83,8 +81,8 @@
             <div class="card-body">
                 <!-- Medicine Table -->
                 <div class="table-responsive">
-                    @if ($barangayMedicines->isEmpty())
-                        <p>No medicines found for your barangay.</p>
+                    @if ($outOfStockMedicines->isEmpty())
+                        <p>No out-of-stock medicines found.</p>
                     @else
                         <table class="table table-hover table-sm">
                             <thead>
@@ -96,12 +94,15 @@
                                     <th>Generic Name</th>
                                     <th>Brand Name</th>
                                     <th>Category</th>
-                                    <th>Stocks</th>
-                                    <th>Action</th>
+                                    <th>Price</th>
+                                    <th>Expiration Date</th>
+                                    @if (auth()->user()->isBHW())
+                                    <th>Actions</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($barangayMedicines as $barangayMedicine)
+                                @foreach ($outOfStockMedicines as $barangayMedicine)
                                     <tr>
                                         <td>{{ $barangayMedicine->id }}</td>
                                         @if (auth()->user()->isAdmin())
@@ -110,16 +111,20 @@
                                         <td>{{ $barangayMedicine->generic_name }}</td>
                                         <td>{{ $barangayMedicine->brand_name }}</td>
                                         <td>{{ $barangayMedicine->medicine->category->name }}</td>
-                                        <td>{{ $barangayMedicine->stocks }}</td>
+                                        <td>₱ {{ $barangayMedicine->price }}</td>
+                                        <td>{{ $barangayMedicine->expiration_date }}</td>
+                                        @if (auth()->user()->isBHW())
                                         <td>
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showbarangayMedicineModal{{ $barangayMedicine->id }}">
-                                                <i class="fas fa-eye"></i>
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                data-target="#editBarangayOutOfStockModal{{ $barangayMedicine->id }}">
+                                                <i class="fas fa-edit"></i>
                                             </button>
                                         </td>
+                                        @endif
                                     </tr>
-                                    @include('barangay.barangay_medicines.show_modal', [
-                                        'barangayMedicines' => $barangayMedicine,
+                                    <!-- Edit Out of Stock Medicine Modal -->
+                                    @include('barangay.barangay_medicines.edit_out_of_stock_modal', [
+                                        'barangayMedicine' => $barangayMedicine,
                                     ])
                                 @endforeach
                             </tbody>
@@ -128,7 +133,6 @@
                 </div>
             </div>
         </div>
-
         <div class="my-4 text-muted">
             <div class="float-left">
                 <div class="credits">
@@ -138,19 +142,18 @@
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
-                    <li class="page-item {{ $barangayMedicines->currentPage() == 1 ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $barangayMedicines->previousPageUrl() }}" aria-label="Previous">
+                    <li class="page-item {{ $outOfStockMedicines->currentPage() == 1 ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $outOfStockMedicines->previousPageUrl() }}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
 
                     @php
-                        $currentPage = $barangayMedicines->currentPage();
-                        $lastPage = $barangayMedicines->lastPage();
+                        $currentPage = $outOfStockMedicines->currentPage();
+                        $lastPage = $outOfStockMedicines->lastPage();
                         $showFirstDots = false;
                         $showLastDots = false;
 
-                        // Determine the range of page numbers to display
                         $startPage = max(1, $currentPage - 2);
                         $endPage = min($lastPage, $currentPage + 2);
 
@@ -167,7 +170,7 @@
 
                     @if ($showFirstDots)
                         <li class="page-item">
-                            <a class="page-link" href="{{ $barangayMedicines->url(1) }}">1</a>
+                            <a class="page-link" href="{{ $outOfStockMedicines->url(1) }}">1</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">...</a>
@@ -176,7 +179,7 @@
 
                     @for ($i = $startPage; $i <= $endPage; $i++)
                         <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
-                            <a class="page-link" href="{{ $barangayMedicines->url($i) }}">{{ $i }}</a>
+                            <a class="page-link" href="{{ $outOfStockMedicines->url($i) }}">{{ $i }}</a>
                         </li>
                     @endfor
 
@@ -185,13 +188,12 @@
                             <a class="page-link">...</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link"
-                                href="{{ $barangayMedicines->url($lastPage) }}">{{ $lastPage }}</a>
+                            <a class="page-link" href="{{ $outOfStockMedicines->url($lastPage) }}">{{ $lastPage }}</a>
                         </li>
                     @endif
 
-                    <li class="page-item {{ $barangayMedicines->currentPage() == $lastPage ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $barangayMedicines->nextPageUrl() }}" aria-label="Next">
+                    <li class="page-item {{ $outOfStockMedicines->currentPage() == $lastPage ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $outOfStockMedicines->nextPageUrl() }}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -200,12 +202,7 @@
             <div class="clearfix"></div>
         </div>
     </div>
-    </div>
 
-    <!-- Include Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-
-    <!-- Include Bootstrap CSS for pagination styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
