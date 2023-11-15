@@ -102,3 +102,6 @@ Route::post('/distributions/generate-distribution-report', [DistributionControll
 // DistributionBarangay
 Route::post('/distribution_barangay/generate-distribution-barangay-report', [DistributionBarangayController::class, 'generateDistributionBarangayReport'])
     ->name('distribution_barangay.generateDistributionBarangayReport');
+// BarangayDistribution
+Route::post('/barangay-distributions/generate-barangay-distribution-report', [BarangayDistributionController::class, 'generateBarangayDistributionReport'])
+    ->name('barangay-distributions.generateBarangayDistributionReport');

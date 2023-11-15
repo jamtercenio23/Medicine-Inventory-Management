@@ -6,14 +6,52 @@
     <div class="container">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Manage Distributions</h1>
-            @if (auth()->user()->isBHW())
+            <div class="d-flex">
+                @if (auth()->user()->isBHW())
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
                     data-target="#createDistributionModal">
                     <i class="fas fa-plus"></i> Add Distribution
                 </button>
+                <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
+                    data-target="#generateBarangayDistributionReportModal">
+                    <i class="fas fa-file-export"></i> Generate Report
+                </button>
             @endif
+            </div>
         </div>
-
+        <div class="modal fade" id="generateBarangayDistributionReportModal" tabindex="-1" role="dialog"
+            aria-labelledby="generateBarangayDistributionReportModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="generateBarangayDistributionReportModalLabel">Generate Report</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('barangay-distributions.generateBarangayDistributionReport') }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <label for="fromDate">From Date:</label>
+                                <input type="date" class="form-control" id="fromDate" name="from" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="toDate">To Date:</label>
+                                <input type="date" class="form-control" id="toDate" name="to" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exportFormat">Export Format</label>
+                                <select class="form-control" id="exportFormat" name="exportFormat" required>
+                                    <option value="pdf">PDF</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Generate</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Display alert message if present -->
         @if (session('success'))
             <div class="alert alert-success">
@@ -64,10 +102,8 @@
                             <tbody>
                                 @foreach ($barangayDistributions as $barangayDistribution)
                                     @if (auth()->user()->isBHW() && $barangayDistribution->bhw_id != auth()->user()->id)
-                                        {{-- Skip displaying distributions created by other BHWs --}}
                                         @continue
                                     @endif
-
                                     <tr>
                                         <td>{{ $barangayDistribution->id }}</td>
                                         <td>
