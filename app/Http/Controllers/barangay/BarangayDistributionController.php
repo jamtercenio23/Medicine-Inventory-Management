@@ -12,60 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class BarangayDistributionController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     $query = $request->input('search');
-    //     $user = Auth::user();
-
-    //     if ($user->isBarangayUser()) {
-    //         $barangayDistributions = BarangayDistribution::where('barangay_id', $user->barangay_id);
-
-    //         // For BHW users, include distributions created by any BHW in the same barangay
-    //         if ($user->isBHW()) {
-    //             $barangayDistributions->where(function ($query) use ($user) {
-    //                 $query->where('bhw_id', $user->id)
-    //                     ->orWhere(function ($query) use ($user) {
-    //                         $query->where('barangay_id', $user->barangay_id)
-    //                             ->whereNull('bhw_id');
-    //                     });
-    //             });
-    //         }
-    //     } else {
-    //         // Show all distributions for admin users
-    //         $barangayDistributions = BarangayDistribution::query();
-    //     }
-
-    //     $barangayDistributions = $barangayDistributions
-    //         ->with(['barangayPatient', 'barangayMedicine'])
-    //         ->when($query, function ($queryBuilder) use ($query) {
-    //             $queryBuilder->whereHas('barangayPatient', function ($subquery) use ($query) {
-    //                 $subquery->where('first_name', 'like', '%' . $query . '%')
-    //                     ->orWhere('last_name', 'like', '%' . $query . '%');
-    //             });
-    //         })
-    //         ->paginate($request->input('entries', 10));
-
-    //     // Loop through the results and handle null values
-    //     $barangayDistributions->each(function ($distribution) {
-    //         $distribution->barangayPatient; // Access the relationship to trigger loading
-
-    //         // Check if the relationship is not null before accessing its properties
-    //         if ($distribution->barangayPatient) {
-    //             $distribution->patient_first_name = $distribution->barangayPatient->first_name;
-    //             // Add other properties as needed
-    //         } else {
-    //             $distribution->patient_first_name = null; // or set a default value
-    //         }
-    //     });
-
-    //     // Define $barangayPatients and $barangayMedicines
-    //     $barangayPatients = BarangayPatient::all();
-    //     $barangayMedicines = BarangayMedicine::where('stocks', '>', 0)
-    //         ->where('expiration_date', '>=', now()->toDateString())
-    //         ->get();
-
-    //     return view('barangay.barangay_distributions.index', compact('barangayDistributions', 'barangayPatients', 'barangayMedicines', 'query'));
-    // }
 
     public function index(Request $request)
     {
@@ -112,8 +58,8 @@ class BarangayDistributionController extends Controller
 
         // Define $barangayPatients and $barangayMedicines
         $barangayPatients = BarangayPatient::all();
-        $barangayMedicines = BarangayMedicine::where('stocks', '>', 0)
-            ->where('expiration_date', '>=', now()->toDateString())
+        $barangayMedicines = BarangayMedicine::where('expiration_date', '>=', now()->toDateString())
+            ->where('barangay_id', $user->barangay_id)
             ->get();
 
         return view('barangay.barangay_distributions.index', compact('barangayDistributions', 'barangayPatients', 'barangayMedicines', 'query'));
@@ -122,9 +68,17 @@ class BarangayDistributionController extends Controller
     public function create()
     {
         $user = auth()->user();
-        dd($user->getRoleNames());
+
+        // Check if the user has at least one role
+        if ($user->getRoleNames()->isEmpty()) {
+            return redirect()->route('barangay-distributions.index')->with('error', 'User does not have any roles');
+        }
+
+        // Retrieve the first role from the collection
+        $firstRole = $user->getRoleNames()->first();
+
         // Check if the user is a barangay user or admin
-        if ($user->hasRole('barangay') || $user->hasRole('admin')) {
+        if ($firstRole === 'barangay' || $firstRole === 'admin') {
             // Fetch patients and medicines related to the user's barangay
             $barangayPatients = BarangayPatient::where('barangay_id', $user->barangay_id)->get();
             $barangayMedicines = BarangayMedicine::where('stocks', '>', 0)
@@ -138,6 +92,7 @@ class BarangayDistributionController extends Controller
             return redirect()->route('barangay-distributions.index')->with('error', 'Unauthorized to create distribution');
         }
     }
+
     public function store(Request $request)
     {
         try {
@@ -147,6 +102,14 @@ class BarangayDistributionController extends Controller
             if ($user->isBHW() || $user->isAdmin()) {
                 // Associate with the user's barangay_id if it's a BHW user
                 $barangayId = $user->isBHW() ? $user->barangay_id : null;
+
+                // Get the selected medicine
+                $selectedMedicine = BarangayMedicine::find($request->input('medicine_id'));
+
+                // Check if the selected medicine exists and has sufficient stocks
+                if (!$selectedMedicine || $selectedMedicine->stocks < $request->input('stocks')) {
+                    return redirect()->route('barangay-distributions.create')->with('error', 'Invalid medicine or insufficient stocks');
+                }
 
                 // Create BarangayDistribution
                 $barangayDistribution = new BarangayDistribution([
@@ -170,7 +133,7 @@ class BarangayDistributionController extends Controller
                 return redirect()->route('barangay-distributions.index')->with('error', 'Unauthorized to create distribution');
             }
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            return redirect()->route('barangay-distributions.index')->with('error', 'Failed to create distribution: ' . $e->getMessage());
         }
     }
     public function update(Request $request, BarangayDistribution $barangayDistribution)

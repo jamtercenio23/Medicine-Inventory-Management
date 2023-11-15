@@ -382,6 +382,13 @@
                                         Medicines</a>
                                 </li>
                             @endcan
+                            @can('view-barangay_out-of-stock')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    &nbsp; &nbsp;<a href="#"><i
+                                            class="fas fa-exclamation-triangle" style="margin-right: 20px;"></i>
+                                        Out of Stock</a>
+                                </li>
+                            @endcan
                         </div>
                     @endcan
                     @can('view-bhw_manage')

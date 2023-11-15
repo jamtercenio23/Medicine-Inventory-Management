@@ -15,11 +15,10 @@ class BarangayMedicineController extends Controller
         $query = $request->input('search', '');
 
         if ($user->hasRole('admin')) {
-            // Admin can see all medicines
-            $barangayMedicines = BarangayMedicine::query();
+            $barangayMedicines = BarangayMedicine::where('stocks', '>', 0); // Only fetch medicines with stock greater than 0
         } elseif ($user->hasRole('bhw')) {
-            // BHW user can see medicines for their own barangay
-            $barangayMedicines = BarangayMedicine::where('barangay_id', $user->barangay_id);
+            $barangayMedicines = BarangayMedicine::where('barangay_id', $user->barangay_id)
+                ->where('stocks', '>', 0);
         }
 
         if ($query) {

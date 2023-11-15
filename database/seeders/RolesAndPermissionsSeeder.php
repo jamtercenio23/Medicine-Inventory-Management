@@ -44,6 +44,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'backup-db',
             'view-settings',
             'view-barangay_medicines',
+            'view-barangay_out-of-stock',
+            'view-barangay_expired',
             'view-barangay_distributions',
             'view-barangay_patients',
         ];
@@ -78,6 +80,8 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view-bhw_manage',
                 'view-bhw_distributions',
                 'view-barangay_medicines',
+                'view-barangay_out-of-stock',
+                'view-barangay_expired',
                 'view-barangay_distributions',
                 'view-barangay_patients',
             ]);

@@ -72,6 +72,7 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     // Barangay Route
     Route::group(['middleware' => 'permission:view-barangay_medicines'], function () {
         Route::resource('barangay/barangay-medicines', BarangayMedicineController::class);
+        // Route::get('/barangay/medicines/out-of-stock', 'BarangayMedicinesController@outOfStock')->name('barangay.medicines.outOfStock');
     });
     Route::group(['middleware' => 'permission:view-barangay_distributions'], function () {
         Route::resource('barangay/barangay-distributions', BarangayDistributionController::class);
