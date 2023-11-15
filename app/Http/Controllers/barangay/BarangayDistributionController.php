@@ -17,56 +17,61 @@ class BarangayDistributionController extends Controller
 {
 
     public function index(Request $request)
-    {
-        $query = $request->input('search');
-        $user = Auth::user();
+{
+    $query = $request->input('search');
+    $user = Auth::user();
 
-        if ($user->isBarangayUser()) {
-            $barangayDistributions = BarangayDistribution::where('barangay_id', $user->barangay_id);
+    if ($user->isBarangayUser()) {
+        $barangayDistributions = BarangayDistribution::where('barangay_id', $user->barangay_id);
 
-            // For BHW users, include only distributions created by the same BHW in the same barangay
-            if ($user->isBHW()) {
-                $barangayDistributions->orWhere(function ($query) use ($user) {
-                    $query->where('bhw_id', $user->id)
-                        ->where('barangay_id', $user->barangay_id);
-                });
-            }
-        } else {
-            // Show all distributions for admin users
-            $barangayDistributions = BarangayDistribution::query();
+        // For BHW users, include only distributions created by the same BHW in the same barangay
+        if ($user->isBHW()) {
+            $barangayDistributions->orWhere(function ($query) use ($user) {
+                $query->where('bhw_id', $user->id)
+                    ->where('barangay_id', $user->barangay_id);
+            });
         }
-
-        $barangayDistributions = $barangayDistributions
-            ->with(['barangayPatient', 'barangayMedicine'])
-            ->when($query, function ($queryBuilder) use ($query) {
-                $queryBuilder->whereHas('barangayPatient', function ($subquery) use ($query) {
-                    $subquery->where('first_name', 'like', '%' . $query . '%')
-                        ->orWhere('last_name', 'like', '%' . $query . '%');
-                });
-            })
-            ->paginate($request->input('entries', 10));
-
-        // Loop through the results and handle null values
-        $barangayDistributions->each(function ($distribution) {
-            $distribution->barangayPatient; // Access the relationship to trigger loading
-
-            // Check if the relationship is not null before accessing its properties
-            if ($distribution->barangayPatient) {
-                $distribution->patient_first_name = $distribution->barangayPatient->first_name;
-                // Add other properties as needed
-            } else {
-                $distribution->patient_first_name = null; // or set a default value
-            }
-        });
-
-        // Define $barangayPatients and $barangayMedicines
-        $barangayPatients = BarangayPatient::all();
-        $barangayMedicines = BarangayMedicine::where('expiration_date', '>=', now()->toDateString())
-            ->where('barangay_id', $user->barangay_id)
-            ->get();
-
-        return view('barangay.barangay_distributions.index', compact('barangayDistributions', 'barangayPatients', 'barangayMedicines', 'query'));
+    } else {
+        // Show all distributions for admin users
+        $barangayDistributions = BarangayDistribution::query();
     }
+
+    $barangayDistributions = $barangayDistributions
+        ->with(['barangayPatient', 'barangayMedicine'])
+        ->when($query, function ($queryBuilder) use ($query) {
+            $queryBuilder->whereHas('barangayPatient', function ($subquery) use ($query) {
+                $subquery->where('first_name', 'like', '%' . $query . '%')
+                    ->orWhere('last_name', 'like', '%' . $query . '%');
+            });
+        })
+        ->when(!$user->isAdmin(), function ($query) use ($user) {
+            // Only apply the barangay filter if the user is not an admin
+            $query->where('barangay_id', $user->barangay_id);
+        })
+        ->paginate($request->input('entries', 10));
+
+    // Loop through the results and handle null values
+    $barangayDistributions->each(function ($distribution) {
+        $distribution->barangayPatient; // Access the relationship to trigger loading
+
+        // Check if the relationship is not null before accessing its properties
+        if ($distribution->barangayPatient) {
+            $distribution->patient_first_name = $distribution->barangayPatient->first_name;
+            // Add other properties as needed
+        } else {
+            $distribution->patient_first_name = null; // or set a default value
+        }
+    });
+
+    // Define $barangayPatients and $barangayMedicines
+    $barangayPatients = BarangayPatient::all();
+    $barangayMedicines = BarangayMedicine::where('expiration_date', '>=', now()->toDateString())
+        ->where('barangay_id', $user->barangay_id)
+        ->get();
+
+    return view('barangay.barangay_distributions.index', compact('barangayDistributions', 'barangayPatients', 'barangayMedicines', 'query'));
+}
+
 
     public function create()
     {
