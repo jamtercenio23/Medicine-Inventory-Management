@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Support\Collection;
 
 
-class MedicineReportExport implements FromCollection, WithHeadings
+class DistributionReportExport implements FromCollection, WithHeadings
 {
     protected $reportData;
     protected $fromDate;

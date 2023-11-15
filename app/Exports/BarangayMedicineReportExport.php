@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Support\Collection;
 
 
-class MedicineReportExport implements FromCollection, WithHeadings
+class BarangayMedicineReportExport implements FromCollection, WithHeadings
 {
     protected $reportData;
     protected $fromDate;
@@ -31,7 +31,7 @@ class MedicineReportExport implements FromCollection, WithHeadings
         return [
             'ID',
             'barangay_id',
-            'generic_name',
+            'first_name',
             'brand_name',
             'category_id',
             'price',

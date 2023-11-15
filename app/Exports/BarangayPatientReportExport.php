@@ -2,13 +2,13 @@
 
 namespace App\Exports;
 
-use App\Models\BarangayDistribution;
+use App\Models\BarangayPati;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Support\Collection;
 
 
-class BarangayDistributionReportExport implements FromCollection, WithHeadings
+class BarangayPatientReportExport implements FromCollection, WithHeadings
 {
     protected $reportData;
     protected $fromDate;
@@ -31,11 +31,11 @@ class BarangayDistributionReportExport implements FromCollection, WithHeadings
         return [
             'ID',
             'barangay_id',
-            'patient_id',
-            'medicine_id',
-            'stocks',
-            'checkup_date',
-            'diagnose',
+            'first_name',
+            'last_name',
+            'birthdate',
+            'age',
+            'gender',
             'Created At',
             'Updated At',
         ];

@@ -21,8 +21,8 @@ return new class extends Migration
             $table->unsignedBigInteger('barangay_id');
             $table->string('blood_pressure')->nullable();
             $table->integer('heart_rate')->nullable();
-            $table->decimal('weight', 5, 2)->nullable();
-            $table->decimal('height', 5, 2)->nullable();
+            $table->integer('weight')->nullable();
+            $table->integer('height')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');

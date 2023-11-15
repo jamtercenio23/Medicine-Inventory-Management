@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Record</title>
+    <title>Barangay Patient Report</title>
     <style>
         /* Add your custom styles for the PDF report here */
         body {
             font-family: Arial, sans-serif;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
     </style>
 </head>
+
 <body>
     <h1>Mabini Health Center</h1>
-    <h2>Patient Record</h2>
+    <h2>Barangay Patient Report</h2>
     <p>Date Range: {{ $fromDate }} to {{ $toDate }}</p>
 
     <table>
@@ -38,32 +44,23 @@
                 <th>Birthdate</th>
                 <th>Age</th>
                 <th>Gender</th>
-                <th>Barangay</th>
-                <th>Blood Pressure</th>
-                <th>Heart Rate</th>
-                <th>Weight</th>
-                <th>Height</th>
                 <th>Created At</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($reportData as $patient)
+            @foreach($reportData as $barangayPatient)
                 <tr>
-                    <td>{{ $patient->id }}</td>
-                    <td>{{ $patient->first_name }}</td>
-                    <td>{{ $patient->last_name }}</td>
-                    <td>{{ $patient->birthdate }}</td>
-                    <td>{{ $patient->age }}</td>
-                    <td>{{ $patient->gender }}</td>
-                    <td>{{ $patient->barangay->name }}</td>
-                    <td>{{ $patient->blood_pressure }}</td>
-                    <td>{{ $patient->heart_rate }}</td>
-                    <td>{{ $patient->weight }} kg</td>
-                    <td>{{ $patient->height }} cm</td>
-                    <td>{{ $patient->created_at }}</td>
+                    <td>{{ $barangayPatient->id }}</td>
+                    <td>{{ $barangayPatient->first_name }}</td>
+                    <td>{{ $barangayPatient->last_name }}</td>
+                    <td>{{ $barangayPatient->birthdate }}</td>
+                    <td>{{ $barangayPatient->age }}</td>
+                    <td>{{ $barangayPatient->gender }}</td>
+                    <td>{{ $barangayPatient->created_at }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 </body>
+
 </html>

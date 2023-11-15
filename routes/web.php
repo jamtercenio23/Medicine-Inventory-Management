@@ -72,7 +72,6 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     // Barangay Route
     Route::group(['middleware' => 'permission:view-barangay_medicines'], function () {
         Route::resource('barangay/barangay-medicines', BarangayMedicineController::class);
-        // Route::get('/barangay/medicines/out-of-stock', 'BarangayMedicinesController@outOfStock')->name('barangay.medicines.outOfStock');
     });
     Route::group(['middleware' => 'permission:view-barangay_distributions'], function () {
         Route::resource('barangay/barangay-distributions', BarangayDistributionController::class);
@@ -81,30 +80,36 @@ Route::middleware(['auth', 'is_active'])->group(function () {
         Route::resource('barangay/barangay-patients', BarangayPatientController::class);
     });
 
+    // Generate Report Route
+    // Medicines
+    Route::post('/medicines/generate-medicine-report', [MedicineController::class, 'generateMedicineReport'])
+        ->name('medicines.generateMedicineReport');
+    Route::post('/medicines/generate-out-of-stock-report', [MedicineController::class, 'generateOutOfStockReport'])
+        ->name('medicines.generateOutOfStockReport');
+    Route::post('/medicines/generate-expired-report', [MedicineController::class, 'generateExpiredReport'])
+        ->name('medicines.generateExpiredReport');
+    // Patients
+    Route::post('/patients/generate-patient-report', [PatientController::class, 'generatePatientReport'])
+        ->name('patients.generatePatientReport');
+    // Distributions
+    Route::post('/distributions/generate-distribution-report', [DistributionController::class, 'generateDistributionReport'])
+        ->name('distributions.generateDistributionReport');
+    // DistributionBarangay
+    Route::post('/distribution_barangay/generate-distribution-barangay-report', [DistributionBarangayController::class, 'generateDistributionBarangayReport'])
+        ->name('distribution_barangay.generateDistributionBarangayReport');
+    // BarangayDistribution
+    Route::post('/barangay-distributions/generate-barangay-distribution-report', [BarangayDistributionController::class, 'generateBarangayDistributionReport'])
+        ->name('barangay-distributions.generateBarangayDistributionReport');
+    // BarangayMedicine
+    Route::post('/barangay-medicines/generate-barangay-medicine-report', [BarangayMedicineController::class, 'generateBarangayMedicineReport'])
+        ->name('barangay-medicines.generateBarangayMedicineReport');
+    // BarangayPatient
+    Route::post('/barangay-patients/generate-barangay-patient-report', [BarangayPatientController::class, 'generateBarangayPatientReport'])
+        ->name('barangay-patients.generateBarangayPatientReport');
+
+
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 });
-// Medicines
-Route::post('/medicines/generate-medicine-report', [MedicineController::class, 'generateMedicineReport'])
-    ->name('medicines.generateMedicineReport');
-Route::post('/medicines/generate-out-of-stock-report', [MedicineController::class, 'generateOutOfStockReport'])
-    ->name('medicines.generateOutOfStockReport');
-Route::post('/medicines/generate-expired-report', [MedicineController::class, 'generateExpiredReport'])
-    ->name('medicines.generateExpiredReport');
-// Patients
-Route::post('/patients/generate-patient-report', [PatientController::class, 'generatePatientReport'])
-    ->name('patients.generatePatientReport');
-// Distributions
-Route::post('/distributions/generate-distribution-report', [DistributionController::class, 'generateDistributionReport'])
-    ->name('distributions.generateDistributionReport');
-// DistributionBarangay
-Route::post('/distribution_barangay/generate-distribution-barangay-report', [DistributionBarangayController::class, 'generateDistributionBarangayReport'])
-    ->name('distribution_barangay.generateDistributionBarangayReport');
-// BarangayDistribution
-Route::post('/barangay-distributions/generate-barangay-distribution-report', [BarangayDistributionController::class, 'generateBarangayDistributionReport'])
-    ->name('barangay-distributions.generateBarangayDistributionReport');
-// BarangayMedicine
-    Route::post('/barangay-medicines/generate-barangay-medicine-report', [BarangayMedicineController::class, 'generateBarangayMedicineReport'])
-    ->name('barangay-medicines.generateBarangayMedicineReport');

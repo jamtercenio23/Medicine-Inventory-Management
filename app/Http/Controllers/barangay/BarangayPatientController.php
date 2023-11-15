@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Barangay;
 use App\Models\BarangayPatient;
 use Illuminate\Support\Facades\Auth;
-
+use PDF;
+use App\Exports\BarangayPatientReportExport;
+use Illuminate\Support\Facades\Response;
 class BarangayPatientController extends Controller
 {
     public function index(Request $request)
@@ -97,5 +99,59 @@ class BarangayPatientController extends Controller
         $barangayPatient->delete();
 
         return redirect()->route('barangay-patients.index')->with('success', 'Patient deleted successfully');
+    }
+
+    public function generateBarangayPatientReport(Request $request)
+    {
+        // Validate the input
+        $request->validate([
+            'from' => 'required|date',
+            'to' => 'required|date|after_or_equal:from',
+            'exportFormat' => 'required|in:pdf,excel',
+        ]);
+
+        $fromDate = $request->input('from');
+        $toDate = $request->input('to');
+        $exportFormat = $request->input('exportFormat');
+
+        $user = Auth::user();
+
+        // Get data for the barangay patient report within the date range
+        $reportData = BarangayPatient::whereBetween('created_at', [$fromDate, $toDate])
+            ->when($user->isBHW(), function ($query) use ($user) {
+                // Limit BHW users to patients from their own barangay
+                $query->where('barangay_id', $user->barangay_id);
+            })
+            ->get();
+
+        // Check if there is data for the report
+        if ($reportData->isEmpty()) {
+            return redirect()->back()->with('error', 'No barangay patient data available for the selected date range');
+        }
+
+        // Export to PDF or Excel based on the selected format
+        if ($exportFormat === 'pdf') {
+            $pdfFileName = 'barangay_patient_report_' . now()->format('YmdHis') . '.pdf';
+            $pdfPath = public_path('reports') . '/' . $pdfFileName;
+
+            // Generate and save the PDF file
+            $pdf = PDF::loadView('barangay.barangay_patients.barangay-patient-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->save($pdfPath);
+
+            // Download the PDF file
+            return response()->download($pdfPath, $pdfFileName);
+        } elseif ($exportFormat === 'excel') {
+            $excelFileName = 'barangay_patient_report_' . now()->format('YmdHis') . '.xlsx';
+
+            // Generate the Excel file and return it as a download
+            // Replace 'BarangayPatientReportExport' with the actual export class if you have one
+            // (you may need to create it using artisan command: php artisan make:export BarangayPatientReportExport)
+            return (new \Maatwebsite\Excel\Excel\BarangayPatientReportExport($reportData, $fromDate, $toDate))->download($excelFileName);
+        }
+
+        return redirect()->back()
+            ->with('success', 'Barangay patient report generated successfully')
+            ->with('pdfFileName', $pdfFileName ?? null)
+            ->with('excelFileName', $excelFileName ?? null);
     }
 }

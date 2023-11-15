@@ -129,8 +129,9 @@ class PatientController extends Controller
             $pdfFileName = 'patient_report_' . now()->format('YmdHis') . '.pdf';
             $pdfPath = public_path('reports') . '/' . $pdfFileName;
 
-            // Generate and save the PDF file
-            $pdf = PDF::loadView('admin.patients.patient-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            // Generate and save the PDF file with landscape orientation (setPaper method)
+            $pdf = PDF::loadView('admin.patients.patient-report-pdf', compact('reportData', 'fromDate', 'toDate'))
+                ->setPaper('a4', 'landscape'); // Adjust paper size and orientation as needed
             $pdf->save($pdfPath);
 
             // Download the PDF file
