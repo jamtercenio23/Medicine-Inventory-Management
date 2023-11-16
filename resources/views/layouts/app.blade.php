@@ -494,6 +494,14 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                        @if (Auth::check())
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="modal" data-target="#notificationModal">
+                                <i class="fas fa-bell"></i>
+                                <span class="nav-text">Notifications</span>
+                            </a>
+                        </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="/"><i class="fas fa-home"></i> <span
                                     class="nav-text">Home</span> <span class="sr-only">(current)</span></a>
@@ -547,6 +555,7 @@
         </div>
     </div>
     @include('auth.logout-modal')
+    @include('layouts.notification_modal')
 </body>
 
 </html>
