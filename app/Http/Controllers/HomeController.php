@@ -15,6 +15,7 @@ use Charts;
 use Chartisan\PHP\Chartisan;
 use ConsoleTVs\Charts\Classes\Chart;
 use Illuminate\Support\Facades\Auth;
+
 class HomeController extends Controller
 {
     /**
@@ -42,56 +43,114 @@ class HomeController extends Controller
             // Admin Dashboard logic
             $totalMedicines = Medicine::count();
             $totalPatients = Patient::count();
+            $totalPatientsAddedToday = Patient::whereDate('created_at', today())->count();
             $totalBarangay = Barangay::count();
             $totalDistributionBarangay = DistributionBarangay::count();
             $totalPatientDistributions = Distribution::count();
             $totalOutOfStockMedicines = Medicine::where('stocks', 0)->count();
             $totalExpiredMedicines = Medicine::where('expiration_date', '<', now())->count();
-
+            $totalNearlyOutOfStockMedicines = Medicine::where('stocks', '>', 1)
+                ->where('stocks', '<=', 50)
+                ->count();
+            $totalNearlyExpiredMedicines = Medicine::where('expiration_date', '>', now())
+                ->where('expiration_date', '<=', now()->addDays(10))
+                ->count();
+            $totalPatientDistributionAddedToday = Distribution::whereDate('created_at', today())->count();
+            $totalBarangayDistributionAddedToday = DistributionBarangay::whereDate('created_at', today())->count();
             return view('home', compact(
                 'totalMedicines',
                 'totalPatients',
+                'totalPatientsAddedToday',
                 'totalBarangay',
                 'totalDistributionBarangay',
                 'totalPatientDistributions',
                 'totalOutOfStockMedicines',
-                'totalExpiredMedicines'
+                'totalExpiredMedicines',
+                'totalNearlyOutOfStockMedicines',
+                'totalNearlyExpiredMedicines',
+                'totalPatientDistributionAddedToday',
+                'totalBarangayDistributionAddedToday'
             ));
         } elseif ($user->isBHW()) {
-            // BHW Dashboard
+            // Get the BHW's barangay ID
             $barangayId = $user->barangay->id;
 
+            // Count total barangay medicines, patients, and distributions
             $totalBarangayMedicines = BarangayMedicine::where('barangay_id', $barangayId)->count();
             $totalBarangayPatients = BarangayPatient::where('barangay_id', $barangayId)->count();
+
             $totalBarangayDistributions = BarangayDistribution::where('barangay_id', $barangayId)->count();
+            $totalDistributionAddedToday = BarangayDistribution::where('barangay_id', $barangayId)
+                ->whereDate('created_at', today())
+                ->count();
+            // Count out of stock, nearly out of stock, expired, and nearly expired medicines
+            $totalOutOfStockMedicines = BarangayMedicine::where('barangay_id', $barangayId)
+                ->where('stocks', 0)
+                ->count();
+
+            $totalExpiredMedicines = BarangayMedicine::where('barangay_id', $barangayId)
+                ->where('expiration_date', '<', now())
+                ->count();
+
+            $totalNearlyOutOfStockMedicines = BarangayMedicine::where('barangay_id', $barangayId)
+                ->where('stocks', '>', 1)
+                ->where('stocks', '<=', 50)
+                ->count();
+
+            $totalNearlyExpiredMedicines = BarangayMedicine::where('barangay_id', $barangayId)
+                ->where('expiration_date', '>', now())
+                ->where('expiration_date', '<=', now()->addDays(10))
+                ->count();
+            $totalPatientsAddedToday = BarangayPatient::where('barangay_id', $barangayId)
+                ->whereDate('created_at', today())
+                ->count();
 
             return view('home', compact(
                 'totalBarangayMedicines',
                 'totalBarangayPatients',
-                'totalBarangayDistributions'
+                'totalPatientsAddedToday',
+                'totalBarangayDistributions',
+                'totalOutOfStockMedicines',
+                'totalExpiredMedicines',
+                'totalNearlyOutOfStockMedicines',
+                'totalNearlyExpiredMedicines',
+                'totalDistributionAddedToday',
             ));
         } elseif ($user->isPharmacist()) {
             // Pharmacist Dashboard logic
             $totalMedicines = Medicine::count();
             $totalPatients = Patient::count();
+            $totalPatientsAddedToday = Patient::whereDate('created_at', today())->count();
             $totalBarangay = Barangay::count();
             $totalDistributionBarangay = DistributionBarangay::count();
             $totalPatientDistributions = Distribution::count();
             $totalOutOfStockMedicines = Medicine::where('stocks', 0)->count();
             $totalExpiredMedicines = Medicine::where('expiration_date', '<', now())->count();
+            $totalNearlyOutOfStockMedicines = Medicine::where('stocks', '>', 1)
+                ->where('stocks', '<=', 50)
+                ->count();
+            $totalNearlyExpiredMedicines = Medicine::where('expiration_date', '>', now())
+                ->where('expiration_date', '<=', now()->addDays(10))
+                ->count();
+            $totalPatientDistributionAddedToday = Distribution::whereDate('created_at', today())->count();
+            $totalBarangayDistributionAddedToday = DistributionBarangay::whereDate('created_at', today())->count();
 
             return view('home', compact(
                 'totalMedicines',
                 'totalPatients',
+                'totalPatientsAddedToday',
                 'totalBarangay',
                 'totalDistributionBarangay',
                 'totalPatientDistributions',
                 'totalOutOfStockMedicines',
-                'totalExpiredMedicines'
+                'totalExpiredMedicines',
+                'totalNearlyOutOfStockMedicines',
+                'totalNearlyExpiredMedicines',
+                'totalPatientDistributionAddedToday',
+                'totalBarangayDistributionAddedToday'
             ));
         } else {
-            // Default logic for other user roles
-            return view('home'); // Adjust the default view as needed
+            return view('home');
         }
     }
 }

@@ -25,9 +25,13 @@
                                     <h5 class="card-title">Medicines</h5>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Total Medicines: {{ $totalMedicines }}</li>
-                                        <li class="list-group-item">Out of Stock Medicines:
-                                            {{ $totalOutOfStockMedicines }}</li>
+                                        <li class="list-group-item">Out of Stock Medicines: {{ $totalOutOfStockMedicines }}
+                                        </li>
+                                        <li class="list-group-item">Nearly Out of Stock Medicines:
+                                            {{ $totalNearlyOutOfStockMedicines }}</li>
                                         <li class="list-group-item">Expired Medicines: {{ $totalExpiredMedicines }}</li>
+                                        <li class="list-group-item">Nearly Expired Medicines:
+                                            {{ $totalNearlyExpiredMedicines }}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -41,6 +45,8 @@
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Total Barangays: {{ $totalBarangay }}</li>
                                         <li class="list-group-item">Total Patients: {{ $totalPatients }}</li>
+                                        <li class="list-group-item">Total Patients added today:
+                                            {{ $totalPatientsAddedToday }}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -54,8 +60,12 @@
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Total Barangay Distributions:
                                             {{ $totalDistributionBarangay }}</li>
+                                        <li class="list-group-item">Total Barangay Distributions added today:
+                                            {{ $totalBarangayDistributionAddedToday }}</li>
                                         <li class="list-group-item">Total Patient Distributions:
                                             {{ $totalPatientDistributions }}</li>
+                                        <li class="list-group-item">Total Patient Distributions added today:
+                                            {{ $totalPatientDistributionAddedToday }}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -70,7 +80,14 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Medicines</h5>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Barangay Medicines: {{ $totalBarangayMedicines }}</li>
+                                        <li class="list-group-item">Total Medicines: {{ $totalBarangayMedicines }}</li>
+                                        <li class="list-group-item">Out of Stock Medicines: {{ $totalOutOfStockMedicines }}
+                                        </li>
+                                        <li class="list-group-item">Nearly Out of Stock Medicines:
+                                            {{ $totalNearlyOutOfStockMedicines }}</li>
+                                        <li class="list-group-item">Expired Medicines: {{ $totalExpiredMedicines }}</li>
+                                        <li class="list-group-item">Nearly Expired Medicines:
+                                            {{ $totalNearlyExpiredMedicines }}</li>
                                         <!-- Add other BHW-specific medicine details here -->
                                     </ul>
                                 </div>
@@ -83,7 +100,9 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Population</h5>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Barangay Populations: {{ $totalBarangayPatients }}</li>
+                                        <li class="list-group-item">Total Patients: {{ $totalBarangayPatients }}</li>
+                                        <li class="list-group-item">Total Patients added today:
+                                            {{ $totalPatientsAddedToday }}</li>
                                         <!-- Add other BHW-specific distribution details here -->
                                     </ul>
                                 </div>
@@ -96,7 +115,10 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Distributions</h5>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Barangay Distributions: {{ $totalBarangayDistributions }}</li>
+                                        <li class="list-group-item">Total Distributions: {{ $totalBarangayDistributions }}
+                                        </li>
+                                        <li class="list-group-item">Total Distributions added today:
+                                            {{ $totalDistributionAddedToday }}</li>
                                         <!-- Add other BHW-specific distribution details here -->
                                     </ul>
                                 </div>
@@ -113,9 +135,13 @@
                                     <h5 class="card-title">Medicines</h5>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Total Medicines: {{ $totalMedicines }}</li>
-                                        <li class="list-group-item">Out of Stock Medicines:
-                                            {{ $totalOutOfStockMedicines }}</li>
+                                        <li class="list-group-item">Out of Stock Medicines: {{ $totalOutOfStockMedicines }}
+                                        </li>
+                                        <li class="list-group-item">Nearly Out of Stock Medicines:
+                                            {{ $totalNearlyOutOfStockMedicines }}</li>
                                         <li class="list-group-item">Expired Medicines: {{ $totalExpiredMedicines }}</li>
+                                        <li class="list-group-item">Nearly Expired Medicines:
+                                            {{ $totalNearlyExpiredMedicines }}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -129,6 +155,8 @@
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Total Barangays: {{ $totalBarangay }}</li>
                                         <li class="list-group-item">Total Patients: {{ $totalPatients }}</li>
+                                        <li class="list-group-item">Total Patients added today:
+                                            {{ $totalPatientsAddedToday }}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -171,7 +199,6 @@
         .list-group-item:hover {
             background-color: #f0f0f0;
         }
-
     </style>
 
     </script>
