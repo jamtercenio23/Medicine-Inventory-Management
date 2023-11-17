@@ -145,6 +145,65 @@
             background-color: #fff;
             margin-bottom: 20px;
         }
+
+        .breadcrumb {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            color: #000;
+            /* Breadcrumb text color */
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .table th {
+            background-color: #343a40;
+            color: #fff;
+            padding: 8px;
+        }
+
+        .table th,
+        .table td {
+            padding: 6px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        .pagination {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .pagination li {
+            display: inline;
+            margin-right: 5px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
+
+        .pagination a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn {
+            margin-right: 5px;
+        }
+
+        .form-control {
+            border-radius: 5px;
+        }
+
         .alert-success {
             background-color: #28a745;
             color: #fff;
@@ -152,6 +211,22 @@
 
         .alert-danger {
             background-color: #dc3545;
+            color: #fff;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode .card {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        body.dark-mode .breadcrumb {
+            background-color: #1e1e1e;
+            color: #fff;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #2d2d2d;
             color: #fff;
         }
     </style>

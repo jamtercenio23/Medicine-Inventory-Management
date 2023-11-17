@@ -32,3 +32,46 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+
+    body.dark-mode #logoutModal .modal-content {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    body.dark-mode #logoutModal .modal-header {
+        background-color: #343a40;
+        color: #fff;
+        border-bottom: 1px solid #007bff;
+    }
+
+    body.dark-mode #logoutModal .modal-title {
+        color: #fff;
+    }
+
+    body.dark-mode #logoutModal .modal-body {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    body.dark-mode #logoutModal .modal-footer {
+        background-color: #343a40;
+        border-top: 1px solid #007bff;
+    }
+
+    body.dark-mode #logoutModal .btn-secondary {
+        color: #fff;
+    }
+
+    body.dark-mode #logoutModal .btn-danger {
+        color: #fff;
+        background-color: #dc3545;
+        border: 1px solid #dc3545;
+    }
+
+    body.dark-mode #logoutModal .btn-danger:hover {
+        background-color: #a5202c;
+        border: 1px solid #a5202c;
+    }
+</style>

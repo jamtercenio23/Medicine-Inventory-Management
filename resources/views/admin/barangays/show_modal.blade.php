@@ -11,7 +11,7 @@
                 <p><strong>Name:</strong><br>{{ $barangay->name }}</p>
 
                 <!-- Medicines Distributed to this barangay -->
-                <div style="background-color: #f7f7f7; padding: 10px; margin-top: 20px;">
+                <div class="medicines-distributed">
                     <h5><strong>Medicines Distributed:</strong></h5>
                     @if ($barangay->distributions->isEmpty())
                         <p>No medicines distributed to this barangay.</p>
@@ -29,7 +29,7 @@
                 </div>
 
                 <!-- Schedule for Distribution to this barangay -->
-                <div style="background-color: #f7f7f7; padding: 10px; margin-top: 20px;">
+                <div class="distribution-schedule">
                     <h5><strong>Schedule for Distribution:</strong></h5>
                     @if ($barangay->schedules->isEmpty())
                         <p>No Schedule for Distribution to this barangay.</p>
@@ -53,3 +53,85 @@
         </div>
     </div>
 </div>
+<style>
+    .medicines-distributed {
+        background-color: #f7f7f7;
+        padding: 10px;
+        margin-top: 20px;
+    }
+    .distribution-schedule{
+        background-color: #f7f7f7;
+        padding: 10px;
+        margin-top: 20px;
+    }
+    body.dark-mode #showBarangayModal{{ $barangay->id }} .modal-content {
+        background-color: #343a40;
+        /* Dark mode background color for the modal content */
+        color: #fff;
+    }
+
+    body.dark-mode #showBarangayModal{{ $barangay->id }} .modal-header {
+        background-color: #343a40;
+        /* Dark mode background color for the modal header */
+        color: #fff;
+        border-bottom: 1px solid #007bff;
+        /* Border color for the header */
+    }
+
+    body.dark-mode #showBarangayModal{{ $barangay->id }} .modal-title {
+        color: #fff;
+        /* Text color for the modal title in dark mode */
+    }
+
+    body.dark-mode #showBarangayModal{{ $barangay->id }} .modal-body {
+        background-color: #343a40;
+        /* Dark mode background color for the modal body */
+        color: #fff;
+    }
+
+    body.dark-mode #showBarangayModal{{ $barangay->id }} p {
+        color: #fff;
+        /* Text color for paragraphs in dark mode */
+    }
+
+    body.dark-mode #showBarangayModal{{ $barangay->id }} ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    body.dark-mode #showBarangayModal{{ $barangay->id }} li {
+        margin-bottom: 10px;
+        color: #fff;
+        /* Text color for list items in dark mode */
+    }
+
+    body.dark-mode #showBarangayModal{{ $barangay->id }} .modal-footer {
+        background-color: #343a40;
+        /* Dark mode background color for the modal footer */
+        border-top: 1px solid #007bff;
+        /* Border color for the footer */
+    }
+
+    body.dark-mode #showBarangayModal{{ $barangay->id }} .btn-secondary {
+        color: #fff;
+        /* Text color for the secondary button in dark mode */
+    }
+
+    body.dark-mode #showBarangayModal{{ $barangay->id }} .modal-body > div {
+        background-color: #2d2d2d;
+        /* Dark mode background color for sections within modal body */
+        padding: 10px;
+        margin-top: 20px;
+    }
+
+    body.dark-mode #showBarangayModal{{ $barangay->id }} .modal-body h5 {
+        color: #fff;
+        /* Text color for section headings in dark mode */
+    }
+
+    body.dark-mode #showBarangayModal{{ $barangay->id }} .modal-body ul {
+        padding-left: 20px;
+        /* Add left padding to nested ul elements */
+    }
+</style>

@@ -25,3 +25,48 @@
         </div>
     </div>
 </div>
+<style>
+    body.dark-mode #showDistributionBarangayModal{{ $distribution_barangay->id }} .modal-content {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    body.dark-mode #showDistributionBarangayModal{{ $distribution_barangay->id }} .modal-header {
+        background-color: #343a40;
+        color: #fff;
+        border-bottom: 1px solid #007bff;
+    }
+
+    body.dark-mode #showDistributionBarangayModal{{ $distribution_barangay->id }} .modal-title {
+        color: #fff;
+    }
+
+    body.dark-mode #showDistributionBarangayModal{{ $distribution_barangay->id }} .modal-body {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    body.dark-mode #showDistributionBarangayModal{{ $distribution_barangay->id }} p {
+        color: #fff;
+    }
+
+    body.dark-mode #showDistributionBarangayModal{{ $distribution_barangay->id }} ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    body.dark-mode #showDistributionBarangayModal{{ $distribution_barangay->id }} li {
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    body.dark-mode #showDistributionBarangayModal{{ $distribution_barangay->id }} .modal-footer {
+        background-color: #343a40;
+        border-top: 1px solid #007bff;
+    }
+
+    body.dark-mode #showDistributionBarangayModal{{ $distribution_barangay->id }} .btn-secondary {
+        color: #fff;
+    }
+</style>

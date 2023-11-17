@@ -170,8 +170,12 @@
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">Total Barangay Distributions:
                                             {{ $totalDistributionBarangay }}</li>
+                                        <li class="list-group-item">Total Barangay Distributions added today:
+                                            {{ $totalBarangayDistributionAddedToday }}</li>
                                         <li class="list-group-item">Total Patient Distributions:
                                             {{ $totalPatientDistributions }}</li>
+                                        <li class="list-group-item">Total Patient Distributions added today:
+                                            {{ $totalPatientDistributionAddedToday }}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -199,8 +203,30 @@
         .list-group-item:hover {
             background-color: #f0f0f0;
         }
-    </style>
 
+        /* Dark mode styles */
+        body.dark-mode .card {
+            background-color: #343a40;
+            /* Dark background color for cards in dark mode */
+            color: #ffffff;
+            /* Text color for cards in dark mode */
+        }
+
+        body.dark-mode .list-group-item {
+            background-color: #343a40;
+            color: #ffffff;
+            /* Text color for list items in dark mode */
+        }
+    </style>
+    <script>
+        // Check if dark mode is enabled in local storage
+        const isDarkMode = localStorage.getItem('dark_mode') === 'true';
+
+        // Apply dark mode styles if enabled
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
     </script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -48,10 +48,45 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create Medicine</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<style>
+    body.dark-mode #createMedicineModal .modal-content {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    body.dark-mode #createMedicineModal .modal-header {
+        background-color: #343a40;
+        color: #fff;
+        border-bottom: 1px solid #007bff;
+    }
+
+    body.dark-mode #createMedicineModal .modal-title {
+        color: #fff;
+    }
+
+    body.dark-mode #createMedicineModal .modal-body {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    body.dark-mode #createMedicineModal label {
+        color: #fff;
+    }
+
+    body.dark-mode #createMedicineModal .form-control {
+        color: #fff;
+        background-color: #2d2d2d; /* Dark mode background color for input elements */
+        border: 1px solid #6c757d; /* White border for input elements */
+    }
+
+    body.dark-mode #createMedicineModal .btn-secondary {
+        color: #fff;
+    }
+</style>

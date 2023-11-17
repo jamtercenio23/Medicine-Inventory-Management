@@ -53,10 +53,41 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create Patient</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<style>
+    body.dark-mode #createBarangayPatientModal .modal-content {
+        background-color: #343a40;
+        /* Dark mode background color for the modal content */
+        color: #fff;
+    }
+
+    body.dark-mode #createBarangayPatientModal .modal-header {
+        background-color: #343a40;
+        /* Dark mode background color for the modal header */
+        color: #fff;
+        border-bottom: 1px solid #007bff;
+        /* Border color for the header */
+    }
+
+    body.dark-mode #createBarangayPatientModal .modal-title {
+        color: #fff;
+        /* Text color for the modal title in dark mode */
+    }
+
+    body.dark-mode #createBarangayPatientModal .modal-body {
+        background-color: #343a40;
+        /* Dark mode background color for the modal body */
+    }
+
+    body.dark-mode #createBarangayPatientModal label,
+    body.dark-mode #createBarangayPatientModal .form-control {
+        color: #fff;
+        /* Text color for labels and form controls in dark mode */
+    }
+</style>

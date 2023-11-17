@@ -58,3 +58,34 @@
         </div>
     </div>
 </div>
+<style>
+    body.dark-mode #editUserModal{{ $user->id }} .modal-content {
+        background-color: #343a40;
+        /* Dark mode background color for the modal content */
+        color: #fff;
+    }
+
+    body.dark-mode #editUserModal{{ $user->id }} .modal-header {
+        background-color: #343a40;
+        /* Dark mode background color for the modal header */
+        color: #fff;
+        border-bottom: 1px solid #007bff;
+        /* Border color for the header */
+    }
+
+    body.dark-mode #editUserModal{{ $user->id }} .modal-title {
+        color: #fff;
+        /* Text color for the modal title in dark mode */
+    }
+
+    body.dark-mode #editUserModal{{ $user->id }} .modal-body {
+        background-color: #343a40;
+        /* Dark mode background color for the modal body */
+    }
+
+    body.dark-mode #editUserModal{{ $user->id }} label,
+    body.dark-mode #editUserModal{{ $user->id }} .form-control {
+        color: #fff;
+        /* Text color for labels and form controls in dark mode */
+    }
+</style>

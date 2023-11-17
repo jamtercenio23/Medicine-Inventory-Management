@@ -9,11 +9,11 @@
             <div class="d-flex">
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
                     data-target="#createDistributionModal">
-                    <i class="fas fa-plus"></i> Add Distribution
+                    <i class="fas fa-plus"></i> Distribution
                 </button>
                 <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
                     data-target="#generateDistributionReportModal">
-                    <i class="fas fa-file-export"></i> Generate Report
+                    <i class="fas fa-file-export"></i> Report
                 </button>
             </div>
         </div>
@@ -231,26 +231,26 @@
             background-color: #f8f9fa;
             padding: 10px;
             border-radius: 5px;
+            margin-bottom: 20px;
+            color: #000;
+            /* Breadcrumb text color */
         }
 
         .table {
             width: 100%;
             border-collapse: collapse;
             font-size: 14px;
-            /* Smaller font size */
         }
 
         .table th {
             background-color: #343a40;
             color: #fff;
             padding: 8px;
-            /* Reduced padding */
         }
 
         .table th,
         .table td {
             padding: 6px;
-            /* Reduced padding */
             border: 1px solid #ccc;
             text-align: left;
         }
@@ -295,12 +295,111 @@
             color: #fff;
         }
 
-        /* Style the breadcrumb */
-        .breadcrumb {
-            background-color: #f8f9fa;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+        /* Dark mode styles */
+        body.dark-mode .card {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        body.dark-mode .breadcrumb {
+            background-color: #1e1e1e;
+            color: #fff;
+        }
+
+        body.dark-mode .table {
+            background-color: #2d2d2d;
+            color: #fff;
+        }
+
+        body.dark-mode .table th {
+            background-color: #1e1e1e;
+            color: #fff;
+        }
+
+        body.dark-mode .table th,
+        body.dark-mode .table td {
+            border: 1px solid #333;
+            background-color: #2d2d2d;
+            /* Darker background for cells */
+            color: #fff;
+        }
+
+        body.dark-mode .pagination a {
+            text-decoration: none;
+            color: #007bff;
+            background-color: #343a40;
+            /* Dark mode background color for pagination links */
+        }
+
+        body.dark-mode .pagination a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        body.dark-mode .pagination .page-item:first-child .page-link,
+        body.dark-mode .pagination .page-item:last-child .page-link {
+            border: 1px solid #007bff;
+            color: #007bff;
+            background-color: #343a40;
+        }
+
+        body.dark-mode .pagination .page-item:first-child .page-link:hover,
+        body.dark-mode .pagination .page-item:last-child .page-link:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        body.dark-mode .pagination .page-item.disabled .page-link {
+            background-color: #343a40;
+            color: #6c757d;
+            border: 1px solid #343a40;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #2d2d2d;
+            color: #fff;
+        }
+
+        body.dark-mode #generateDistributionReportModal .modal-content {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        body.dark-mode #generateDistributionReportModal .modal-header {
+            background-color: #343a40;
+            color: #fff;
+            border-bottom: 1px solid #007bff;
+        }
+
+        body.dark-mode #generateDistributionReportModal .modal-title {
+            color: #fff;
+        }
+
+        body.dark-mode #generateDistributionReportModal .modal-body {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        body.dark-mode #generateDistributionReportModal label,
+        body.dark-mode #generateDistributionReportModal .form-control {
+            color: #fff;
+        }
+
+        body.dark-mode #generateDistributionReportModal .form-control {
+            background-color: #2d2d2d;
+            /* Dark mode background color for input elements */
+            border: 1px solid #6c757d;
+            /* White border for input elements */
+            color: #fff;
+        }
+
+        body.dark-mode #generateDistributionReportModal .modal-footer {
+            background-color: #343a40;
+            border-top: 1px solid #007bff;
+        }
+
+        body.dark-mode #generateDistributionReportModal .btn-secondary {
+            color: #fff;
         }
     </style>
 @endsection

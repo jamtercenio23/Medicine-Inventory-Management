@@ -27,10 +27,10 @@
                         <p><strong>Height:</strong><br>{{ $patient->height }} cm</p>
                     </div>
                 </div>
-                <div style="background-color: #f7f7f7; padding: 10px; margin-top: 20px;">
+                <div class="medicines-distributed">
                     <h5><strong>Medicines Distributed:</strong></h5>
                     @if ($patient->distributions->isEmpty())
-                        <p>No medicines distributed to this patient.</p>
+                        <p class="no-medicines">No medicines distributed to this patient.</p>
                     @else
                         <ul>
                             @foreach ($patient->distributions as $distribution)
@@ -53,3 +53,69 @@
         </div>
     </div>
 </div>
+<style>
+    .medicines-distributed {
+        background-color: #f7f7f7;
+        padding: 10px;
+        margin-top: 20px;
+    }
+    body.dark-mode #showPatientModal{{ $patient->id }} .modal-content {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    body.dark-mode #showPatientModal{{ $patient->id }} .modal-header {
+        background-color: #343a40;
+        color: #fff;
+        border-bottom: 1px solid #007bff;
+    }
+
+    body.dark-mode #showPatientModal{{ $patient->id }} .modal-title {
+        color: #fff;
+    }
+
+    body.dark-mode #showPatientModal{{ $patient->id }} .modal-body {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    body.dark-mode #showPatientModal{{ $patient->id }} p {
+        color: #fff;
+    }
+
+    body.dark-mode #showPatientModal{{ $patient->id }} ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    body.dark-mode #showPatientModal{{ $patient->id }} li {
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    body.dark-mode #showPatientModal{{ $patient->id }} .modal-footer {
+        background-color: #343a40;
+        border-top: 1px solid #007bff;
+    }
+
+    body.dark-mode #showPatientModal{{ $patient->id }} .btn-secondary {
+        color: #fff;
+    }
+
+    body.dark-mode #showPatientModal{{ $patient->id }} .medicines-distributed {
+        background-color: #2d2d2d;
+        padding: 10px;
+        margin-top: 20px;
+    }
+
+    body.dark-mode #showPatientModal{{ $patient->id }} .medicines-distributed h5 {
+        color: #fff;
+    }
+
+    body.dark-mode #showPatientModal{{ $patient->id }} .medicines-distributed ul {
+        padding-left: 20px;
+    }
+
+</style>
+

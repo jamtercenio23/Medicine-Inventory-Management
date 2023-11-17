@@ -27,3 +27,48 @@
         </div>
     </div>
 </div>
+<style>
+    body.dark-mode #showDistributionModal{{ $barangayDistribution->id }} .modal-content {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    body.dark-mode #showDistributionModal{{ $barangayDistribution->id }} .modal-header {
+        background-color: #343a40;
+        color: #fff;
+        border-bottom: 1px solid #007bff;
+    }
+
+    body.dark-mode #showDistributionModal{{ $barangayDistribution->id }} .modal-title {
+        color: #fff;
+    }
+
+    body.dark-mode #showDistributionModal{{ $barangayDistribution->id }} .modal-body {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    body.dark-mode #showDistributionModal{{ $barangayDistribution->id }} p {
+        color: #fff;
+    }
+
+    body.dark-mode #showDistributionModal{{ $barangayDistribution->id }} ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    body.dark-mode #showDistributionModal{{ $barangayDistribution->id }} li {
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    body.dark-mode #showDistributionModal{{ $barangayDistribution->id }} .modal-footer {
+        background-color: #343a40;
+        border-top: 1px solid #007bff;
+    }
+
+    body.dark-mode #showScheduleModal{{ $barangayDistribution->id }} .btn-secondary {
+        color: #fff;
+    }
+</style>

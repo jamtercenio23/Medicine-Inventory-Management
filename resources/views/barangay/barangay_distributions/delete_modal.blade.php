@@ -20,3 +20,33 @@
         </div>
     </div>
 </div>
+<style>
+    body.dark-mode #deleteDistributionModal{{ $barangayDistribution->id }} .modal-content {
+        background-color: #343a40;
+        /* Dark mode background color for the modal content */
+        color: #fff;
+    }
+
+    body.dark-mode #deleteDistributionModal{{ $barangayDistribution->id }} .modal-header {
+        background-color: #343a40;
+        /* Dark mode background color for the modal header */
+        color: #fff;
+        border-bottom: 1px solid #dc3545;
+        /* Border color for the header */
+    }
+
+    body.dark-mode #deleteDistributionModal{{ $barangayDistribution->id }} .modal-title {
+        color: #fff;
+        /* Text color for the modal title in dark mode */
+    }
+
+    body.dark-mode #deleteDistributionModal{{ $barangayDistribution->id }} .modal-body {
+        background-color: #343a40;
+        /* Dark mode background color for the modal body */
+    }
+
+    body.dark-mode #deleteDistributionModal{{ $barangayDistribution->id }} p {
+        color: #fff;
+        /* Text color for paragraph in dark mode */
+    }
+</style>

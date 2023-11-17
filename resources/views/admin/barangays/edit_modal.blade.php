@@ -23,3 +23,40 @@
         </div>
     </div>
 </div>
+<style>
+    body.dark-mode #editBarangayModal{{ $barangay->id }} .modal-content {
+        background-color: #343a40;
+        /* Dark mode background color for the modal content */
+        color: #fff;
+    }
+
+    body.dark-mode #editBarangayModal{{ $barangay->id }} .modal-header {
+        background-color: #343a40;
+        /* Dark mode background color for the modal header */
+        color: #fff;
+        border-bottom: 1px solid #007bff;
+        /* Border color for the header */
+    }
+
+    body.dark-mode #editBarangayModal{{ $barangay->id }} .modal-title {
+        color: #fff;
+        /* Text color for the modal title in dark mode */
+    }
+
+    body.dark-mode #editBarangayModal{{ $barangay->id }} .modal-body {
+        background-color: #343a40;
+        /* Dark mode background color for the modal body */
+    }
+
+    body.dark-mode #editBarangayModal{{ $barangay->id }} label {
+        color: #fff;
+        /* Text color for labels in dark mode */
+    }
+
+    body.dark-mode #editBarangayModal{{ $barangay->id }} .form-control {
+        background-color: #2d2d2d; /* Background color for form controls */
+        color: #fff; /* Text color for form controls in dark mode */
+        border: 1px solid #fff; /* White border for form controls */
+        border-radius: 5px; /* Optional: Add border-radius for a rounded look */
+    }
+</style>

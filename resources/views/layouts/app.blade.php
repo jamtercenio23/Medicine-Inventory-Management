@@ -13,6 +13,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/dark-mode.css') }}" id="dark-mode-stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -112,7 +113,23 @@
             $("#loading-overlay").hide();
         });
     </script>
+    <script>
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
 
+            // Update local storage with the current state
+            const isDarkMode = body.classList.contains('dark-mode');
+            document.cookie = 'dark_mode=' + isDarkMode + ';path=/'; // Set the dark_mode cookie
+        }
+
+        // Check if dark mode is enabled in cookie
+        const isDarkMode = document.cookie.split(';').some((item) => item.trim().startsWith('dark_mode='));
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
     <style>
         body {
             overflow: auto;
@@ -133,6 +150,33 @@
             @if (Auth::check())
                 display: none;
             @endif
+        }
+
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        body.dark-mode #sidebar-wrapper,
+        body.dark-mode #sidebar-wrapper .list-group-item {
+            background-color: #343a40 !important;
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .navbar,
+        body.dark-mode .navbar-light .navbar-toggler-icon,
+        body.dark-mode .navbar-light .navbar-toggler {
+            background-color: #343a40 !important;
+            color: #ffffff !important;
+            border-color: #ffffff !important;
+        }
+
+        body.dark-mode #sidebar-wrapper .list-group-item a {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode #sidebar-wrapper .list-group-item a:hover {
+            color: #3498db !important;
         }
 
         #sidebar-wrapper {
@@ -220,15 +264,6 @@
             }
         }
 
-        /* Style for the footer */
-        /* footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background-color: #f8f9fa;
-            text-align: center;
-            padding: 10px 0;
-        } */
         .sidebar-logo {
             text-align: center;
             margin: 20px 0;
@@ -259,7 +294,8 @@
 
 </head>
 
-<body>
+<body
+    class="{{ Auth::check() && (isset($_COOKIE['dark_mode']) && $_COOKIE['dark_mode'] == 'true') ? 'dark-mode' : '' }}">
     <div id="loading-overlay">
         <div class="loading-spinner"></div>
     </div>
@@ -391,8 +427,8 @@
                             @endcan
                             @can('view-barangay_expired')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('barangay-medicines.expired') }}"><i class="fas fa-calendar-times"
-                                            style="margin-right: 20px;"></i> Expired
+                                    &nbsp; &nbsp;<a href="{{ route('barangay-medicines.expired') }}"><i
+                                            class="fas fa-calendar-times" style="margin-right: 20px;"></i> Expired
                                         Medicines</a>
                                 </li>
                             @endcan
@@ -494,14 +530,18 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+
                         @if (Auth::check())
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" data-toggle="modal" data-target="#notificationModal">
-                                <i class="fas fa-bell"></i>
-                                <span class="nav-text">Notifications</span>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="modal"
+                                    data-target="#notificationModal">
+                                    <i class="fas fa-bell"></i>
+                                    <span class="nav-text">Notifications</span>
+                                </a>
+                            </li>
+
                         @endif
+
                         <li class="nav-item">
                             <a class="nav-link" href="/"><i class="fas fa-home"></i> <span
                                     class="nav-text">Home</span> <span class="sr-only">(current)</span></a>
@@ -520,6 +560,13 @@
                                             Distributions</span></a>
                                 </li>
                             @endcan
+                            @if (Auth::check())
+                        <li class="nav-item">
+                            <button class="btn btn-secondary rounded-pill" onclick="toggleDarkMode()">
+                                <i class="fas fa-moon"></i> <!-- Moon icon for dark mode -->
+                            </button>
+                        </li>
+                        @endif
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                                     role="button" data-toggle="dropdown" aria-haspopup="true"

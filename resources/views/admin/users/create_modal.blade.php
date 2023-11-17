@@ -49,10 +49,41 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create User</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<style>
+    body.dark-mode #createUserModal .modal-content {
+        background-color: #343a40;
+        /* Dark mode background color for the modal content */
+        color: #fff;
+    }
+
+    body.dark-mode #createUserModal .modal-header {
+        background-color: #343a40;
+        /* Dark mode background color for the modal header */
+        color: #fff;
+        border-bottom: 1px solid #007bff;
+        /* Border color for the header */
+    }
+
+    body.dark-mode #createUserModal .modal-title {
+        color: #fff;
+        /* Text color for the modal title in dark mode */
+    }
+
+    body.dark-mode #createUserModal .modal-body {
+        background-color: #343a40;
+        /* Dark mode background color for the modal body */
+    }
+
+    body.dark-mode #createUserModal label,
+    body.dark-mode #createUserModal .form-control {
+        color: #fff;
+        /* Text color for labels and form controls in dark mode */
+    }
+</style>
