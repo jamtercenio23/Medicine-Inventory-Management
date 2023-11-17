@@ -555,7 +555,7 @@
         </div>
     </div>
     @include('auth.logout-modal')
-    @include('layouts.notification_modal')
+    @include('notifications.modal')
 </body>
 
 </html>
