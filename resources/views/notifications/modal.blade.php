@@ -17,3 +17,35 @@
         </div>
     </div>
 </div>
+<style>
+    /* ... Your existing styles ... */
+
+    body.dark-mode #notificationModal .modal-content {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    body.dark-mode #notificationModal .modal-header {
+        background-color: #343a40;
+        color: #fff;
+        border-bottom: 1px solid #007bff;
+    }
+
+    body.dark-mode #notificationModal .modal-title {
+        color: #fff;
+    }
+
+    body.dark-mode #notificationModal .modal-body {
+        background-color: #343a40;
+        color: #fff;
+    }
+
+    body.dark-mode #notificationModal .modal-footer {
+        background-color: #343a40;
+        border-top: 1px solid #007bff;
+    }
+
+    body.dark-mode #notificationModal .btn-secondary {
+        color: #fff;
+    }
+</style>
