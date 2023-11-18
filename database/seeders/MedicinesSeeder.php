@@ -17,14 +17,14 @@ class MedicinesSeeder extends Seeder
      */
     public function run()
     {
-        $categories = [1, 2, 3, 4, 5]; // Replace with your actual category IDs
+        $categories = range(1, 47);
         $faker = Faker::create();
 
-        for ($i = 1; $i <= 100; $i++) {
-            $isOutOfStock = $i % 3 == 0; // Every third medicine is out of stock
-            $isExpired = $i % 4 == 0; // Every fourth medicine is expired
+        for ($i = 1; $i <= 10000; $i++) {
+            $isOutOfStock = $i % 3 == 0;
+            $isExpired = $i % 4 == 0;
 
-            $stock = $isOutOfStock ? 0 : rand(10, 100);
+            $stock = $isOutOfStock ? 0 : rand(10, 10000);
             $expirationDate = $isExpired ? now()->subDays(rand(1, 365)) : now()->addDays(rand(1, 365));
             $createdDate = $faker->dateTimeBetween('-2 years', 'now');
 
@@ -32,7 +32,7 @@ class MedicinesSeeder extends Seeder
                 'generic_name' => $faker->word,
                 'brand_name' => $faker->word,
                 'category_id' => $categories[array_rand($categories)],
-                'price' => rand(10, 100),
+                'price' => rand(10, 200),
                 'stocks' => $stock,
                 'expiration_date' => $expirationDate,
                 'created_at' => $createdDate,

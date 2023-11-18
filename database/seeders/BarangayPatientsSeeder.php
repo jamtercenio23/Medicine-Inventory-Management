@@ -17,7 +17,7 @@ class BarangayPatientsSeeder extends Seeder
 
         for ($barangayId = 1; $barangayId <= 16; $barangayId++) {
             // Generate a random number of patients for each barangay
-            $numPatients = rand(5, 20); // You can adjust this range as needed
+            $numPatients = rand(5, 50); // You can adjust this range as needed
             $createdDate = $faker->dateTimeBetween('-2 years', 'now');
             for ($i = 0; $i < $numPatients; $i++) {
                 $patientsData[] = [

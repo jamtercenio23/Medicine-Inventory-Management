@@ -19,7 +19,7 @@ class PatientsSeeder extends Seeder
 
         for ($barangayId = 1; $barangayId <= 16; $barangayId++) {
             // Generate a random number of patients for each barangay
-            $numPatients = rand(5, 20); // You can adjust this range as needed
+            $numPatients = rand(5, 100); // You can adjust this range as needed
             $createdDate = $faker->dateTimeBetween('-2 years', 'now');
             for ($i = 0; $i < $numPatients; $i++) {
                 $patientsData[] = [
@@ -32,7 +32,7 @@ class PatientsSeeder extends Seeder
                     'blood_pressure' =>$faker->numberBetween(60,200),
                     'heart_rate' => $faker->numberBetween(60,130),
                     'weight' => $faker->numberBetween(20,100),
-                    'height' => $faker->numberBetween(130,200),
+                    'height' => $faker->numberBetween(130,180),
                     'created_at' => $createdDate,
                 ];
             }
