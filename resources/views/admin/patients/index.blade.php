@@ -7,11 +7,10 @@
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Manage Patients</h1>
             <div class="d-flex">
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createPatientModal">
-                    <i class="fas fa-plus"></i> Patient
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createPatientModal">
+                    <i class="fas fa-plus"></i> Add Patient
                 </button>
-                <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
-                    data-target="#generatePatientReportModal">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#generatePatientReportModal">
                     <i class="fas fa-file-export"></i> Report
                 </button>
             </div>
@@ -43,7 +42,7 @@
                                     <option value="pdf">PDF</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Generate</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Generate</button>
                         </form>
                     </div>
                 </div>

@@ -6,8 +6,8 @@
     <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Manage Schedules</h1>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createScheduleModal">
-                <i class="fas fa-plus"></i> Schedule
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createScheduleModal">
+                <i class="fas fa-plus"></i> Add Schedule
             </button>
         </div>
         @if (session('success'))

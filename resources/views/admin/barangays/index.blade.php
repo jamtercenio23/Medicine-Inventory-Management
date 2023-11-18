@@ -6,8 +6,8 @@
     <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Manage Barangays</h1>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createBarangayModal">
-                <i class="fas fa-plus"></i> Barangay
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createBarangayModal">
+                <i class="fas fa-plus"></i> Add Barangay
             </button>
         </div>
         @if (session('success'))

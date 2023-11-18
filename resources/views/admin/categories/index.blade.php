@@ -6,8 +6,8 @@
     <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Medicine Categories</h1>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createCategoryModal">
-                <i class="fas fa-plus"></i> Category
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCategoryModal">
+                <i class="fas fa-plus"></i> Add Category
             </button>
         </div>
         @if (session('success'))

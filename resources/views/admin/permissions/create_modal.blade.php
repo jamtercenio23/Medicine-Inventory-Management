@@ -15,7 +15,7 @@
                         <label for="name">Permission Name</label>
                         <input type="text" name="name" id="name" class="form-control" placeholder="Enter the Permission Name" required>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Create</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button>
                 </form>
             </div>

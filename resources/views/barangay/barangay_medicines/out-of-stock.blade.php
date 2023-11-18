@@ -7,7 +7,7 @@
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Barangay Out of Stock Medicines</h1>
             @if (auth()->user()->isBHW())
-                <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
+                <button type="button" class="btn btn-success" data-toggle="modal"
                     data-target="#generateBarangayOutOfStockReportModal">
                     <i class="fas fa-file-export"></i> Report
                 </button>
@@ -44,7 +44,7 @@
                                     <option value="pdf">PDF</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Generate Report</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Generate Report</button>
                         </form>
                     </div>
                 </div>

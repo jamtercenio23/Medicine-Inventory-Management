@@ -6,8 +6,8 @@
     <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Manage Permissions</h1>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createPermissionModal">
-                <i class="fas fa-plus"></i> Permission
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createPermissionModal">
+                <i class="fas fa-plus"></i> Add Permission
             </button>
         </div>
         @if (session('success'))

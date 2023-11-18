@@ -51,7 +51,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Create</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Create</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button>
                 </form>
             </div>

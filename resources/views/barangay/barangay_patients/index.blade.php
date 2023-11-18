@@ -8,11 +8,11 @@
             <h1>Manage Patients</h1>
             <div class="d-flex">
                 @if (auth()->user()->isBHW())
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
                         data-target="#createBarangayPatientModal">
-                        <i class="fas fa-plus"></i> Patient
+                        <i class="fas fa-plus"></i> Add Patient
                     </button>
-                    <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
+                    <button type="button" class="btn btn-success" data-toggle="modal"
                         data-target="#generateBarangayPatientReportModal">
                         <i class="fas fa-file-export"></i> Report
                     </button>
@@ -46,7 +46,7 @@
                                     <option value="pdf">PDF</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Generate</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Generate</button>
                         </form>
                     </div>
                 </div>

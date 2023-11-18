@@ -6,10 +6,11 @@
     <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Out of Stock Medicines</h1>
-            <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
-                data-target="#generateOutOfStockReportModal">
-                <i class="fas fa-file-export"></i> Report
-            </button>
+            <div class="d-flex">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#generateOutOfStockReportModal">
+                    <i class="fas fa-file-export"></i> Report
+                </button>
+            </div>
         </div>
 
         <!-- Generate Out of Stock Report Modal -->
@@ -41,7 +42,7 @@
                                     <option value="pdf">PDF</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Generate</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Generate</button>
                         </form>
                     </div>
                 </div>

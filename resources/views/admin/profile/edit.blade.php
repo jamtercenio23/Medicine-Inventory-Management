@@ -54,7 +54,7 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update Profile</button>
                 </form>
 
                 <hr>
@@ -88,7 +88,7 @@
                             placeholder="Leave empty to keep the current password">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Update Password</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update Password</button>
                 </form>
             </div>
         </div>

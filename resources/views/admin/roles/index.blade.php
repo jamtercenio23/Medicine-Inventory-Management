@@ -6,8 +6,8 @@
     <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Role Management</h1>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createRoleModal">
-                <i class="fas fa-plus"></i> Role
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createRoleModal">
+                <i class="fas fa-plus"></i> Add Role
             </button>
         </div>
 
