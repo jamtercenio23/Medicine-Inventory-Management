@@ -3,7 +3,7 @@
 @section('title', 'Medicine Inventory - User Management')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>User Management</h1>
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createUserModal">
@@ -80,10 +80,12 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editUserModal{{ $user->id }}">
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                data-target="#editUserModal{{ $user->id }}">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteUserModal{{ $user->id }}">
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                data-target="#deleteUserModal{{ $user->id }}">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </td>

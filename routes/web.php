@@ -21,7 +21,9 @@ use App\Http\Controllers\admin\ProfileController;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/about', function () {
+    return view('about');
+});
 Auth::routes();
 // Admin Route
 Route::middleware(['auth', 'is_active'])->group(function () {

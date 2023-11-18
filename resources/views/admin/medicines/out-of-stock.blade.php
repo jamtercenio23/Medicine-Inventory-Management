@@ -3,7 +3,7 @@
 @section('title', 'Medicine Inventory - Out of Stock Medicines')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Out of Stock Medicines</h1>
             <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
@@ -338,43 +338,45 @@
         }
 
         body.dark-mode #generateOutOfStockReportModal .modal-content {
-        background-color: #343a40;
-        color: #fff;
-    }
+            background-color: #343a40;
+            color: #fff;
+        }
 
-    body.dark-mode #generateOutOfStockReportModal .modal-header {
-        background-color: #343a40;
-        color: #fff;
-        border-bottom: 1px solid #007bff;
-    }
+        body.dark-mode #generateOutOfStockReportModal .modal-header {
+            background-color: #343a40;
+            color: #fff;
+            border-bottom: 1px solid #007bff;
+        }
 
-    body.dark-mode #generateOutOfStockReportModal .modal-title {
-        color: #fff;
-    }
+        body.dark-mode #generateOutOfStockReportModal .modal-title {
+            color: #fff;
+        }
 
-    body.dark-mode #generateOutOfStockReportModal .modal-body {
-        background-color: #343a40;
-        color: #fff;
-    }
+        body.dark-mode #generateOutOfStockReportModal .modal-body {
+            background-color: #343a40;
+            color: #fff;
+        }
 
-    body.dark-mode #generateOutOfStockReportModal label,
-    body.dark-mode #generateOutOfStockReportModal .form-control {
-        color: #fff;
-    }
+        body.dark-mode #generateOutOfStockReportModal label,
+        body.dark-mode #generateOutOfStockReportModal .form-control {
+            color: #fff;
+        }
 
-    body.dark-mode #generateOutOfStockReportModal .form-control {
-        background-color: #2d2d2d; /* Dark mode background color for input elements */
-        border: 1px solid #6c757d; /* White border for input elements */
-        color: #fff;
-    }
+        body.dark-mode #generateOutOfStockReportModal .form-control {
+            background-color: #2d2d2d;
+            /* Dark mode background color for input elements */
+            border: 1px solid #6c757d;
+            /* White border for input elements */
+            color: #fff;
+        }
 
-    body.dark-mode #generateOutOfStockReportModal .modal-footer {
-        background-color: #343a40;
-        border-top: 1px solid #007bff;
-    }
+        body.dark-mode #generateOutOfStockReportModal .modal-footer {
+            background-color: #343a40;
+            border-top: 1px solid #007bff;
+        }
 
-    body.dark-mode #generateOutOfStockReportModal .btn-secondary {
-        color: #fff;
-    }
+        body.dark-mode #generateOutOfStockReportModal .btn-secondary {
+            color: #fff;
+        }
     </style>
 @endsection

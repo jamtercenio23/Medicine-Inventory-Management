@@ -3,7 +3,7 @@
 @section('title', 'Medicine Inventory - Medicines')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Medicine Inventory</h1>
             <div class="d-flex">
@@ -352,6 +352,7 @@
             color: #6c757d;
             border: 1px solid #343a40;
         }
+
         body.dark-mode .form-control {
             background-color: #2d2d2d;
             color: #fff;

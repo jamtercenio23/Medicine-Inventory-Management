@@ -3,7 +3,7 @@
 @section('title', 'Medicine Inventory - Barangay Medicines')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Barangay Medicines</h1>
             <div class="d-flex">
@@ -26,8 +26,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('barangay-medicines.generateBarangayMedicineReport') }}"
-                            method="post">
+                        <form action="{{ route('barangay-medicines.generateBarangayMedicineReport') }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label for="fromDate">From Date:</label>
@@ -91,7 +90,7 @@
                                 <tr>
                                     <th>ID</th>
                                     @if (auth()->user()->isAdmin())
-                                    <th>Barangay</th>
+                                        <th>Barangay</th>
                                     @endif
                                     <th>Generic Name</th>
                                     <th>Brand Name</th>
@@ -105,7 +104,7 @@
                                     <tr>
                                         <td>{{ $barangayMedicine->id }}</td>
                                         @if (auth()->user()->isAdmin())
-                                        <td>{{ $barangayMedicine->barangay->name }}</td>
+                                            <td>{{ $barangayMedicine->barangay->name }}</td>
                                         @endif
                                         <td>{{ $barangayMedicine->generic_name }}</td>
                                         <td>{{ $barangayMedicine->brand_name }}</td>
@@ -185,8 +184,7 @@
                             <a class="page-link">...</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link"
-                                href="{{ $barangayMedicines->url($lastPage) }}">{{ $lastPage }}</a>
+                            <a class="page-link" href="{{ $barangayMedicines->url($lastPage) }}">{{ $lastPage }}</a>
                         </li>
                     @endif
 

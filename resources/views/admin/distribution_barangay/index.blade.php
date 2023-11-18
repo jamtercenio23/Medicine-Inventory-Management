@@ -3,7 +3,7 @@
 @section('title', 'Medicine Inventory - Distribution to Barangays')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Barangay Distribution</h1>
             <div class="d-flex">

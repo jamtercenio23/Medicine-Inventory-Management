@@ -3,7 +3,7 @@
 @section('title', 'Edit Profile')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Edit Profile</h1>
         </div>
@@ -54,7 +54,7 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
                 </form>
 
                 <hr>
@@ -88,7 +88,7 @@
                             placeholder="Leave empty to keep the current password">
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block">Update Password</button>
+                    <button type="submit" class="btn btn-primary">Update Password</button>
                 </form>
             </div>
         </div>

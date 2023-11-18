@@ -3,7 +3,7 @@
 @section('title', 'Medicine Inventory - Patients')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Manage Patients</h1>
             <div class="d-flex">
@@ -91,7 +91,7 @@
                                 <tr>
                                     <th>ID</th>
                                     @if (auth()->user()->isAdmin())
-                                    <th>Barangay</th>
+                                        <th>Barangay</th>
                                     @endif
                                     <th>Name</th>
                                     <th>Gender</th>
@@ -104,7 +104,7 @@
                                     <tr>
                                         <td>{{ $barangayPatient->id }}</td>
                                         @if (auth()->user()->isAdmin())
-                                        <td>{{ $barangayPatient->barangay->name }}</td>
+                                            <td>{{ $barangayPatient->barangay->name }}</td>
                                         @endif
                                         <td>{{ $barangayPatient->first_name }} {{ $barangayPatient->last_name }}</td>
                                         <td>{{ $barangayPatient->gender }}</td>

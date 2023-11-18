@@ -3,7 +3,7 @@
 @section('title', 'Medicine Inventory - Roles')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Role Management</h1>
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createRoleModal">

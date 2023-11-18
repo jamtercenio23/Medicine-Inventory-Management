@@ -3,7 +3,7 @@
 @section('title', 'Medicine Inventory - Barangay Out of Stock Medicines')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Barangay Out of Stock Medicines</h1>
             @if (auth()->user()->isBHW())
@@ -89,7 +89,7 @@
                                 <tr>
                                     <th>ID</th>
                                     @if (auth()->user()->isAdmin())
-                                    <th>Barangay</th>
+                                        <th>Barangay</th>
                                     @endif
                                     <th>Generic Name</th>
                                     <th>Brand Name</th>
@@ -97,7 +97,7 @@
                                     <th>Price</th>
                                     <th>Expiration Date</th>
                                     @if (auth()->user()->isBHW())
-                                    <th>Actions</th>
+                                        <th>Actions</th>
                                     @endif
                                 </tr>
                             </thead>
@@ -106,7 +106,7 @@
                                     <tr>
                                         <td>{{ $barangayMedicine->id }}</td>
                                         @if (auth()->user()->isAdmin())
-                                        <td>{{ $barangayMedicine->barangay->name }}</td>
+                                            <td>{{ $barangayMedicine->barangay->name }}</td>
                                         @endif
                                         <td>{{ $barangayMedicine->generic_name }}</td>
                                         <td>{{ $barangayMedicine->brand_name }}</td>
@@ -114,12 +114,12 @@
                                         <td>₱ {{ $barangayMedicine->price }}</td>
                                         <td>{{ $barangayMedicine->expiration_date }}</td>
                                         @if (auth()->user()->isBHW())
-                                        <td>
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editBarangayOutOfStockModal{{ $barangayMedicine->id }}">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                        </td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                    data-target="#editBarangayOutOfStockModal{{ $barangayMedicine->id }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </td>
                                         @endif
                                     </tr>
                                     <!-- Edit Out of Stock Medicine Modal -->

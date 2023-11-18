@@ -3,14 +3,16 @@
 @section('title', 'Medicine Inventory - Expired Medicines')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Expired Medicines</h1>
-            <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal" data-target="#generateExpiredReportModal">
+            <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
+                data-target="#generateExpiredReportModal">
                 <i class="fas fa-file-export"></i> Report
             </button>
         </div>
-        <div class="modal fade" id="generateExpiredReportModal" tabindex="-1" role="dialog" aria-labelledby="generateExpiredReportModalLabel" aria-hidden="true">
+        <div class="modal fade" id="generateExpiredReportModal" tabindex="-1" role="dialog"
+            aria-labelledby="generateExpiredReportModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -334,44 +336,47 @@
             background-color: #2d2d2d;
             color: #fff;
         }
+
         body.dark-mode #generateExpiredReportModal .modal-content {
-        background-color: #343a40;
-        color: #fff;
-    }
+            background-color: #343a40;
+            color: #fff;
+        }
 
-    body.dark-mode #generateExpiredReportModal .modal-header {
-        background-color: #343a40;
-        color: #fff;
-        border-bottom: 1px solid #007bff;
-    }
+        body.dark-mode #generateExpiredReportModal .modal-header {
+            background-color: #343a40;
+            color: #fff;
+            border-bottom: 1px solid #007bff;
+        }
 
-    body.dark-mode #generateExpiredReportModal .modal-title {
-        color: #fff;
-    }
+        body.dark-mode #generateExpiredReportModal .modal-title {
+            color: #fff;
+        }
 
-    body.dark-mode #generateExpiredReportModal .modal-body {
-        background-color: #343a40;
-        color: #fff;
-    }
+        body.dark-mode #generateExpiredReportModal .modal-body {
+            background-color: #343a40;
+            color: #fff;
+        }
 
-    body.dark-mode #generateExpiredReportModal label,
-    body.dark-mode #generateExpiredReportModal .form-control {
-        color: #fff;
-    }
+        body.dark-mode #generateExpiredReportModal label,
+        body.dark-mode #generateExpiredReportModal .form-control {
+            color: #fff;
+        }
 
-    body.dark-mode #generateExpiredReportModal .form-control {
-        background-color: #2d2d2d; /* Dark mode background color for input elements */
-        border: 1px solid #6c757d; /* White border for input elements */
-        color: #fff;
-    }
+        body.dark-mode #generateExpiredReportModal .form-control {
+            background-color: #2d2d2d;
+            /* Dark mode background color for input elements */
+            border: 1px solid #6c757d;
+            /* White border for input elements */
+            color: #fff;
+        }
 
-    body.dark-mode #generateExpiredReportModal .modal-footer {
-        background-color: #343a40;
-        border-top: 1px solid #007bff;
-    }
+        body.dark-mode #generateExpiredReportModal .modal-footer {
+            background-color: #343a40;
+            border-top: 1px solid #007bff;
+        }
 
-    body.dark-mode #generateExpiredReportModal .btn-secondary {
-        color: #fff;
-    }
+        body.dark-mode #generateExpiredReportModal .btn-secondary {
+            color: #fff;
+        }
     </style>
 @endsection

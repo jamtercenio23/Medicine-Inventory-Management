@@ -3,7 +3,7 @@
 @section('title', 'Medicine Inventory - Barangays')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Manage Barangays</h1>
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createBarangayModal">
@@ -27,7 +27,8 @@
                 <div class="float-right">
                     <form action="{{ route('barangays.index') }}" method="GET" class="form-inline">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
+                            <input type="text" class="form-control" placeholder="Search" name="search"
+                                value="{{ $query }}">
                             <div class="input-group-append">
                                 <button class="btn btn-secondary" type="submit">
                                     <i class="fas fa-search"></i>
@@ -43,7 +44,7 @@
                     @if ($barangays->isEmpty())
                         <p>No barangays found.</p>
                     @else
-                    <table class="table table-hover table-sm">
+                        <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
                                     <th>ID</th>

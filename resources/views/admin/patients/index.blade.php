@@ -3,7 +3,7 @@
 @section('title', 'Medicine Inventory - Patients')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Manage Patients</h1>
             <div class="d-flex">

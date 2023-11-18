@@ -3,16 +3,18 @@
 @section('title', 'Medicine Inventory - Barangay Expired Medicines')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
             <h1>Barangay Expired Medicines</h1>
             @if (auth()->user()->isBHW())
-            <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal" data-target="#generateBarangayExpiredReportModal">
-                <i class="fas fa-file-export"></i> Report
-            </button>
+                <button type="button" class="btn btn-success btn-sm ml-2" data-toggle="modal"
+                    data-target="#generateBarangayExpiredReportModal">
+                    <i class="fas fa-file-export"></i> Report
+                </button>
             @endif
         </div>
-        <div class="modal fade" id="generateBarangayExpiredReportModal" tabindex="-1" role="dialog" aria-labelledby="generateBarangayExpiredReportModalLabel" aria-hidden="true">
+        <div class="modal fade" id="generateBarangayExpiredReportModal" tabindex="-1" role="dialog"
+            aria-labelledby="generateBarangayExpiredReportModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -84,7 +86,7 @@
                                 <tr>
                                     <th>ID</th>
                                     @if (auth()->user()->isAdmin())
-                                    <th>Barangay</th>
+                                        <th>Barangay</th>
                                     @endif
                                     <th>Generic Name</th>
                                     <th>Brand Name</th>
@@ -93,7 +95,7 @@
                                     <th>Stocks</th>
                                     <th>Expiration Date</th>
                                     @if (auth()->user()->isBHW())
-                                    <th>Actions</th>
+                                        <th>Actions</th>
                                     @endif
                                 </tr>
                             </thead>
@@ -102,7 +104,7 @@
                                     <tr>
                                         <td>{{ $barangayMedicine->id }}</td>
                                         @if (auth()->user()->isAdmin())
-                                        <td>{{ $barangayMedicine->barangay->name }}</td>
+                                            <td>{{ $barangayMedicine->barangay->name }}</td>
                                         @endif
                                         <td>{{ $barangayMedicine->generic_name }}</td>
                                         <td>{{ $barangayMedicine->brand_name }}</td>
@@ -111,11 +113,11 @@
                                         <td>{{ $barangayMedicine->stocks }}</td>
                                         <td>{{ $barangayMedicine->expiration_date }}</td>
                                         @if (auth()->user()->isBHW())
-                                        <td>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteExpiredModal{{ $barangayMedicine->id }}"><i
-                                                    class="fas fa-trash"></i> </button>
-                                        </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#deleteExpiredModal{{ $barangayMedicine->id }}"><i
+                                                        class="fas fa-trash"></i> </button>
+                                            </td>
                                         @endif
                                     </tr>
                                     <!-- Delete Expired Medicine Modal -->

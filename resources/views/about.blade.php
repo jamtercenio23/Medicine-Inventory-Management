@@ -16,7 +16,7 @@
             margin: 0;
             padding: 0;
             position: relative;
-            color: #ecf0f1;
+            color: #333;
         }
 
         body::before {
@@ -64,12 +64,6 @@
             margin-right: 20px;
         }
 
-        #dashboard-link {
-            color: #ecf0f1;
-            text-decoration: none;
-            margin-right: 20px;
-        }
-
         #welcome-link {
             color: #ecf0f1;
             text-decoration: none;
@@ -82,9 +76,16 @@
             padding: 2em;
             float: left;
             padding-left: 200px;
-            padding-top: 50px;
+            padding-top: 10px;
             position: relative;
             z-index: 1;
+        }
+
+        section img {
+            border-radius: 50%;
+            /* Make the image circular */
+            max-width: 100%;
+            /* Ensure the image doesn't overflow its container */
         }
 
         h1 {
@@ -125,6 +126,23 @@
             background-color: #2980b9;
         }
 
+        section h3 {
+            color: #3498db;
+            font-size: 25px;
+        }
+
+        section p {
+            line-height: 1.6em;
+            font-size: 22px;
+            margin-top: 15px;
+            color: #ecf0f1;
+        }
+        section ul {
+            color: #ecf0f1;
+            list-style-type: none;
+            padding-left: 1;
+            font-size: 20px;
+        }
         @media (max-width: 768px) {
             header {
                 text-align: center;
@@ -136,11 +154,6 @@
             }
 
             #login-link {
-                display: block;
-                margin: 10px 0;
-            }
-
-            #dashboard-link {
                 display: block;
                 margin: 10px 0;
             }
@@ -166,9 +179,7 @@
                     padding: 2em;
                     float: none;
                     padding-left: 20px;
-                    /* Adjust as needed */
                     padding-top: 20px;
-                    /* Adjust as needed */
                 }
 
                 h2 {
@@ -200,7 +211,7 @@
             <a id="welcome-link" href="/">Home</a>
             <a id="about-link" href="/about">About</a>
             @auth
-                <a id="dashboard-link" href="{{ route('home') }}">Dashboard</a>
+                <a id="login-link" href="{{ route('home') }}">Dashboard</a>
             @else
                 <a id="login-link" href="{{ route('login') }}">Login</a>
             @endauth
@@ -208,16 +219,27 @@
     </header>
 
     <section>
-        <h2>Your Health and Wellness <span>at the Heart of Our Service</span></h2>
-
+        <h2>All about, <span> Mabini Health Center</span></h2>
         <p>
-            At Mabini Health Center, we are committed to providing you with high-quality healthcare services. Our
-            state-of-the-art facilities and dedicated medical professionals are here to ensure your well-being.
+            The Mabini Health Center Office is a Hospital located at 3W9R+M7M, Mabini, Pangasinan PH.
+            The Mabini Health Center is dedicated to providing quality healthcare services to the community.
+            Our mission is to promote the well-being of individuals and families through accessible and
+            comprehensive medical care. With a team of experienced healthcare professionals, we strive to
+            create a healthy and supportive environment for everyone we serve.
         </p>
-
-        <a href="{{ route('login') }}" class="cta-button">Get Started</a>
+        <h3>What Mabini Health Center Offers:</h3>
+        <ul>
+            <li>Primary Care Services</li>
+            <li>Specialized Medical Treatments</li>
+            <li>Preventive Healthcare Programs</li>
+            <li>Health Education and Counseling</li>
+            <!-- Add more items as needed -->
+        </ul>
     </section>
 
+    <section>
+        <img src="{{ asset('images/logo.png') }}" alt="Mabini Health Center Logo">
+    </section>
 </body>
 
 </html>
