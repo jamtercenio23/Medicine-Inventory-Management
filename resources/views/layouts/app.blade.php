@@ -179,6 +179,24 @@
             color: #3498db !important;
         }
 
+        body.dark-mode .dropdown-menu {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        body.dark-mode .dropdown-item {
+            color: #fff;
+        }
+
+        body.dark-mode .dropdown-item:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        body.dark-mode .dropdown-divider {
+            border-top: 1px solid #6c757d;
+        }
+
         #sidebar-wrapper {
             min-height: 100vh;
             margin-left: -15rem;
@@ -539,7 +557,6 @@
                                     <span class="nav-text">Notifications</span>
                                 </a>
                             </li>
-
                         @endif
 
                         <li class="nav-item">
@@ -561,12 +578,12 @@
                                 </li>
                             @endcan
                             @if (Auth::check())
-                        <li class="nav-item">
-                            <button class="btn btn-secondary rounded-pill" onclick="toggleDarkMode()">
-                                <i class="fas fa-moon"></i> <!-- Moon icon for dark mode -->
-                            </button>
-                        </li>
-                        @endif
+                                <li class="nav-item">
+                                    <button class="btn btn-secondary rounded-pill" onclick="toggleDarkMode()">
+                                        <i class="fas fa-moon"></i>
+                                    </button>
+                                </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                                     role="button" data-toggle="dropdown" aria-haspopup="true"
