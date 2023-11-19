@@ -20,7 +20,7 @@
             </div>
         @endif
         <div class="breadcrumb">
-            <h5><a href="{{ route('home') }}">Dashboard</a> / Permissions</h5>
+            <h6><a href="{{ route('home') }}">Dashboard</a> / Permissions</h6>
         </div>
         <div class="card">
             <div class="card-header">

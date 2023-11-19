@@ -60,7 +60,7 @@
         @endif
 
         <div class="breadcrumb">
-            <h5><a href="{{ route('home') }}">Dashboard</a> / Distribution for Patients</h5>
+            <h6><a href="{{ route('home') }}">Dashboard</a> / Distribution for Patients</h6>
         </div>
 
         <div class="card">

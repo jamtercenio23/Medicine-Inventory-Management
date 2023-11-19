@@ -57,7 +57,7 @@
             </div>
         @endif
         <div class="breadcrumb">
-            <h5><a href="{{ route('home') }}">Dashboard</a> / Expired Medicines</h5>
+            <h6><a href="{{ route('home') }}">Dashboard</a> / <a href="{{ route('barangay-medicines.index') }}">Barangay Medicines</a> / Expired Medicines</h6>
         </div>
         <div class="card">
             <div class="card-header">
