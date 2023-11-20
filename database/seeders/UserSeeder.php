@@ -26,6 +26,24 @@ class UserSeeder extends Seeder
     ]);
     $user->assignRole('admin');
 
+    $user = User::create([
+        'name' => "Backup Admin",
+        'email' => "backup_admin@example.com",
+        'password' => Hash::make('admin'),
+        'is_active' => '1',
+        'created_at' => now(),
+    ]);
+    $user->assignRole('admin');
+
+    $user = User::create([
+        'name' => "Super Admin",
+        'email' => "superadmin@example.com",
+        'password' => Hash::make('admin'),
+        'is_active' => '1',
+        'created_at' => now(),
+    ]);
+
+    $user->assignRole('admin');
     // Create a pharmacist user
     $user = User::create([
         'name' => "Pharmacist",
