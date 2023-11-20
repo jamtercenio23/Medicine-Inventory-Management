@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
-            <h1>Dashboard</h1>
+            <h1>Notification Updates</h1>
         </div>
         <div class="card">
             <div class="card-body">

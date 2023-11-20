@@ -549,7 +549,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 
-                        @if (Auth::check())
+                        {{-- @if (Auth::check())
                             <li class="nav-item">
                                 <a class="nav-link" href="#" data-toggle="modal"
                                     data-target="#notificationModal">
@@ -557,7 +557,7 @@
                                     <span class="nav-text">Notifications</span>
                                 </a>
                             </li>
-                        @endif
+                        @endif --}}
 
                         <li class="nav-item">
                             <a class="nav-link" href="/"><i class="fas fa-home"></i> <span
