@@ -55,7 +55,9 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
-                                    <th>Status</th> <!-- New column for user status -->
+                                    <th>Status</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -79,6 +81,8 @@
                                                 <span class="badge badge-danger">Inactive</span>
                                             @endif
                                         </td>
+                                        <td>{{ $user->created_at }}</td>
+                                        <td>{{ $user->updated_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editUserModal{{ $user->id }}">

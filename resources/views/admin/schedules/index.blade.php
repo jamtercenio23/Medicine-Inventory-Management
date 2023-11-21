@@ -50,6 +50,7 @@
                                     <th>ID</th>
                                     <th>Barangay</th>
                                     <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -59,6 +60,7 @@
                                         <td>{{ $schedule->id }}</td>
                                         <td>{{ $schedule->barangay->name }}</td>
                                         <td>{{ $schedule->created_at }}</td>
+                                        <td>{{ $schedule->updated_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showScheduleModal{{ $schedule->id }}">

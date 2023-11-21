@@ -51,6 +51,7 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -60,6 +61,7 @@
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
                                         <td>{{ $category->created_at }}</td>
+                                        <td>{{ $category->updated_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editCategoryModal{{ $category->id }}">

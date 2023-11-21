@@ -49,6 +49,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -57,6 +59,8 @@
                                     <tr>
                                         <td>{{ $permission->id }}</td>
                                         <td>{{ $permission->name }}</td>
+                                        <td>{{ $permission->created_at }}</td>
+                                        <td>{{ $permission->updated_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editPermissionModal{{ $permission->id }}">

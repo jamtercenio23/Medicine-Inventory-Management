@@ -96,6 +96,9 @@
                                     <th>Brand Name</th>
                                     <th>Category</th>
                                     <th>Stocks</th>
+                                    @if (auth()->user()->isBHW())
+                                    <th>Added At</th>
+                                    @endif
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -110,6 +113,9 @@
                                         <td>{{ $barangayMedicine->brand_name }}</td>
                                         <td>{{ $barangayMedicine->medicine->category->name }}</td>
                                         <td>{{ $barangayMedicine->stocks }}</td>
+                                        @if (auth()->user()->isBHW())
+                                        <td>{{ $barangayMedicine->created_at }}</td>
+                                        @endif
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showbarangayMedicineModal{{ $barangayMedicine->id }}">

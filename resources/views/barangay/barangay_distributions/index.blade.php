@@ -99,7 +99,10 @@
                                     @endif
                                     <th>Patient</th>
                                     <th>Checkup Date</th>
+                                    @if (auth()->user()->isBHW())
                                     <th>Created At</th>
+                                    <th>Updated At</th>
+                                    @endif
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -122,7 +125,10 @@
                                             @endif
                                         </td>
                                         <td>{{ $barangayDistribution->checkup_date }}</td>
+                                        @if (auth()->user()->isBHW())
                                         <td>{{ $barangayDistribution->created_at }}</td>
+                                        <td>{{ $barangayDistribution->updated_at }}</td>
+                                        @endif
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showDistributionModal{{ $barangayDistribution->id }}">

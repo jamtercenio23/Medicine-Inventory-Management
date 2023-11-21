@@ -93,6 +93,7 @@
                                     <th>Patient</th>
                                     <th>Checkup Date</th>
                                     <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -104,6 +105,7 @@
                                         </td>
                                         <td>{{ $distribution->checkup_date }}</td>
                                         <td>{{ $distribution->created_at }}</td>
+                                        <td>{{ $distribution->updated_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showDistributionModal{{ $distribution->id }}">

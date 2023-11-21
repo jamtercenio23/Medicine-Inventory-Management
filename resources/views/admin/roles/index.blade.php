@@ -53,6 +53,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Role Name</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -61,6 +63,8 @@
                                     <tr>
                                         <td>{{ $role->id }}</td>
                                         <td>{{ $role->name }}</td>
+                                        <td>{{ $role->created_at }}</td>
+                                        <td>{{ $role->updated_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editRoleModal{{ $role->id }}">

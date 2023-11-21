@@ -94,6 +94,7 @@
                                     <th>Brand Name</th>
                                     <th>Category</th>
                                     <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -105,6 +106,7 @@
                                         <td>{{ $medicine->brand_name }}</td>
                                         <td>{{ $medicine->category->name }}</td>
                                         <td>{{ $medicine->created_at }}</td>
+                                        <td>{{ $medicine->updated_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showMedicineModal{{ $medicine->id }}">

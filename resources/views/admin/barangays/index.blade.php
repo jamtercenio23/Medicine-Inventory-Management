@@ -49,7 +49,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Craete At</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -59,6 +60,7 @@
                                         <td>{{ $barangay->id }}</td>
                                         <td>{{ $barangay->name }}</td>
                                         <td>{{ $barangay->created_at }}</td>
+                                        <td>{{ $barangay->updated_at }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showBarangayModal{{ $barangay->id }}">

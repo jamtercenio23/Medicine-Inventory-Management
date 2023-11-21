@@ -95,7 +95,10 @@
                                     @endif
                                     <th>Name</th>
                                     <th>Gender</th>
+                                    @if (auth()->user()->isBHW())
                                     <th>Created At</th>
+                                    <th>Updated At</th>
+                                    @endif
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -108,7 +111,10 @@
                                         @endif
                                         <td>{{ $barangayPatient->first_name }} {{ $barangayPatient->last_name }}</td>
                                         <td>{{ $barangayPatient->gender }}</td>
+                                        @if (auth()->user()->isBHW())
                                         <td>{{ $barangayPatient->created_at }}</td>
+                                        <td>{{ $barangayPatient->updated_at }}</td>
+                                        @endif
                                         <td>
 
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
