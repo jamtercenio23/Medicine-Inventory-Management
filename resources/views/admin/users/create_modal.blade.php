@@ -29,6 +29,17 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="barangay">Barangay</label>
+                                <select class="form-control" id="barangay" name="barangay">
+                                    <option value="">Select Barangay</option>
+                                    @forelse (\App\Models\Barangay::all() as $barangay)
+                                        <option value="{{ $barangay->id }}">{{ $barangay->name }}</option>
+                                    @empty
+                                        <option value="" disabled>No Barangays available</option>
+                                    @endforelse
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">

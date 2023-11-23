@@ -51,7 +51,9 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Created At</th>
+                                    <th>Created By</th>
                                     <th>Updated At</th>
+                                    <th>Updated By</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -60,8 +62,10 @@
                                     <tr>
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
-                                        <td>{{ $category->created_at }}</td>
-                                        <td>{{ $category->updated_at }}</td>
+                                        <td>{{ $category->created_at ? $category->created_at : 'N/A '}}</td>
+                                        <td>{{ $category->creator ? $category->creator->name : 'N/A' }}</td>
+                                        <td>{{ $category->updated_at ? $category->updated_at : 'N/A '}}</td>
+                                        <td>{{ $category->updater ? $category->updater->name : 'N/A' }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
                                                 data-target="#editCategoryModal{{ $category->id }}">

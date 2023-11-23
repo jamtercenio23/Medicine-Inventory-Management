@@ -6,13 +6,18 @@
             <div class="col-md-8 col-lg-6 col-xl-5">
                 <div class="card">
                     <div class="card-header text-center" style="border-bottom: none; margin-bottom: 0;">
-
                         <img src="{{ asset('images/logo.png') }}" alt="Mabini Health Center Logo"
                             style="max-width: 200px; margin-top: 20px; border-radius: 50%;">
-                            <h2>{{ __('Mabini Health Center') }}</h2>
+                        <h2>{{ __('Mabini Health Center') }}</h2>
                     </div>
 
                     <div class="card-body">
+                        @if ($errors->has('email'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ $errors->first('email') }}
+                            </div>
+                        @endif
+
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 

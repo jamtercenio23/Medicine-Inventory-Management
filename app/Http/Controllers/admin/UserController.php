@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use App\Models\Barangay;
 
 class UserController extends Controller
 {
@@ -26,7 +27,9 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('admin.users.create', compact('roles'));
+        $barangays = Barangay::all();
+
+        return view('admin.users.create', compact('roles', 'barangays'));
     }
 
     public function store(Request $request)
@@ -43,6 +46,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'is_active' => $request->filled('is_active') && $request->input('is_active') == 'on',
+            'barangay_id' => $request->barangay, // Add this line
         ]);
 
         $user->assignRole($request->role);
@@ -74,6 +78,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'is_active' => $request->has('is_active') && $request->input('is_active') == '1',
+                'barangay_id' => $request->barangay, // Add this line
             ]);
         } else {
             // For non-admin users, update other fields but not is_active

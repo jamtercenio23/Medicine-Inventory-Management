@@ -16,7 +16,7 @@ use App\Http\Controllers\admin\ScheduleController;
 use App\Http\Controllers\admin\DistributionBarangayController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\ProfileController;
-
+use App\Http\Controllers\admin\ManageRequestsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -88,6 +88,17 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     Route::group(['middleware' => 'permission:view-barangay_patients'], function () {
         Route::resource('barangay/barangay-patients', BarangayPatientController::class);
     });
+    Route::group(['middleware' => 'permission:view-manage-request'], function () {
+        Route::get('/admin/manage-requests', [ManageRequestsController::class, 'index'])->name('admin.manage-requests.index');
+        Route::get('/admin/manage-requests/{id}', [ManageRequestsController::class, 'show'])->name('admin.manage-requests.show');
+        Route::put('/admin/approve-reject/{barangayMedicine}', [ManageRequestsController::class, 'approveReject'])->name('admin.barangay-medicines.approve-reject');
+        Route::put('/barangay-medicines/approve-reject/{barangayMedicine}', [ManageRequestsController::class, 'approveReject'])
+            ->name('barangay-medicines.approve-reject');
+        Route::get('/admin/manage-requests', [ManageRequestsController::class, 'index'])
+            ->name('admin.manage-requests');
+    });
+    Route::post('/barangay-medicines/out-of-stock/{barangayMedicine}/request', [BarangayMedicineController::class, 'requestOutOfStock'])
+        ->name('barangay-medicines.out-of-stock.request');
 
     // Generate Report Route
     // Medicines

@@ -21,6 +21,10 @@ class BarangayMedicine extends Model
         'price',
         'expiration_date',
         'stocks',
+        'status',
+        'admin_comment',
+        'expected_stocks',
+        'distribution_schedule',
     ];
 
     public function barangay()

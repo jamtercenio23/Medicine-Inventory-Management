@@ -395,6 +395,13 @@
                                         Schedules</a>
                                 </li>
                             @endcan
+                            @can('view-manage-request')
+                                <li class="list-group-item list-group-item-action bg-light">
+                                    &nbsp; &nbsp;<a href="{{ route('admin.manage-requests') }}"><i class="fa-solid fa-recycle"
+                                            style="margin-right: 23px;"></i>
+                                        Restock Requests</a>
+                                </li>
+                            @endcan
                         </div>
                     @endcan
 
@@ -409,14 +416,14 @@
                             @can('view-distributions')
                                 <li class="list-group-item list-group-item-action bg-light">
                                     &nbsp; &nbsp;<a href="{{ route('distributions.index') }}" style="font-size: 14.5px"><i
-                                            class="fas fa-clipboard-list" style="margin-right: 23px;"></i> Patient
+                                            class="fas fa-clipboard-list" style="margin-right: 20px;"></i> Patient
                                         Distributions</a>
                                 </li>
                             @endcan
                             @can('view-distribution-barangay')
                                 <li class="list-group-item list-group-item-action bg-light">
                                     &nbsp; &nbsp;<a href="{{ route('distribution_barangay.index') }}"
-                                        style="font-size: 14.5px"><i class="fas fa-chart-bar" style="margin-right: 20px;"></i>
+                                        style="font-size: 14.5px"><i class="fas fa-chart-bar" style="margin-right: 10px;"></i>
                                         Barangay Distributions</a>
                                 </li>
                             @endcan
@@ -471,7 +478,7 @@
                     @can('view-bhw_distributions')
                         <li class="list-group-item list-group-item-action bg-light" id="barangaydistribution-toggle">
                             <a href="javascript:void(0)" style="font-size: 14.5px"><i class="fas fa-truck"
-                                    style="margin-right: 30px; padding-top:5px; padding-bottom: 5px"></i> Barangay
+                                    style="margin-right: 25px; padding-top:5px; padding-bottom: 5px"></i> Barangay
                                 Distributions</a>
                         </li>
                         <div id="barangaydistribution-categories" style="display: none;">

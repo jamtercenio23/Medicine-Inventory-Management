@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'is_active',
+        'barangay_id',
     ];
 
     /**
@@ -61,7 +62,7 @@ class User extends Authenticatable
     }
     public function barangay()
     {
-        return $this->belongsTo(Barangay::class);
+        return $this->belongsTo(Barangay::class, 'barangay_id')->withDefault();
     }
     public function isBHW()
     {
@@ -70,4 +71,28 @@ class User extends Authenticatable
     protected $attributes = [
         'is_active' => true,
     ];
+    public function createdCategories()
+    {
+        return $this->hasMany(Category::class, 'created_by');
+    }
+    public function updatedCategories()
+    {
+        return $this->hasMany(Category::class, 'updated_by');
+    }
+    public function createdMedicines()
+    {
+        return $this->hasMany(Medicine::class, 'created_by');
+    }
+    public function updatedMedicines()
+    {
+        return $this->hasMany(Medicine::class, 'updated_by');
+    }
+    public function createdPatients()
+    {
+        return $this->hasMany(Patient::class, 'created_by');
+    }
+    public function updatedPatients()
+    {
+        return $this->hasMany(Patient::class, 'updated_by');
+    }
 }

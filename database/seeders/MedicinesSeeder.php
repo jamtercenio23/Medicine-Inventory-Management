@@ -20,11 +20,11 @@ class MedicinesSeeder extends Seeder
         $categories = range(1, 47);
         $faker = Faker::create();
 
-        for ($i = 1; $i <= 10000; $i++) {
+        for ($i = 1; $i <= 1000; $i++) {
             $isOutOfStock = $i % 3 == 0;
             $isExpired = $i % 4 == 0;
 
-            $stock = $isOutOfStock ? 0 : rand(10, 10000);
+            $stock = $isOutOfStock ? 0 : rand(10, 1000);
             $expirationDate = $isExpired ? now()->subDays(rand(1, 365)) : now()->addDays(rand(1, 365));
             $createdDate = $faker->dateTimeBetween('-2 years', 'now');
 

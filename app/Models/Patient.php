@@ -12,7 +12,7 @@ class Patient extends Model
     use SoftDeletes;
     protected $fillable = [
         'first_name', 'last_name', 'birthdate', 'age', 'gender', 'barangay_id',
-        'blood_pressure', 'heart_rate', 'weight', 'height',
+        'blood_pressure', 'heart_rate', 'weight', 'height', 'created_by', 'updated_by'
     ];
 
     public function barangay()
@@ -51,5 +51,13 @@ class Patient extends Model
         } else {
             return 'Not Available';
         }
+    }
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

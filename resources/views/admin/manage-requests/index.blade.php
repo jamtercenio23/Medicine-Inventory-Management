@@ -1,31 +1,23 @@
-@extends('layouts.app')
+<!-- resources/views/admin/manage_requests/index.blade.php -->
 
-@section('title', 'Medicine Inventory - Permissions')
+@extends('layouts.app')
 
 @section('content')
     <div class="container-fluid">
-        <div class="mb-8 d-flex justify-content-between align-items-center">
-            <h1>Manage Permissions</h1>
-            {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createPermissionModal">
-                <i class="fas fa-plus"></i> Add Permission
-            </button> --}}
-        </div>
+        <h2>Manage Restock Requests</h2>
+
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
-        @elseif (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
         @endif
         <div class="breadcrumb">
-            <h6><a href="{{ route('home') }}">Dashboard</a> / Permissions</h6>
+            <h6><a href="{{ route('home') }}">Dashboard</a> / Restock Requests for Barangay</h6>
         </div>
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
-                    <form action="{{ route('permissions.index') }}" method="GET" class="form-inline">
+                    <form action="{{ route('admin.manage-requests') }}" method="GET" class="form-inline">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="search"
                                 value="{{ $query }}">
@@ -39,52 +31,51 @@
                 </div>
             </div>
             <div class="card-body">
-                <!-- Permission Table -->
-                <div class="table-responsive">
-                    @if ($permissions->isEmpty())
-                        <p>No permissions found.</p>
-                    @else
+                @if ($restockRequests->isEmpty())
+                    <p>No restock requests found.</p>
+                @else
+                    <div class="table-responsive">
                         <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Updated At</th>
-                                    <th>Actions</th>
+                                    <th>Medicine</th>
+                                    <th>Barangay</th>
+                                    <th>Expected Stocks</th>
+                                    <th>Distribution Schedule</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($permissions as $permission)
+                                @foreach ($restockRequests as $request)
                                     <tr>
-                                        <td>{{ $permission->id }}</td>
-                                        <td>{{ $permission->name }}</td>
-                                        <td>{{ $permission->updated_at }}</td>
+                                        <td>{{ $request->id }}</td>
+                                        <td>{{ $request->medicine->generic_name }} - {{ $request->medicine->brand_name }}
+                                        </td>
+                                        <td>{{ $request->barangay->name }}</td>
+                                        <td>{{ $request->expected_stocks }}</td>
+                                        <td>{{ $request->distribution_schedule }}</td>
+                                        <td>{{ ucfirst($request->status) }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editPermissionModal{{ $permission->id }}">
-                                                <i class="fas fa-edit"></i>
+                                            <button class="btn btn-primary" data-toggle="modal"
+                                                data-target="#approveRejectModal{{ $request->id }}">
+                                                Approve/Reject
                                             </button>
-                                            {{-- <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deletePermissionModal{{ $permission->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button> --}}
                                         </td>
                                     </tr>
-
-                                    <!-- Edit Permission Modal -->
-                                    @include('admin.permissions.edit_modal', ['permission' => $permission])
-
-                                    <!-- Delete Permission Modal -->
-                                    @include('admin.permissions.delete_modal', [
-                                        'permission' => $permission,
+                                    <!-- Approve/Reject Modal -->
+                                    @include('admin.manage-requests.approve_reject_modal', [
+                                        'request' => $request,
                                     ])
                                 @endforeach
                             </tbody>
                         </table>
-                    @endif
-                </div>
+                    </div>
+                @endif
             </div>
         </div>
+
         <div class="my-4 text-muted">
             <div class="float-left">
                 <div class="credits">
@@ -94,15 +85,15 @@
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
-                    <li class="page-item {{ $permissions->currentPage() == 1 ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $permissions->previousPageUrl() }}" aria-label="Previous">
+                    <li class="page-item {{ $restockRequests->currentPage() == 1 ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $restockRequests->previousPageUrl() }}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
 
                     @php
-                        $currentPage = $permissions->currentPage();
-                        $lastPage = $permissions->lastPage();
+                        $currentPage = $restockRequests->currentPage();
+                        $lastPage = $restockRequests->lastPage();
                         $showFirstDots = false;
                         $showLastDots = false;
 
@@ -122,7 +113,7 @@
 
                     @if ($showFirstDots)
                         <li class="page-item">
-                            <a class="page-link" href="{{ $permissions->url(1) }}">1</a>
+                            <a class="page-link" href="{{ $restockRequests->url(1) }}">1</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">...</a>
@@ -131,7 +122,7 @@
 
                     @for ($i = $startPage; $i <= $endPage; $i++)
                         <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
-                            <a class="page-link" href="{{ $permissions->url($i) }}">{{ $i }}</a>
+                            <a class="page-link" href="{{ $restockRequests->url($i) }}">{{ $i }}</a>
                         </li>
                     @endfor
 
@@ -140,12 +131,12 @@
                             <a class="page-link">...</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="{{ $permissions->url($lastPage) }}">{{ $lastPage }}</a>
+                            <a class="page-link" href="{{ $restockRequests->url($lastPage) }}">{{ $lastPage }}</a>
                         </li>
                     @endif
 
-                    <li class="page-item {{ $permissions->currentPage() == $lastPage ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $permissions->nextPageUrl() }}" aria-label="Next">
+                    <li class="page-item {{ $restockRequests->currentPage() == $lastPage ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $restockRequests->nextPageUrl() }}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -153,10 +144,6 @@
             </div>
             <div class="clearfix"></div>
         </div>
-    </div>
-
-    <!-- Create Permission Modal -->
-    @include('admin.permissions.create_modal')
     </div>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -305,5 +292,7 @@
             background-color: #2d2d2d;
             color: #fff;
         }
+
+
     </style>
 @endsection

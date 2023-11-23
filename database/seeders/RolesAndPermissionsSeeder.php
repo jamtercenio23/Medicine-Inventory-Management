@@ -34,6 +34,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'view-patients',
             'view-barangays',
             'view-schedules',
+            'view-manage-request',
             'view-users',
             'view-access-control',
             'view-roles',
@@ -72,6 +73,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view-admin_inventory',
                 'view-admin_manage',
                 'view-admin_distributions',
+                'view-manage-request',
             ]);
 
         $role = Role::create(['name' => 'bhw'])

@@ -211,6 +211,7 @@ class DistributionBarangayController extends Controller
 
             // Generate and save the PDF file
             $pdf = Pdf::loadView('admin.distribution_barangay.distribution-barangay-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->setPaper('a4', 'landscape');
             $pdf->save($pdfPath);
 
             // Download the PDF file

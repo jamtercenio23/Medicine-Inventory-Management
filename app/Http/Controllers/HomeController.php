@@ -11,6 +11,7 @@ use App\Models\BarangayMedicine;
 use App\Models\Distribution;
 use App\Models\BarangayDistribution;
 use App\Models\BarangayPatient;
+use App\Models\Schedule;
 use Charts;
 use Chartisan\PHP\Chartisan;
 use ConsoleTVs\Charts\Classes\Chart;
@@ -57,6 +58,19 @@ class HomeController extends Controller
                 ->count();
             $totalPatientDistributionAddedToday = Distribution::whereDate('created_at', today())->count();
             $totalBarangayDistributionAddedToday = DistributionBarangay::whereDate('created_at', today())->count();
+            $distributionSchedulesToday = Schedule::with(['barangay', 'medicine'])
+                ->whereDate('schedule_date_time', today())
+                ->get();
+            $distributionSchedulesThisWeek = Schedule::with(['barangay', 'medicine'])
+                ->whereBetween('schedule_date_time', [now()->startOfWeek(), now()->endOfWeek()])
+                ->get();
+            $nearlyOutOfStockMedicines = Medicine::where('stocks', '>', 1)
+                ->where('stocks', '<=', 50)
+                ->get(); // Fetch all nearly out of stock medicines
+
+            $nearlyExpiredMedicines = Medicine::where('expiration_date', '>', now())
+                ->where('expiration_date', '<=', now()->addDays(10))
+                ->get();
             return view('home', compact(
                 'totalMedicines',
                 'totalPatients',
@@ -69,7 +83,11 @@ class HomeController extends Controller
                 'totalNearlyOutOfStockMedicines',
                 'totalNearlyExpiredMedicines',
                 'totalPatientDistributionAddedToday',
-                'totalBarangayDistributionAddedToday'
+                'totalBarangayDistributionAddedToday',
+                'distributionSchedulesToday',
+                'distributionSchedulesThisWeek',
+                'nearlyOutOfStockMedicines',
+                'nearlyExpiredMedicines',
             ));
         } elseif ($user->isBHW()) {
             // Get the BHW's barangay ID
@@ -104,7 +122,18 @@ class HomeController extends Controller
             $totalPatientsAddedToday = BarangayPatient::where('barangay_id', $barangayId)
                 ->whereDate('created_at', today())
                 ->count();
-
+            $distributionSchedulesInYourBarangay = Schedule::with(['barangay', 'medicine'])
+                ->where('barangay_id', $user->barangay->id)
+                ->whereBetween('schedule_date_time', [now()->startOfWeek(), now()->endOfWeek()])
+                ->get();
+            $nearlyOutOfStockMedicines = BarangayMedicine::where('barangay_id', $user->barangay->id)
+                ->where('stocks', '>', 1)
+                ->where('stocks', '<=', 50)
+                ->get();
+            $nearlyExpiredMedicines = BarangayMedicine::where('barangay_id', $user->barangay->id)
+                ->where('expiration_date', '>', now())
+                ->where('expiration_date', '<=', now()->addDays(10))
+                ->get();
             return view('home', compact(
                 'totalBarangayMedicines',
                 'totalBarangayPatients',
@@ -115,6 +144,9 @@ class HomeController extends Controller
                 'totalNearlyOutOfStockMedicines',
                 'totalNearlyExpiredMedicines',
                 'totalDistributionAddedToday',
+                'distributionSchedulesInYourBarangay',
+                'nearlyOutOfStockMedicines',
+                'nearlyExpiredMedicines',
             ));
         } elseif ($user->isPharmacist()) {
             // Pharmacist Dashboard logic
@@ -134,7 +166,19 @@ class HomeController extends Controller
                 ->count();
             $totalPatientDistributionAddedToday = Distribution::whereDate('created_at', today())->count();
             $totalBarangayDistributionAddedToday = DistributionBarangay::whereDate('created_at', today())->count();
+            $distributionSchedulesToday = Schedule::with(['barangay', 'medicine'])
+                ->whereDate('schedule_date_time', today())
+                ->get();
+            $distributionSchedulesThisWeek = Schedule::with(['barangay', 'medicine'])
+                ->whereBetween('schedule_date_time', [now()->startOfWeek(), now()->endOfWeek()])
+                ->get();
+            $nearlyOutOfStockMedicines = Medicine::where('stocks', '>', 1)
+                ->where('stocks', '<=', 50)
+                ->get(); // Fetch all nearly out of stock medicines
 
+            $nearlyExpiredMedicines = Medicine::where('expiration_date', '>', now())
+                ->where('expiration_date', '<=', now()->addDays(10))
+                ->get();
             return view('home', compact(
                 'totalMedicines',
                 'totalPatients',
@@ -147,7 +191,11 @@ class HomeController extends Controller
                 'totalNearlyOutOfStockMedicines',
                 'totalNearlyExpiredMedicines',
                 'totalPatientDistributionAddedToday',
-                'totalBarangayDistributionAddedToday'
+                'totalBarangayDistributionAddedToday',
+                'distributionSchedulesToday',
+                'distributionSchedulesThisWeek',
+                'nearlyOutOfStockMedicines',
+                'nearlyExpiredMedicines',
             ));
         } else {
             return view('home');

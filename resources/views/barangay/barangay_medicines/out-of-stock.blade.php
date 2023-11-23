@@ -44,7 +44,8 @@
                                     <option value="pdf">PDF</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Generate Report</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Generate
+                                Report</button>
                         </form>
                     </div>
                 </div>
@@ -60,7 +61,8 @@
             </div>
         @endif
         <div class="breadcrumb">
-            <h6><a href="{{ route('home') }}">Dashboard</a> / <a href="{{ route('barangay-medicines.index') }}">Barangay Medicines</a> / Out of Stock Medicines</h6>
+            <h6><a href="{{ route('home') }}">Dashboard</a> / <a href="{{ route('barangay-medicines.index') }}">Barangay
+                    Medicines</a> / Out of Stock Medicines</h6>
         </div>
         <div class="card">
             <div class="card-header">
@@ -115,15 +117,28 @@
                                         <td>{{ $barangayMedicine->expiration_date }}</td>
                                         @if (auth()->user()->isBHW())
                                             <td>
-                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                    data-target="#editBarangayOutOfStockModal{{ $barangayMedicine->id }}">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+                                                @if (session("requested_medicine_{$barangayMedicine->id}"))
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                        data-target="#statusModal{{ $barangayMedicine->id }}">
+                                                        <i class="fas fa-info"></i> Status
+                                                    </button>
+                                                @else
+                                                    @if ($barangayMedicine->status != 'rejected')
+                                                        <button type="button" class="btn btn-warning btn-sm"
+                                                            data-toggle="modal"
+                                                            data-target="#editBarangayOutOfStockModal{{ $barangayMedicine->id }}">
+                                                            <i class="fas fa-edit"></i> Request
+                                                        </button>
+                                                    @endif
+                                                @endif
                                             </td>
                                         @endif
                                     </tr>
                                     <!-- Edit Out of Stock Medicine Modal -->
                                     @include('barangay.barangay_medicines.edit_out_of_stock_modal', [
+                                        'barangayMedicine' => $barangayMedicine,
+                                    ])
+                                    @include('barangay.barangay_medicines.status_modal', [
                                         'barangayMedicine' => $barangayMedicine,
                                     ])
                                 @endforeach
@@ -188,7 +203,8 @@
                             <a class="page-link">...</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="{{ $outOfStockMedicines->url($lastPage) }}">{{ $lastPage }}</a>
+                            <a class="page-link"
+                                href="{{ $outOfStockMedicines->url($lastPage) }}">{{ $lastPage }}</a>
                         </li>
                     @endif
 

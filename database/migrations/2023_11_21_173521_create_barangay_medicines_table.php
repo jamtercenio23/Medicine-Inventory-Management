@@ -21,6 +21,10 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->date('expiration_date');
             $table->integer('stocks');
+            $table->enum('status', ['approved', 'pending', 'rejected'])->default('pending');
+            $table->text('admin_comment')->nullable();
+            $table->integer('expected_stocks')->nullable();
+            $table->date('distribution_schedule')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('barangay_id')->references('id')->on('barangays')->onDelete('cascade');

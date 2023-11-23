@@ -27,7 +27,7 @@ class BarangayController extends Controller
         $request->validate([
             'name' => 'required|string|unique:barangays',
         ]);
-
+        $request->merge(['created_by' => auth()->id()]);
         Barangay::create($request->all());
 
         return redirect()->route('barangays.index')->with('success', 'Barangay created successfully');
@@ -43,7 +43,7 @@ class BarangayController extends Controller
         $request->validate([
             'name' => 'required|string|unique:barangays,name,' . $barangay->id,
         ]);
-
+        $request->merge(['updated_by' => auth()->id()]);
         $barangay->update($request->all());
 
         return redirect()->route('barangays.index')->with('success', 'Barangay updated successfully');

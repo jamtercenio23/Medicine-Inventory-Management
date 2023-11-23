@@ -77,6 +77,7 @@ class BarangayMedicineController extends Controller
 
             // Generate and save the PDF file
             $pdf = Pdf::loadView('barangay.barangay_medicines.barangay-medicine-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->setPaper('a4', 'landscape');
             $pdf->save($pdfPath);
 
             // Download the PDF file
@@ -133,20 +134,24 @@ class BarangayMedicineController extends Controller
 
         return $queryBuilder;
     }
-    public function updateOutOfStock(Request $request, BarangayMedicine $barangayMedicine)
+    public function requestOutOfStock(Request $request, BarangayMedicine $barangayMedicine)
     {
         $request->validate([
-            'stocks' => 'required|integer',
-            'expected_distribution_date' => 'required|date',
+            'expected_stocks' => 'required|integer',
+            'distribution_schedule' => 'required|date',
         ]);
 
-        // Update the stocks and expected distribution date
+        // Ensure you are updating the correct fields in the database
         $barangayMedicine->update([
-            'stocks' => $request->input('stocks'),
-            'expected_distribution_date' => $request->input('expected_distribution_date'),
+            'expected_stocks' => $request->input('expected_stocks'),
+            'distribution_schedule' => $request->input('distribution_schedule'),
+            'status' => 'pending', // Set the default status to 'pending'
         ]);
 
-        return redirect()->route('barangay-medicines.out-of-stock')->with('success', 'Restock request submitted successfully');
+        // Set the session variable to indicate that the medicine has been requested
+        session(["requested_medicine_{$barangayMedicine->id}" => true]);
+
+        return redirect()->back()->with('success', 'Restock request submitted successfully');
     }
     public function generateBarangayOutOfStockReport(Request $request)
     {
@@ -184,6 +189,7 @@ class BarangayMedicineController extends Controller
 
             // Generate and save the PDF file
             $pdf = PDF::loadView('barangay.barangay_medicines.barangay-out-of-stock-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->setPaper('a4', 'landscape');
             $pdf->save($pdfPath);
 
             // Download the PDF file
@@ -296,6 +302,7 @@ class BarangayMedicineController extends Controller
 
             // Generate and save the PDF file
             $pdf = PDF::loadView('barangay.barangay_medicines.barangay-expired-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->setPaper('a4', 'landscape');
             $pdf->save($pdfPath);
 
             // Download the PDF file

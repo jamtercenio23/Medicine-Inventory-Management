@@ -94,7 +94,9 @@
                                     <th>Brand Name</th>
                                     <th>Category</th>
                                     <th>Created At</th>
+                                    <th>Created By</th>
                                     <th>Updated At</th>
+                                    <th>Updated By</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -105,8 +107,10 @@
                                         <td>{{ $medicine->generic_name }}</td>
                                         <td>{{ $medicine->brand_name }}</td>
                                         <td>{{ $medicine->category->name }}</td>
-                                        <td>{{ $medicine->created_at }}</td>
-                                        <td>{{ $medicine->updated_at }}</td>
+                                        <td>{{ $medicine->created_at ? $medicine->created_at : 'N/A '}}</td>
+                                        <td>{{ $medicine->creator ? $medicine->creator->name : 'N/A' }}</td>
+                                        <td>{{ $medicine->updated_at ? $medicine->updated_at : 'N/A '}}</td>
+                                        <td>{{ $medicine->updater ? $medicine->updater->name : 'N/A' }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showMedicineModal{{ $medicine->id }}">

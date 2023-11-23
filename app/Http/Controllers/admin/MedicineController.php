@@ -50,6 +50,7 @@ class MedicineController extends Controller
             'expiration_date' => 'required|date|after_or_equal:tomorrow', // Ensure expiration_date is not before tomorrow
         ]);
 
+        $request->merge(['created_by' => auth()->id()]);
         $medicine = Medicine::create($request->all());
 
         // Check if the medicine is already expired
@@ -81,7 +82,7 @@ class MedicineController extends Controller
             'stocks' => 'required|integer',
             'expiration_date' => 'required|date',
         ]);
-
+        $request->merge(['updated_by' => auth()->id()]);
         $medicine->update($request->all());
 
         return redirect()->route('medicines.index')->with('success', 'Medicine updated successfully');
@@ -185,6 +186,7 @@ class MedicineController extends Controller
 
             // Generate and save the PDF file
             $pdf = PDF::loadView('admin.medicines.medicine-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->setPaper('a4', 'landscape');
             $pdf->save($pdfPath);
 
             // Download the PDF file
@@ -241,6 +243,7 @@ class MedicineController extends Controller
 
             // Generate and save the PDF file
             $pdf = PDF::loadView('admin.medicines.out-of-stock-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->setPaper('a4', 'landscape');
             $pdf->save($pdfPath);
 
             // Download the PDF file
@@ -297,6 +300,7 @@ class MedicineController extends Controller
 
             // Generate and save the PDF file
             $pdf = PDF::loadView('admin.medicines.expired-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->setPaper('a4', 'landscape');
             $pdf->save($pdfPath);
 
             // Download the PDF file

@@ -177,6 +177,7 @@ class DistributionController extends Controller
 
             // Generate and save the PDF file
             $pdf = Pdf::loadView('admin.distributions.distribution-report-pdf', compact('reportData', 'fromDate', 'toDate'));
+            $pdf->setPaper('a4', 'landscape');
             $pdf->save($pdfPath);
 
             // Download the PDF file

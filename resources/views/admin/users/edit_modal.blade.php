@@ -32,6 +32,17 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="barangay">Barangay</label>
+                                <select class="form-control" id="barangay" name="barangay">
+                                    <option value="">Select Barangay</option>
+                                    @foreach (\App\Models\Barangay::all() as $barangay)
+                                        <option value="{{ $barangay->id }}" {{ $user->barangay_id == $barangay->id ? 'selected' : '' }}>
+                                            {{ $barangay->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">

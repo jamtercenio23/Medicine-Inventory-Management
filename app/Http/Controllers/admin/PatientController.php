@@ -61,7 +61,7 @@ class PatientController extends Controller
             'weight' => 'nullable|numeric',
             'height' => 'nullable|numeric',
         ]);
-
+        $request->merge(['created_by' => auth()->id()]);
         Patient::create($request->all());
 
         return redirect()->route('patients.index')->with('success', 'Patient created successfully');
@@ -89,7 +89,7 @@ class PatientController extends Controller
             'weight' => 'nullable|numeric',
             'height' => 'nullable|numeric',
         ]);
-
+        $request->merge(['updated_by' => auth()->id()]);
         $patient->update($request->all());
 
         return redirect()->route('patients.index')->with('success', 'Patient updated successfully');

@@ -90,7 +90,9 @@
                                     <th>Name</th>
                                     <th>Gender</th>
                                     <th>Created At</th>
+                                    <th>Created By</th>
                                     <th>Updated At</th>
+                                    <th>Updated By</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -101,8 +103,10 @@
                                         <td>{{ $patient->barangay->name }}</td>
                                         <td>{{ $patient->first_name }} {{ $patient->last_name }}</td>
                                         <td>{{ $patient->gender }}</td>
-                                        <td>{{ $patient->created_at }}</td>
-                                        <td>{{ $patient->updated_at }}</td>
+                                        <td>{{ $patient->created_at ? $patient->created_at : 'N/A '}}</td>
+                                        <td>{{ $patient->creator ? $patient->creator->name : 'N/A' }}</td>
+                                        <td>{{ $patient->updated_at ? $patient->updated_at : 'N/A '}}</td>
+                                        <td>{{ $patient->updater ? $patient->updater->name : 'N/A' }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showPatientModal{{ $patient->id }}">
