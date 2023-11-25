@@ -17,25 +17,32 @@ class DistributionController extends Controller
 {
     public function index(Request $request)
     {
-        $distributions = Distribution::with(['patient', 'medicine']);
-
         $query = $request->input('search');
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
+        $entries = $request->input('entries', 10);
 
-        if ($query) {
-            $distributions->whereHas('patient', function ($subquery) use ($query) {
-                $subquery->where('first_name', 'like', '%' . $query . '%')
-                    ->orWhere('last_name', 'like', '%' . $query . '%');
-            });
-        }
+        $distributionsQuery = Distribution::with(['patient', 'medicine']);
 
-        $distributions = $distributions->paginate($request->input('entries', 10));
+        $distributions = $distributionsQuery
+            ->when($query, function ($query) use ($request) {
+                $query->whereHas('patient', function ($subquery) use ($request) {
+                    $subquery->where('first_name', 'like', '%' . $request->input('search') . '%')
+                        ->orWhere('last_name', 'like', '%' . $request->input('search') . '%');
+                })
+                    ->orWhereHas('medicine', function ($subquery) use ($request) {
+                        $subquery->where('generic_name', 'like', '%' . $request->input('search') . '%')
+                            ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
+                    });
+            })
+            ->orderBy($column, $order)
+            ->paginate($entries);
 
         $patients = Patient::all();
         $medicines = Medicine::all();
 
-        return view('admin.distributions.index', compact('distributions', 'patients', 'medicines', 'query'));
+        return view('admin.distributions.index', compact('distributions', 'patients', 'medicines', 'query', 'column', 'order', 'entries'));
     }
-
     public function create()
     {
         $patients = Patient::all();

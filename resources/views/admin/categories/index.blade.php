@@ -20,12 +20,22 @@
             </div>
         @endif
         <div class="breadcrumb">
-            <h6><a href="{{ route('home') }}">Dashboard</a> / <a href="{{ route('medicines.index') }}">Medicines</a> / Categories</h6>
+            <h6><a href="{{ route('home') }}">Dashboard</a> / <a href="{{ route('medicines.index') }}">Medicines</a> /
+                Categories</h6>
         </div>
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
                     <form action="{{ route('categories.index') }}" method="GET" class="form-inline">
+                        <div class="input-group mr-2">
+                            <label for="entriesSelect" class="mr-2">Show:</label>
+                            <select id="entriesSelect" class="form-control" name="entries">
+                                <option value="10" {{ $entries == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ $entries == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ $entries == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ $entries == 100 ? 'selected' : '' }}>100</option>
+                            </select>
+                        </div>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="search"
                                 value="{{ $query }}">
@@ -48,11 +58,11 @@
                         <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Created At</th>
+                                    <th onclick="handleSort('id')">ID</th>
+                                    <th onclick="handleSort('name')">Name</th>
+                                    <th onclick="handleSort('created_at')">Created At</th>
                                     <th>Created By</th>
-                                    <th>Updated At</th>
+                                    <th onclick="handleSort('updated_at')">Updated At</th>
                                     <th>Updated By</th>
                                     <th>Actions</th>
                                 </tr>
@@ -62,9 +72,9 @@
                                     <tr>
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
-                                        <td>{{ $category->created_at ? $category->created_at : 'N/A '}}</td>
+                                        <td>{{ $category->created_at ? $category->created_at : 'N/A ' }}</td>
                                         <td>{{ $category->creator ? $category->creator->name : 'N/A' }}</td>
-                                        <td>{{ $category->updated_at ? $category->updated_at : 'N/A '}}</td>
+                                        <td>{{ $category->updated_at ? $category->updated_at : 'N/A ' }}</td>
                                         <td>{{ $category->updater ? $category->updater->name : 'N/A' }}</td>
                                         <td>
                                             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
@@ -87,16 +97,17 @@
             </div>
         </div>
         <div class="my-4 text-muted">
+
             <div class="float-left">
-                <div class="credits">
-                    <p>Mabini Health Center</p>
-                </div>
+                Showing {{ $categories->firstItem() }} to {{ $categories->lastItem() }} of {{ $categories->total() }}
+                entries
             </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
                     <li class="page-item {{ $categories->currentPage() == 1 ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $categories->previousPageUrl() }}" aria-label="Previous">
+                        <a class="page-link" href="{{ $categories->previousPageUrl() }}&entries={{ $entries }}"
+                            aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -123,7 +134,7 @@
 
                     @if ($showFirstDots)
                         <li class="page-item">
-                            <a class="page-link" href="{{ $categories->url(1) }}">1</a>
+                            <a class="page-link" href="{{ $categories->url(1) }}&entries={{ $entries }}">1</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">...</a>
@@ -132,7 +143,8 @@
 
                     @for ($i = $startPage; $i <= $endPage; $i++)
                         <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
-                            <a class="page-link" href="{{ $categories->url($i) }}">{{ $i }}</a>
+                            <a class="page-link"
+                                href="{{ $categories->url($i) }}&entries={{ $entries }}">{{ $i }}</a>
                         </li>
                     @endfor
 
@@ -141,12 +153,14 @@
                             <a class="page-link">...</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="{{ $categories->url($lastPage) }}">{{ $lastPage }}</a>
+                            <a class="page-link"
+                                href="{{ $categories->url($lastPage) }}&entries={{ $entries }}">{{ $lastPage }}</a>
                         </li>
                     @endif
 
                     <li class="page-item {{ $categories->currentPage() == $lastPage ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $categories->nextPageUrl() }}" aria-label="Next">
+                        <a class="page-link" href="{{ $categories->nextPageUrl() }}&entries={{ $entries }}"
+                            aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -163,6 +177,65 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#entriesSelect').change(function() {
+                updateTable();
+            });
+
+            $('#searchInput').on('input', function() {
+                delay(function() {
+                    updateTable();
+                }, 500);
+            });
+
+            function updateTable() {
+                var entries = $('#entriesSelect').val();
+                var searchQuery = $('#searchInput').val();
+
+                $.ajax({
+                    url: "{{ route('categories.index') }}",
+                    type: 'GET',
+                    data: {
+                        entries: entries,
+                        search: searchQuery,
+                        column: "{{ $column }}", // Include the current column for sorting
+                        order: "{{ $order }}" // Include the current order for sorting
+                    },
+                    success: function(data) {
+                        $('#categoryTable').html(data);
+                    },
+                    error: function() {
+                        console.log('Error occurred while updating table.');
+                    }
+                });
+            }
+
+            // Initial update on page load
+            updateTable();
+        });
+
+        var delay = (function() {
+            var timer = 0;
+            return function(callback, ms) {
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+            };
+        });
+
+        function handleSort(column) {
+            var order = 'asc';
+
+            if (column === "{{ $column }}") {
+                order = "{{ $order === 'asc' ? 'desc' : 'asc' }}";
+            }
+
+            var entries = $('#entriesSelect').val(); // Get the selected number of entries
+            window.location = "{{ route('categories.index') }}?column=" + column + "&order=" + order + "&entries=" +
+                entries;
+        }
+    </script>
+
     <style>
         .card {
             border: 1px solid #ccc;

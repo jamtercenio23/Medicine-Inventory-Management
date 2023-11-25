@@ -20,11 +20,13 @@ class BarangayDistributionController extends Controller
 {
     $query = $request->input('search');
     $user = Auth::user();
+    $entries = $request->input('entries', 10);
+    $column = $request->input('column', 'id');
+    $order = $request->input('order', 'asc');
 
     if ($user->isBarangayUser()) {
         $barangayDistributions = BarangayDistribution::where('barangay_id', $user->barangay_id);
 
-        // For BHW users, include only distributions created by the same BHW in the same barangay
         if ($user->isBHW()) {
             $barangayDistributions->orWhere(function ($query) use ($user) {
                 $query->where('bhw_id', $user->id)
@@ -32,7 +34,6 @@ class BarangayDistributionController extends Controller
             });
         }
     } else {
-        // Show all distributions for admin users
         $barangayDistributions = BarangayDistribution::query();
     }
 
@@ -45,10 +46,15 @@ class BarangayDistributionController extends Controller
             });
         })
         ->when(!$user->isAdmin(), function ($query) use ($user) {
-            // Only apply the barangay filter if the user is not an admin
             $query->where('barangay_id', $user->barangay_id);
         })
-        ->paginate($request->input('entries', 10));
+        ->when($column === 'first_name', function ($query) use ($order) {
+            // If ordering by 'first_name', join the 'barangayPatient' table
+            $query->join('barangay_patients', 'barangay_distributions.barangay_patient_id', '=', 'barangay_patients.id')
+                ->orderBy('barangay_patients.first_name', $order);
+        })
+        ->orderBy($column, $order)
+        ->paginate($entries);
 
     // Loop through the results and handle null values
     $barangayDistributions->each(function ($distribution) {
@@ -69,9 +75,8 @@ class BarangayDistributionController extends Controller
         ->where('barangay_id', $user->barangay_id)
         ->get();
 
-    return view('barangay.barangay_distributions.index', compact('barangayDistributions', 'barangayPatients', 'barangayMedicines', 'query'));
+        return view('barangay.barangay_distributions.index', compact('barangayDistributions', 'barangayPatients', 'barangayMedicines', 'query', 'entries', 'column', 'order'));
 }
-
 
     public function create()
     {

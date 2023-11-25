@@ -1,4 +1,3 @@
-<!-- Status Modal -->
 <div class="modal fade" id="statusModal{{ $barangayMedicine->id }}" tabindex="-1" role="dialog"
     aria-labelledby="statusModalLabel{{ $barangayMedicine->id }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -14,8 +13,17 @@
                 @if ($barangayMedicine->status == 'approved')
                     <p><strong>Expected Stocks:</strong> {{ $barangayMedicine->expected_stocks }}</p>
                     <p><strong>Distribution Schedule:</strong> {{ $barangayMedicine->distribution_schedule }}</p>
+                    @if (!empty($barangayMedicine->admin_comment))
+                        <p><strong>Admin's Comment:</strong> {{ $barangayMedicine->admin_comment }}</p>
+                    @else
+                        <p><strong>Admin's Comment:</strong> No comment provided</p>
+                    @endif
                 @elseif ($barangayMedicine->status == 'rejected')
-                    <p><strong>Admin's Comment:</strong> {{ $barangayMedicine->admin_comment }}</p>
+                    @if (!empty($barangayMedicine->admin_comment))
+                        <p><strong>Admin's Comment:</strong> {{ $barangayMedicine->admin_comment }}</p>
+                    @else
+                        <p><strong>Admin's Comment:</strong> No comment provided</p>
+                    @endif
                 @endif
             </div>
         </div>

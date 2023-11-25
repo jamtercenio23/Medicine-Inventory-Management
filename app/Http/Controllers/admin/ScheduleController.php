@@ -16,16 +16,17 @@ class ScheduleController extends Controller
         $barangays = Barangay::all();
         $medicines = Medicine::all();
         $query = $request->input('search');
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
+        $entries = $request->input('entries', 10);
 
-        $schedules = Schedule::with('barangay')
-            ->when($query, function ($query) use ($request) {
-                $query->whereHas('barangay', function ($subquery) use ($request) {
-                    $subquery->where('name', 'like', '%' . $request->input('search') . '%');
-                });
-            })
-            ->paginate($request->input('entries', 10));
+        $schedules = Schedule::when($query, function ($query) use ($request) {
+            $query->where('name', 'like', '%' . $request->input('search') . '%');
+        })
+            ->orderBy($column, $order)
+            ->paginate($entries);
 
-        return view('admin.schedules.index', compact('schedules', 'barangays', 'medicines', 'query'));
+        return view('admin.schedules.index', compact('schedules', 'barangays', 'medicines', 'query', 'column', 'order', 'entries'));
     }
 
 

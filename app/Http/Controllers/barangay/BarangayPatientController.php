@@ -14,35 +14,46 @@ use Illuminate\Support\Facades\Response;
 class BarangayPatientController extends Controller
 {
     public function index(Request $request)
-    {
-        $query = $request->input('search');
-        $user = Auth::user();
+{
+    $query = $request->input('search');
+    $entries = $request->input('entries', 10);
+    $column = $request->input('column', 'id');
+    $order = $request->input('order', 'asc');
+    $user = Auth::user();
 
-        if ($user && $user->isBHW()) {
-            // If the user is a BHW, retrieve patients from their barangay
-            $barangayPatients = BarangayPatient::where('barangay_id', $user->barangay_id);
-        } elseif ($user && $user->isAdmin()) {
-            // If the user is an Admin, retrieve patients from all barangays
-            $barangayPatients = BarangayPatient::query();
-        } else {
-            // For all other users or unauthenticated users, don't allow access to patient data
-            abort(403, 'Unauthorized');
+    $barangayPatients = BarangayPatient::query();
+
+    if ($user) {
+        // If the user is a BHW, retrieve patients from their barangay
+        if ($user->isBHW()) {
+            $barangayPatients->where('barangay_id', $user->barangay_id);
         }
 
-        $barangayPatients = $barangayPatients
-            ->when(!$user->isAdmin(), function ($query) use ($request, $user) {
-                // Only apply the search condition if the user is not an admin
-                $query->where(function ($query) use ($request) {
-                    $query->where('first_name', 'like', '%' . $request->input('search') . '%')
-                        ->orWhere('last_name', 'like', '%' . $request->input('search') . '%');
-                });
-            })
-            ->paginate($request->input('entries', 10));
-
-        $barangays = Barangay::all();
-
-        return view('barangay.barangay_patients.index', compact('barangayPatients', 'barangays', 'query'));
+        // For Admin, retrieve patients from all barangays
+        if ($user->isAdmin()) {
+            $barangayPatients->orWhere('id', '>', 0); // A condition to include all records, adjust it as per your needs
+        }
+    } else {
+        // For unauthenticated users, don't allow access to patient data
+        abort(403, 'Unauthorized');
     }
+
+    $barangayPatients = $barangayPatients
+        ->where(function ($query) use ($request) {
+            // Apply the search condition for both first_name, last_name, and barangay name
+            $query->where('first_name', 'like', '%' . $request->input('search') . '%')
+                ->orWhere('last_name', 'like', '%' . $request->input('search') . '%')
+                ->orWhereHas('barangay', function ($subquery) use ($request) {
+                    $subquery->where('name', 'like', '%' . $request->input('search') . '%');
+                });
+        })
+        ->orderBy($column, $order)
+        ->paginate($entries);
+
+    $barangays = Barangay::all();
+
+    return view('barangay.barangay_patients.index', compact('barangayPatients', 'barangays', 'query', 'entries', 'column', 'order'));
+}
 
     public function create()
     {

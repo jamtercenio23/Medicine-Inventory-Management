@@ -8,8 +8,7 @@
             <h1>Manage Distributions</h1>
             <div class="d-flex">
                 @if (auth()->user()->isBHW())
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                        data-target="#createDistributionModal">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createDistributionModal">
                         <i class="fas fa-plus"></i> Add Distribution
                     </button>
                     <button type="button" class="btn btn-success" data-toggle="modal"
@@ -72,6 +71,15 @@
             <div class="card-header">
                 <div class="float-right">
                     <form action="{{ route('barangay-distributions.index') }}" method="GET" class="form-inline">
+                        <div class="input-group mr-2">
+                            <label for="entriesSelect" class="mr-2">Show:</label>
+                            <select id="entriesSelect" class="form-control" name="entries">
+                                <option value="10" {{ $entries == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ $entries == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ $entries == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ $entries == 100 ? 'selected' : '' }}>100</option>
+                            </select>
+                        </div>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="search"
                                 value="{{ $query }}">
@@ -93,15 +101,16 @@
                         <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th onclick="handleSort('id')">ID</th>
                                     @if (auth()->user()->isAdmin())
-                                        <th>Barangay</th>
+                                        <th onclick="handleSort('barangay_id')">Barangay</th>
                                     @endif
-                                    <th>Patient</th>
-                                    <th>Checkup Date</th>
+                                    <th onclick="handleSort('first_name')">Patient</th>
+                                    <th onclick="handleSort('generic_name')">Medicine</th>
+                                    <th onclick="handleSort('checkup_date')">Checkup Date</th>
                                     @if (auth()->user()->isBHW())
-                                    <th>Created At</th>
-                                    <th>Updated At</th>
+                                        <th onclick="handleSort('created_at')">Created At</th>
+                                        <th>Updated At</th>
                                     @endif
                                     <th>Actions</th>
                                 </tr>
@@ -124,10 +133,11 @@
                                                 N/A
                                             @endif
                                         </td>
+                                        <td>{{ $barangayDistribution->barangayMedicine->generic_name }} - {{ $barangayDistribution->barangayMedicine->generic_name }}</td>
                                         <td>{{ $barangayDistribution->checkup_date }}</td>
                                         @if (auth()->user()->isBHW())
-                                        <td>{{ $barangayDistribution->created_at }}</td>
-                                        <td>{{ $barangayDistribution->updated_at }}</td>
+                                            <td>{{ $barangayDistribution->created_at }}</td>
+                                            <td>{{ $barangayDistribution->updated_at }}</td>
                                         @endif
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
@@ -169,15 +179,17 @@
         </div>
         <div class="my-4 text-muted">
             <div class="float-left">
-                <div class="credits">
-                    <p>Mabini Health Center</p>
-                </div>
+                Showing {{ $barangayDistributions->firstItem() }} to {{ $barangayDistributions->lastItem() }} of
+                {{ $barangayDistributions->total() }}
+                entries
             </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
-                    <li class="page-item {{ $barangayDistributions->onFirstPage() ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $barangayDistributions->previousPageUrl() }}" aria-label="Previous">
+                    <li class="page-item {{ $barangayDistributions->currentPage() == 1 ? 'disabled' : '' }}">
+                        <a class="page-link"
+                            href="{{ $barangayDistributions->previousPageUrl() }}&entries={{ $entries }}"
+                            aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -188,7 +200,6 @@
                         $showFirstDots = false;
                         $showLastDots = false;
 
-                        // Determine the range of page numbers to display
                         $startPage = max(1, $currentPage - 2);
                         $endPage = min($lastPage, $currentPage + 2);
 
@@ -205,7 +216,8 @@
 
                     @if ($showFirstDots)
                         <li class="page-item">
-                            <a class="page-link" href="{{ $barangayDistributions->url(1) }}">1</a>
+                            <a class="page-link"
+                                href="{{ $barangayDistributions->url(1) }}&entries={{ $entries }}">1</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">...</a>
@@ -214,7 +226,8 @@
 
                     @for ($i = $startPage; $i <= $endPage; $i++)
                         <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
-                            <a class="page-link" href="{{ $barangayDistributions->url($i) }}">{{ $i }}</a>
+                            <a class="page-link"
+                                href="{{ $barangayDistributions->url($i) }}&entries={{ $entries }}">{{ $i }}</a>
                         </li>
                     @endfor
 
@@ -224,12 +237,14 @@
                         </li>
                         <li class="page-item">
                             <a class="page-link"
-                                href="{{ $barangayDistributions->url($lastPage) }}">{{ $lastPage }}</a>
+                                href="{{ $barangayDistributions->url($lastPage) }}&entries={{ $entries }}">{{ $lastPage }}</a>
                         </li>
                     @endif
 
                     <li class="page-item {{ $barangayDistributions->currentPage() == $lastPage ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $barangayDistributions->nextPageUrl() }}" aria-label="Next">
+                        <a class="page-link"
+                            href="{{ $barangayDistributions->nextPageUrl() }}&entries={{ $entries }}"
+                            aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -245,6 +260,65 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#entriesSelect').change(function() {
+                updateTable();
+            });
+
+            $('#searchInput').on('input', function() {
+                delay(function() {
+                    updateTable();
+                }, 500);
+            });
+
+            function updateTable() {
+                var entries = $('#entriesSelect').val();
+                var searchQuery = $('#searchInput').val();
+
+                $.ajax({
+                    url: "{{ route('barangay-distributions.index') }}",
+                    type: 'GET',
+                    data: {
+                        entries: entries,
+                        search: searchQuery,
+                        column: "{{ $column }}", // Include the current column for sorting
+                        order: "{{ $order }}" // Include the current order for sorting
+                    },
+                    success: function(data) {
+                        $('#categoryTable').html(data);
+                    },
+                    error: function() {
+                        console.log('Error occurred while updating table.');
+                    }
+                });
+            }
+
+            // Initial update on page load
+            updateTable();
+        });
+
+        var delay = (function() {
+            var timer = 0;
+            return function(callback, ms) {
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+            };
+        });
+
+        function handleSort(column) {
+            var order = 'asc';
+
+            if (column === "{{ $column }}") {
+                order = "{{ $order === 'asc' ? 'desc' : 'asc' }}";
+            }
+
+            var entries = $('#entriesSelect').val(); // Get the selected number of entries
+            window.location = "{{ route('barangay-distributions.index') }}?column=" + column + "&order=" + order +
+                "&entries=" +
+                entries;
+        }
+    </script>
     <style>
         .card {
             border: 1px solid #ccc;

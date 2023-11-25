@@ -17,6 +17,9 @@ class BarangayMedicineController extends Controller
     {
         $user = Auth::user();
         $query = $request->input('search', '');
+        $entries = $request->input('entries', 10);
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
 
         if ($user->hasRole('admin')) {
             $barangayMedicines = BarangayMedicine::where('stocks', '>', 0); // Only fetch medicines with stock greater than 0
@@ -36,10 +39,11 @@ class BarangayMedicineController extends Controller
             });
         }
 
-        $barangayMedicines = $barangayMedicines->paginate(10);
+        $barangayMedicines = $barangayMedicines->orderBy($column, $order)->paginate($entries);
 
-        return view('barangay.barangay_medicines.index', compact('barangayMedicines', 'query'));
+        return view('barangay.barangay_medicines.index', compact('barangayMedicines', 'query', 'entries', 'column', 'order'));
     }
+
 
     public function generateBarangayMedicineReport(Request $request)
     {
@@ -101,17 +105,20 @@ class BarangayMedicineController extends Controller
     {
         $user = Auth::user();
         $query = $request->input('search', '');
+        $category = $request->input('category', '');
+        $entries = $request->input('entries', 10);
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
 
-        // Fetch out-of-stock medicines based on user role
-        $outOfStockMedicines = $this->getOutOfStockMedicines($user, $query);
+        $outOfStockMedicines = $this->getOutOfStockMedicines($user, $query, $category)
+            ->orderBy($column, $order)
+            ->paginate($entries);
 
-        $outOfStockMedicines = $outOfStockMedicines->paginate(10);
-
-        return view('barangay.barangay_medicines.out-of-stock', compact('outOfStockMedicines', 'query'))
+        return view('barangay.barangay_medicines.out-of-stock', compact('outOfStockMedicines', 'query', 'entries', 'column', 'order'))
             ->with('success', 'Out of stock medicines retrieved successfully');
     }
 
-    protected function getOutOfStockMedicines($user, $query)
+    protected function getOutOfStockMedicines($user, $query, $category)
     {
         $queryBuilder = BarangayMedicine::where('stocks', '<=', 0);
 
@@ -122,18 +129,24 @@ class BarangayMedicineController extends Controller
         }
 
         if ($query) {
-            $queryBuilder->where(function ($queryBuilder) use ($query) {
+            $queryBuilder->where(function ($queryBuilder) use ($query, $category) {
                 $queryBuilder->whereHas('barangay', function ($subquery) use ($query) {
                     $subquery->where('name', 'like', '%' . $query . '%');
-                })->orWhereHas('medicine', function ($subquery) use ($query) {
+                })->orWhereHas('medicine', function ($subquery) use ($query, $category) {
                     $subquery->where('generic_name', 'like', '%' . $query . '%')
-                        ->orWhere('brand_name', 'like', '%' . $query . '%');
+                        ->orWhere('brand_name', 'like', '%' . $query . '%')
+                        ->orWhere('category', 'like', '%' . $category . '%');
                 });
+            });
+        } elseif ($category) {
+            $queryBuilder->whereHas('medicine', function ($subquery) use ($category) {
+                $subquery->where('category', 'like', '%' . $category . '%');
             });
         }
 
         return $queryBuilder;
     }
+
     public function requestOutOfStock(Request $request, BarangayMedicine $barangayMedicine)
     {
         $request->validate([
@@ -145,7 +158,7 @@ class BarangayMedicineController extends Controller
         $barangayMedicine->update([
             'expected_stocks' => $request->input('expected_stocks'),
             'distribution_schedule' => $request->input('distribution_schedule'),
-            'status' => 'pending', // Set the default status to 'pending'
+            'status' => 'pending',
         ]);
 
         // Set the session variable to indicate that the medicine has been requested
@@ -209,19 +222,23 @@ class BarangayMedicineController extends Controller
             ->with('excelFileName', $excelFileName ?? null);
     }
     public function expired(Request $request)
-    {
-        $user = Auth::user();
-        $query = $request->input('search', '');
+{
+    $user = Auth::user();
+    $query = $request->input('search', '');
+    $entries = $request->input('entries', 10);
+    $column = $request->input('column', 'id');
+    $order = $request->input('order', 'asc');
 
-        // Fetch expired medicines based on user role and barangay
-        $expiredMedicines = $this->getExpiredMedicines($user, $query);
+    // Fetch expired medicines based on user role and barangay
+    $expiredMedicines = $this->getExpiredMedicines($user, $query);
 
-        $expiredMedicines = $expiredMedicines->paginate(10);
+    $expiredMedicines = $expiredMedicines
+        ->orderBy($column, $order)
+        ->paginate($entries);
 
-        return view('barangay.barangay_medicines.expired', compact('expiredMedicines', 'query'))
-            ->with('success', 'Expired medicines retrieved successfully');
-    }
-
+    return view('barangay.barangay_medicines.expired', compact('expiredMedicines', 'query', 'entries', 'column', 'order'))
+        ->with('success', 'Expired medicines retrieved successfully');
+}
     protected function getExpiredMedicines($user, $query)
     {
         $queryBuilder = BarangayMedicine::where('expiration_date', '<', now());

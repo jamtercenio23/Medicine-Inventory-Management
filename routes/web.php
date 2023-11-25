@@ -89,7 +89,7 @@ Route::middleware(['auth', 'is_active'])->group(function () {
         Route::resource('barangay/barangay-patients', BarangayPatientController::class);
     });
     Route::group(['middleware' => 'permission:view-manage-request'], function () {
-        Route::get('/admin/manage-requests', [ManageRequestsController::class, 'index'])->name('admin.manage-requests.index');
+        Route::get('/admin/manage-requests.index', [ManageRequestsController::class, 'index'])->name('admin.manage-requests.index');
         Route::get('/admin/manage-requests/{id}', [ManageRequestsController::class, 'show'])->name('admin.manage-requests.show');
         Route::put('/admin/approve-reject/{barangayMedicine}', [ManageRequestsController::class, 'approveReject'])->name('admin.barangay-medicines.approve-reject');
         Route::put('/barangay-medicines/approve-reject/{barangayMedicine}', [ManageRequestsController::class, 'approveReject'])

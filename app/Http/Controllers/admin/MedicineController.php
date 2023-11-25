@@ -19,6 +19,9 @@ class MedicineController extends Controller
         $currentDate = now()->toDateString();
         $categories = Category::all();
         $query = $request->input('search');
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
+        $entries = $request->input('entries', 10);
 
         $medicines = Medicine::with('category')
             ->when($query, function ($query) use ($request) {
@@ -27,9 +30,10 @@ class MedicineController extends Controller
             })
             ->where('stocks', '>', 0)
             ->where('expiration_date', '>=', $currentDate)
-            ->paginate($request->input('entries', 10));
+            ->orderBy($column, $order)
+            ->paginate($entries);
 
-        return view('admin.medicines.index', compact('categories', 'medicines', 'query'));
+        return view('admin.medicines.index', compact('categories', 'medicines', 'query', 'column', 'order', 'entries'));
     }
 
     public function create()
@@ -98,15 +102,20 @@ class MedicineController extends Controller
     public function outOfStock(Request $request)
     {
         $query = $request->input('search', ''); // Default to an empty string if not provided
+        $entries = $request->input('entries', 10); // Default to 10 if not provided
+        $column = $request->input('column', 'id'); // Default to 'id' if not provided
+        $order = $request->input('order', 'asc'); // Default to 'asc' if not provided
+
         $outOfStockMedicines = Medicine::where('stocks', 0)
             ->where('expiration_date', '>=', now()) // Exclude expired medicines
             ->when($query, function ($query) use ($request) {
                 $query->where('generic_name', 'like', '%' . $request->input('search') . '%')
                     ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
             })
-            ->paginate(10); // You can adjust the pagination size as needed
+            ->orderBy($column, $order)
+            ->paginate($entries); // Use the $entries variable for pagination
 
-        return view('admin.medicines.out-of-stock', compact('outOfStockMedicines', 'query'))
+        return view('admin.medicines.out-of-stock', compact('outOfStockMedicines', 'query', 'entries', 'column', 'order'))
             ->with('success', 'Out of stock medicines retrieved successfully');
     }
 
@@ -132,9 +141,19 @@ class MedicineController extends Controller
     public function expired(Request $request)
     {
         $query = $request->input('search', '');
-        $expiredMedicines = Medicine::where('expiration_date', '<', now())->paginate(10);
+        $entries = $request->input('entries', 10);
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
 
-        return view('admin.medicines.expired', compact('expiredMedicines', 'query'))
+        $expiredMedicines = Medicine::where('expiration_date', '<', now())
+            ->when($query, function ($query) use ($request) {
+                $query->where('generic_name', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
+            })
+            ->orderBy($column, $order)
+            ->paginate($entries);
+
+        return view('admin.medicines.expired', compact('expiredMedicines', 'query', 'entries', 'column', 'order'))
             ->with('success', 'Expired medicines retrieved successfully');
     }
 

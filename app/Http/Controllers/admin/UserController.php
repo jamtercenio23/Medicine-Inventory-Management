@@ -14,16 +14,27 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $query = $request->input('search');
-        $users = User::where('name', 'like', '%' . $query . '%')
-            ->orWhere('email', 'like', '%' . $query . '%')
-            ->with('roles')
-            ->paginate(10);
+        $entries = $request->input('entries', 10);
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
+
+        $users = User::with('roles')
+            ->where('name', 'like', '%' . $query . '%')
+            ->when($query, function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('email', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('is_active', 'like', '%' . $request->input('search') . '%');
+            })
+            ->orWhereHas('roles', function ($roleQuery) use ($request) {
+                $roleQuery->where('name', 'like', '%' . $request->input('search') . '%');
+            })
+            ->orderBy($column, $order)
+            ->paginate($entries);
 
         $roles = Role::all();
 
-        return view('admin.users.index', compact('users', 'roles', 'query'));
+        return view('admin.users.index', compact('users', 'roles', 'query', 'entries', 'column', 'order'));
     }
-
     public function create()
     {
         $roles = Role::all();

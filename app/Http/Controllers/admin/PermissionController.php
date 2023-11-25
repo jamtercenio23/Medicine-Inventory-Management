@@ -9,11 +9,21 @@ use Spatie\Permission\Models\Permission;
 class PermissionController extends Controller
 {
     public function index(Request $request)
-{
-    $query = $request->input('search');
-    $permissions = Permission::where('name', 'like', '%' . $query . '%')->paginate(10);
-    return view('admin.permissions.index', compact('permissions', 'query'));
-}
+    {
+        $query = $request->input('search');
+        $entries = $request->input('entries', 10);
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
+
+        $permissions = Permission::with('permissions')
+            ->when($query, function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->input('search') . '%');
+            })
+            ->orderBy($column, $order)
+            ->paginate($entries);
+
+        return view('admin.permissions.index', compact('permissions', 'query', 'entries', 'column', 'order'));
+    }
 
     public function create()
     {

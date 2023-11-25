@@ -12,8 +12,7 @@
                 </button>
 
                 <!-- New Button for Generating Reports -->
-                <button type="button" class="btn btn-success" data-toggle="modal"
-                    data-target="#generateMedicineReportModal">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#generateMedicineReportModal">
                     <i class="fas fa-file-export"></i> Report
                 </button>
             </div>
@@ -68,6 +67,15 @@
             <div class="card-header">
                 <div class="float-right">
                     <form action="{{ route('medicines.index') }}" method="GET" class="form-inline">
+                        <div class="input-group mr-2">
+                            <label for="entriesSelect" class="mr-2">Show:</label>
+                            <select id="entriesSelect" class="form-control" name="entries">
+                                <option value="10" {{ $entries == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ $entries == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ $entries == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ $entries == 100 ? 'selected' : '' }}>100</option>
+                            </select>
+                        </div>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="search"
                                 value="{{ $query }}">
@@ -89,13 +97,13 @@
                         <table class="table table-hover table-sm">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Generic Name</th>
-                                    <th>Brand Name</th>
-                                    <th>Category</th>
-                                    <th>Created At</th>
+                                    <th onclick="handleSort('id')">ID</th>
+                                    <th onclick="handleSort('generic_name')">Generic Name</th>
+                                    <th onclick="handleSort('brand_name')">Brand Name</th>
+                                    <th onclick="handleSort('category_id')">Category</th>
+                                    <th onclick="handleSort('created_at')">Created At</th>
                                     <th>Created By</th>
-                                    <th>Updated At</th>
+                                    <th onclick="handleSort('updated_at')">Updated At</th>
                                     <th>Updated By</th>
                                     <th>Actions</th>
                                 </tr>
@@ -107,9 +115,9 @@
                                         <td>{{ $medicine->generic_name }}</td>
                                         <td>{{ $medicine->brand_name }}</td>
                                         <td>{{ $medicine->category->name }}</td>
-                                        <td>{{ $medicine->created_at ? $medicine->created_at : 'N/A '}}</td>
+                                        <td>{{ $medicine->created_at ? $medicine->created_at : 'N/A ' }}</td>
                                         <td>{{ $medicine->creator ? $medicine->creator->name : 'N/A' }}</td>
-                                        <td>{{ $medicine->updated_at ? $medicine->updated_at : 'N/A '}}</td>
+                                        <td>{{ $medicine->updated_at ? $medicine->updated_at : 'N/A ' }}</td>
                                         <td>{{ $medicine->updater ? $medicine->updater->name : 'N/A' }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
@@ -144,15 +152,15 @@
         </div>
         <div class="my-4 text-muted">
             <div class="float-left">
-                <div class="credits">
-                    <p>Mabini Health Center</p>
-                </div>
+                Showing {{ $medicines->firstItem() }} to {{ $medicines->lastItem() }} of {{ $medicines->total() }}
+                entries
             </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
                     <li class="page-item {{ $medicines->currentPage() == 1 ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $medicines->previousPageUrl() }}" aria-label="Previous">
+                        <a class="page-link" href="{{ $medicines->previousPageUrl() }}&entries={{ $entries }}"
+                            aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -179,7 +187,7 @@
 
                     @if ($showFirstDots)
                         <li class="page-item">
-                            <a class="page-link" href="{{ $medicines->url(1) }}">1</a>
+                            <a class="page-link" href="{{ $medicines->url(1) }}&entries={{ $entries }}">1</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">...</a>
@@ -188,7 +196,8 @@
 
                     @for ($i = $startPage; $i <= $endPage; $i++)
                         <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
-                            <a class="page-link" href="{{ $medicines->url($i) }}">{{ $i }}</a>
+                            <a class="page-link"
+                                href="{{ $medicines->url($i) }}&entries={{ $entries }}">{{ $i }}</a>
                         </li>
                     @endfor
 
@@ -197,12 +206,14 @@
                             <a class="page-link">...</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="{{ $medicines->url($lastPage) }}">{{ $lastPage }}</a>
+                            <a class="page-link"
+                                href="{{ $medicines->url($lastPage) }}&entries={{ $entries }}">{{ $lastPage }}</a>
                         </li>
                     @endif
 
                     <li class="page-item {{ $medicines->currentPage() == $lastPage ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $medicines->nextPageUrl() }}" aria-label="Next">
+                        <a class="page-link" href="{{ $medicines->nextPageUrl() }}&entries={{ $entries }}"
+                            aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -222,6 +233,64 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#entriesSelect').change(function() {
+                updateTable();
+            });
+
+            $('#searchInput').on('input', function() {
+                delay(function() {
+                    updateTable();
+                }, 500);
+            });
+
+            function updateTable() {
+                var entries = $('#entriesSelect').val();
+                var searchQuery = $('#searchInput').val();
+
+                $.ajax({
+                    url: "{{ route('medicines.index') }}",
+                    type: 'GET',
+                    data: {
+                        entries: entries,
+                        search: searchQuery,
+                        column: "{{ $column }}", // Include the current column for sorting
+                        order: "{{ $order }}" // Include the current order for sorting
+                    },
+                    success: function(data) {
+                        $('#categoryTable').html(data);
+                    },
+                    error: function() {
+                        console.log('Error occurred while updating table.');
+                    }
+                });
+            }
+
+            // Initial update on page load
+            updateTable();
+        });
+
+        var delay = (function() {
+            var timer = 0;
+            return function(callback, ms) {
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+            };
+        });
+
+        function handleSort(column) {
+            var order = 'asc';
+
+            if (column === "{{ $column }}") {
+                order = "{{ $order === 'asc' ? 'desc' : 'asc' }}";
+            }
+
+            var entries = $('#entriesSelect').val(); // Get the selected number of entries
+            window.location = "{{ route('medicines.index') }}?column=" + column + "&order=" + order + "&entries=" +
+                entries;
+        }
+    </script>
     <style>
         .card {
             border: 1px solid #ccc;

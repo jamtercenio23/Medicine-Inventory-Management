@@ -13,8 +13,18 @@ class RoleController extends Controller
     {
         $permissions = Permission::all();
         $query = $request->input('search');
-        $roles = Role::where('name', 'like', '%' . $query . '%')->paginate(10);
-        return view('admin.roles.index', compact('roles', 'query'));
+        $entries = $request->input('entries', 10);
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
+
+        $roles = Role::where('name', 'like', '%' . $query . '%')
+        ->when($query, function ($query) use ($request) {
+            $query->where('name', 'like', '%' . $request->input('search') . '%');
+        })
+        ->orderBy($column, $order)
+            ->paginate($entries);
+
+        return view('admin.roles.index', compact('roles', 'query', 'entries', 'column', 'order'));
     }
 
     public function create()

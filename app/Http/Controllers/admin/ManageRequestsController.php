@@ -12,12 +12,19 @@ class ManageRequestsController extends Controller
     {
         $restockRequests = BarangayMedicine::all();
         $query = $request->input('search');
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
+        $entries = $request->input('entries', 10);
+
         $restockRequests = BarangayMedicine::when($query, function ($query) use ($request) {
             $query->where('generic_name', 'like', '%' . $request->input('search') . '%')
                 ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%')
                 ->orWhere('status', 'like', '%' . $request->input('search') . '%');
-        })->paginate($request->input('entries', 10));
-        return view('admin.manage-requests.index', compact('restockRequests', 'query'));
+        })
+        ->where('stocks', 0)
+        ->orderBy($column, $order)
+        ->paginate(intval($entries));
+        return view('admin.manage-requests.index', compact('restockRequests', 'query', 'column', 'order', 'entries'));
     }
 
     public function approveReject(Request $request, BarangayMedicine $barangayMedicine)

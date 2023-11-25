@@ -37,4 +37,8 @@ class Barangay extends Model
     {
         return $this->hasMany(BarangayDistribution::class);
     }
+    public function barangayMedicines()
+    {
+        return $this->hasMany(BarangayMedicine::class, 'barangay_id');
+    }
 }

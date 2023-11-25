@@ -11,11 +11,17 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $query = $request->input('search');
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
+        $entries = $request->input('entries', 10);  // Add this line
+
         $categories = Category::when($query, function ($query) use ($request) {
             $query->where('name', 'like', '%' . $request->input('search') . '%');
-        })->paginate($request->input('entries', 10));
+        })
+        ->orderBy($column, $order)
+        ->paginate($entries);
 
-        return view('admin.categories.index', compact('categories', 'query'));
+        return view('admin.categories.index', compact('categories', 'query', 'column', 'order', 'entries'));
     }
 
 

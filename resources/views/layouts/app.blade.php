@@ -397,7 +397,7 @@
                             @endcan
                             @can('view-manage-request')
                                 <li class="list-group-item list-group-item-action bg-light">
-                                    &nbsp; &nbsp;<a href="{{ route('admin.manage-requests') }}"><i class="fa-solid fa-recycle"
+                                    &nbsp; &nbsp;<a href="{{ route('admin.manage-requests.index') }}"><i class="fa-solid fa-recycle"
                                             style="margin-right: 23px;"></i>
                                         Restock Requests</a>
                                 </li>

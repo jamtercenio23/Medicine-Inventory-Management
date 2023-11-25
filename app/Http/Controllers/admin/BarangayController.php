@@ -11,10 +11,16 @@ class BarangayController extends Controller
     public function index(Request $request)
     {
         $query = $request->input('search');
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
+        $entries = $request->input('entries', 10);
+
         $barangays = Barangay::when($query, function ($query) use ($request) {
             $query->where('name', 'like', '%' . $request->input('search') . '%');
-        })->paginate($request->input('entries', 10));
-        return view('admin.barangays.index', compact('barangays', 'query'));
+        })
+        ->orderBy($column, $order)
+        ->paginate($entries);
+        return view('admin.barangays.index', compact('barangays', 'query', 'column', 'order', 'entries'));
     }
 
     public function create()
