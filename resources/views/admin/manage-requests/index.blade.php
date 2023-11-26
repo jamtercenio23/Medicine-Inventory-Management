@@ -64,8 +64,11 @@
                                             <td>{{ $request->distribution_schedule }}</td>
                                             <td>{{ ucfirst($request->status) }}</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#approveRejectModal{{ $request->id }}"><i class="fas fa-edit"></i>
-                                                </button>
+                                                @if ($request->status != 'approved' && $request->status != 'rejected')
+                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#approveRejectModal{{ $request->id }}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                @endif
                                             </td>
                                         </tr>
                                         <!-- Approve/Reject Modal -->

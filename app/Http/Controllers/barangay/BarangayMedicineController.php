@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Exports\BarangayMedicineReportExport;
 use Illuminate\Support\Facades\Response;
 use Barryvdh\DomPDF\ServiceProvider;
+use Illuminate\Support\Facades\Session;
 
 class BarangayMedicineController extends Controller
 {
@@ -159,10 +160,8 @@ class BarangayMedicineController extends Controller
             'expected_stocks' => $request->input('expected_stocks'),
             'distribution_schedule' => $request->input('distribution_schedule'),
             'status' => 'pending',
+            'requested_at' => now(),
         ]);
-
-        // Set the session variable to indicate that the medicine has been requested
-        session(["requested_medicine_{$barangayMedicine->id}" => true]);
 
         return redirect()->back()->with('success', 'Restock request submitted successfully');
     }
@@ -222,23 +221,23 @@ class BarangayMedicineController extends Controller
             ->with('excelFileName', $excelFileName ?? null);
     }
     public function expired(Request $request)
-{
-    $user = Auth::user();
-    $query = $request->input('search', '');
-    $entries = $request->input('entries', 10);
-    $column = $request->input('column', 'id');
-    $order = $request->input('order', 'asc');
+    {
+        $user = Auth::user();
+        $query = $request->input('search', '');
+        $entries = $request->input('entries', 10);
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
 
-    // Fetch expired medicines based on user role and barangay
-    $expiredMedicines = $this->getExpiredMedicines($user, $query);
+        // Fetch expired medicines based on user role and barangay
+        $expiredMedicines = $this->getExpiredMedicines($user, $query);
 
-    $expiredMedicines = $expiredMedicines
-        ->orderBy($column, $order)
-        ->paginate($entries);
+        $expiredMedicines = $expiredMedicines
+            ->orderBy($column, $order)
+            ->paginate($entries);
 
-    return view('barangay.barangay_medicines.expired', compact('expiredMedicines', 'query', 'entries', 'column', 'order'))
-        ->with('success', 'Expired medicines retrieved successfully');
-}
+        return view('barangay.barangay_medicines.expired', compact('expiredMedicines', 'query', 'entries', 'column', 'order'))
+            ->with('success', 'Expired medicines retrieved successfully');
+    }
     protected function getExpiredMedicines($user, $query)
     {
         $queryBuilder = BarangayMedicine::where('expiration_date', '<', now());

@@ -25,6 +25,7 @@ class BarangayMedicine extends Model
         'admin_comment',
         'expected_stocks',
         'distribution_schedule',
+        'requested_at',
     ];
 
     public function barangay()

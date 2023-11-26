@@ -126,19 +126,22 @@
                                         <td>{{ $barangayMedicine->expiration_date }}</td>
                                         @if (auth()->user()->isBHW())
                                             <td>
-                                                @if (session("requested_medicine_{$barangayMedicine->id}"))
+                                                @if ($barangayMedicine->status == 'approved')
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                        data-target="#statusModal{{ $barangayMedicine->id }}">
+                                                        <i class="fas fa-info"></i> Status
+                                                    </button>
+                                                @elseif ($barangayMedicine->requested_at)
                                                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                         data-target="#statusModal{{ $barangayMedicine->id }}">
                                                         <i class="fas fa-info"></i> Status
                                                     </button>
                                                 @else
-                                                    @if ($barangayMedicine->status != 'rejected')
-                                                        <button type="button" class="btn btn-warning btn-sm"
-                                                            data-toggle="modal"
-                                                            data-target="#editBarangayOutOfStockModal{{ $barangayMedicine->id }}">
-                                                            <i class="fas fa-edit"></i>
-                                                        </button>
-                                                    @endif
+                                                    <button type="button" class="btn btn-danger  btn-sm"
+                                                        data-toggle="modal"
+                                                        data-target="#editBarangayOutOfStockModal{{ $barangayMedicine->id }}">
+                                                        <i class="fas fa-exclamation"></i> Request Restock
+                                                    </button>
                                                 @endif
                                             </td>
                                         @endif
@@ -159,14 +162,16 @@
         </div>
         <div class="my-4 text-muted">
             <div class="float-left">
-                Showing {{ $outOfStockMedicines->firstItem() }} to {{ $outOfStockMedicines->lastItem() }} of {{ $outOfStockMedicines->total() }}
+                Showing {{ $outOfStockMedicines->firstItem() }} to {{ $outOfStockMedicines->lastItem() }} of
+                {{ $outOfStockMedicines->total() }}
                 entries
             </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
                     <li class="page-item {{ $outOfStockMedicines->currentPage() == 1 ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $outOfStockMedicines->previousPageUrl() }}&entries={{ $entries }}"
+                        <a class="page-link"
+                            href="{{ $outOfStockMedicines->previousPageUrl() }}&entries={{ $entries }}"
                             aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
@@ -194,7 +199,8 @@
 
                     @if ($showFirstDots)
                         <li class="page-item">
-                            <a class="page-link" href="{{ $outOfStockMedicines->url(1) }}&entries={{ $entries }}">1</a>
+                            <a class="page-link"
+                                href="{{ $outOfStockMedicines->url(1) }}&entries={{ $entries }}">1</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">...</a>
@@ -219,7 +225,8 @@
                     @endif
 
                     <li class="page-item {{ $outOfStockMedicines->currentPage() == $lastPage ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $outOfStockMedicines->nextPageUrl() }}&entries={{ $entries }}"
+                        <a class="page-link"
+                            href="{{ $outOfStockMedicines->nextPageUrl() }}&entries={{ $entries }}"
                             aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
@@ -289,7 +296,8 @@
             }
 
             var entries = $('#entriesSelect').val(); // Get the selected number of entries
-            window.location = "{{ route('barangay-medicines.out-of-stock') }}?column=" + column + "&order=" + order + "&entries=" +
+            window.location = "{{ route('barangay-medicines.out-of-stock') }}?column=" + column + "&order=" + order +
+                "&entries=" +
                 entries;
         }
     </script>
