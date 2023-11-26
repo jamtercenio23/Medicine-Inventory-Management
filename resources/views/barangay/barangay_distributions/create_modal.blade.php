@@ -16,18 +16,20 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="barangay_patient_id">Barangay Patient:</label>
-                                <select class="form-control" id="barangay_patient_id" name="barangay_patient_id" required>
+                                <input list="barangayPatients" class="form-control" id="barangay_patient_id" name="barangay_patient_id" placeholder="Enter the Barangay Patient Name/ID" required>
+                                <datalist id="barangayPatients">
                                     @foreach ($barangayPatients as $barangayPatient)
                                         @if (auth()->user()->isBHW() && $barangayPatient->barangay_id !== auth()->user()->barangay_id)
                                             @continue
                                         @endif
                                         <option value="{{ $barangayPatient->id }}">{{ $barangayPatient->first_name }} {{ $barangayPatient->last_name }}</option>
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
                             <div class="form-group">
                                 <label for="medicine_id">Medicine:</label>
-                                <select class="form-control" id="medicine_id" name="medicine_id" required>
+                                <input list="medicines" class="form-control" id="medicine_id" name="medicine_id" placeholder="Enter the Medicine Name/ID" required>
+                                <datalist id="medicines">
                                     @foreach ($barangayMedicines as $barangayMedicine)
                                         @if ($barangayMedicine->stocks > 0 && $barangayMedicine->expiration_date > now()->toDateString())
                                             @if (auth()->user()->isBHW() && $barangayMedicine->barangay_id !== auth()->user()->barangay_id)
@@ -36,8 +38,9 @@
                                             <option value="{{ $barangayMedicine->id }}">{{ $barangayMedicine->generic_name }} - {{ $barangayMedicine->brand_name }} | Stocks: {{ $barangayMedicine->stocks }}</option>
                                         @endif
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
+
                             <div class="form-group">
                                 <label for="stocks">Stock:</label>
                                 <input type="number" class="form-control" id="stocks" name="stocks" placeholder="Enter the Stocks" required>
