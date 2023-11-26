@@ -16,23 +16,24 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="patient_id">Patient:</label>
-                                <select class="form-control select2" id="patient_id" name="patient_id" required>
+                                <input list="patients" class="form-control" id="patient_id" name="patient_id" placeholder="Enter the Patient Name/ID" required>
+                                <datalist id="patients">
                                     @foreach ($patients as $patient)
-                                        <option value="{{ $patient->id }}">{{ $patient->first_name }}
-                                            {{ $patient->last_name }}</option>
+                                        <option value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }}</option>
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
                             <div class="form-group">
                                 <label for="medicine_id">Medicine:</label>
-                                <select class="form-control select2" id="medicine_id" name="medicine_id" required>
+                                <input list="medicines" class="form-control" id="medicine_id" name="medicine_id" placeholder="Enter the Medicine Name/ID" required>
+                                <datalist id="medicines">
                                     @foreach ($medicines as $medicine)
                                         @if ($medicine->stocks > 0 && $medicine->expiration_date > now()->toDateString())
                                             <option value="{{ $medicine->id }}">{{ $medicine->generic_name }} -
                                                 {{ $medicine->brand_name }} | Stocks: {{ $medicine->stocks }}</option>
                                         @endif
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
                             <div class="form-group">
                                 <label for="stocks">Stock:</label>
@@ -46,8 +47,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="checkup_date">Checkup Date:</label>
-                                <input type="date" class="form-control" id="checkup_date" name="checkup_date"
-                                    required>
+                                <input type="date" class="form-control" id="checkup_date" name="checkup_date" required>
                             </div>
                         </div>
                     </div>
@@ -58,6 +58,7 @@
         </div>
     </div>
 </div>
+
 
 @push('scripts')
     <script>

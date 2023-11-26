@@ -19,6 +19,7 @@ class Distribution extends Model
 
     public function medicine()
     {
-        return $this->belongsTo(Medicine::class);
+        return $this->belongsTo(Medicine::class, 'medicine_id');
     }
+
 }

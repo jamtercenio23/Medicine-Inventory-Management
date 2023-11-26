@@ -17,16 +17,25 @@ class ManageRequestsController extends Controller
         $entries = $request->input('entries', 10);
 
         $restockRequests = BarangayMedicine::when($query, function ($query) use ($request) {
-            $query->where('generic_name', 'like', '%' . $request->input('search') . '%')
-                ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%')
-                ->orWhere('status', 'like', '%' . $request->input('search') . '%');
+            $numericSearch = is_numeric($request->input('search'));
+            $query->when($numericSearch, function ($query) use ($request) {
+                $query->orWhere('id', $request->input('search'));
+            }, function ($query) use ($request) {
+                $query->orWhere('generic_name', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('status', 'like', '%' . $request->input('search') . '%');
+
+                $query->orWhereHas('barangay', function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->input('search') . '%');
+                });
+            });
         })
-        ->where('stocks', 0)
-        ->orderBy($column, $order)
-        ->paginate(intval($entries));
+            ->where('stocks', 0)
+            ->orderBy($column, $order)
+            ->paginate(intval($entries));
+
         return view('admin.manage-requests.index', compact('restockRequests', 'query', 'column', 'order', 'entries'));
     }
-
     public function approveReject(Request $request, BarangayMedicine $barangayMedicine)
     {
         $request->validate([
@@ -44,6 +53,5 @@ class ManageRequestsController extends Controller
         session()->forget("requested_medicine_{$barangayMedicine->id}");
 
         return redirect()->route('admin.manage-requests')->with('success', 'Restock request updated successfully');
-
     }
 }

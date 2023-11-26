@@ -65,6 +65,8 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     });
     Route::group(['middleware' => 'permission:view-distributions'], function () {
         Route::resource('admin/distributions', DistributionController::class);
+        Route::get('/search/patients', [DistributionController::class, 'searchPatients'])->name('search.patients');
+        Route::get('/search/medicines', [DistributionController::class, 'searchMedicines'])->name('search.medicines');
     });
     Route::group(['middleware' => 'permission:view-distribution-barangay'], function () {
         Route::resource('admin/distribution_barangay', DistributionBarangayController::class);

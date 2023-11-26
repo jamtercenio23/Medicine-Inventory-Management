@@ -58,7 +58,8 @@
                                 <tr>
                                     <th onclick="handleSort('id')">ID</th>
                                     <th onclick="handleSort('barangay_id')">Barangay</th>
-                                    <th onclick="handleSort('medicine_id')">Medicines</th>
+                                    <th onclick="handleSort('medicine_id')">Generic Name</th>
+                                    <th onclick="handleSort('medicine_id')">Brand Name</th>
                                     <th onclick="handleSort('created_at')">Created At</th>
                                     <th onclick="handleSort('updated_at')">Updated At</th>
                                     <th>Actions</th>
@@ -69,7 +70,8 @@
                                     <tr>
                                         <td>{{ $schedule->id }}</td>
                                         <td>{{ $schedule->barangay->name }}</td>
-                                        <td>{{ $schedule->medicine->generic_name }} - {{ $schedule->medicine->brand_name }}</td>
+                                        <td>{{ $schedule->medicine->generic_name }}</td>
+                                        <td>{{ $schedule->medicine->brand_name }}</td>
                                         <td>{{ $schedule->created_at }}</td>
                                         <td>{{ $schedule->updated_at }}</td>
                                         <td>

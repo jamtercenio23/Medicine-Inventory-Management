@@ -101,7 +101,8 @@
                                 <tr>
                                     <th onclick="handleSort('id')">ID</th>
                                     <th onclick="handleSort('barangay_id')">Barangay</th>
-                                    <th onclick="handleSort('medicine_id')">Medicine</th>
+                                    <th onclick="handleSort('medicine_id')">Generic Name</th>
+                                    <th onclick="handleSort('medicine_id')">Brand Name</th>
                                     <th onclick="handleSort('distribution_date')">Distribution Date</th>
                                     <th onclick="handleSort('created_at')">Created At</th>
                                     <th>Actions</th>
@@ -112,7 +113,8 @@
                                     <tr>
                                         <td>{{ $distribution_barangay->id }}</td>
                                         <td>{{ $distribution_barangay->barangay->name }}</td>
-                                        <td>{{ $distribution_barangay->medicine->generic_name }} - {{ $distribution_barangay->medicine->brand_name }}</td>
+                                        <td>{{ $distribution_barangay->medicine->generic_name }}</td>
+                                        <td>{{ $distribution_barangay->medicine->brand_name }}</td>
                                         <td>{{ $distribution_barangay->distribution_date }}</td>
                                         <td>{{ $distribution_barangay->created_at }}</td>
                                         <td>

@@ -21,15 +21,24 @@ class ScheduleController extends Controller
         $entries = $request->input('entries', 10);
 
         $schedules = Schedule::when($query, function ($query) use ($request) {
-            $query->where('name', 'like', '%' . $request->input('search') . '%');
+            $numericSearch = is_numeric($request->input('search'));
+            $query->when($numericSearch, function ($query) use ($request) {
+                $query->orWhere('id', $request->input('search'));
+            }, function ($query) use ($request) {
+                $query->orWhereHas('barangay', function ($query) use ($request) {
+                    $query->where('name', '=', $request->input('search'));
+                });
+                $query->orWhereHas('medicine', function ($query) use ($request) {
+                    $query->where('generic_name', 'like', '%' . $request->input('search') . '%')
+                        ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
+                });
+            });
         })
             ->orderBy($column, $order)
             ->paginate($entries);
 
         return view('admin.schedules.index', compact('schedules', 'barangays', 'medicines', 'query', 'column', 'order', 'entries'));
     }
-
-
     public function create()
     {
         $barangays = Barangay::all();

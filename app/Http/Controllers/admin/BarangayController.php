@@ -16,13 +16,18 @@ class BarangayController extends Controller
         $entries = $request->input('entries', 10);
 
         $barangays = Barangay::when($query, function ($query) use ($request) {
-            $query->where('name', 'like', '%' . $request->input('search') . '%');
+            $numericSearch = is_numeric($request->input('search'));
+            $query->when($numericSearch, function ($query) use ($request) {
+                $query->orWhere('id', $request->input('search'));
+            }, function ($query) use ($request) {
+                $query->orWhere('name', 'like', '%' . $request->input('search') . '%');
+            });
         })
-        ->orderBy($column, $order)
-        ->paginate($entries);
+            ->orderBy($column, $order)
+            ->paginate($entries);
+
         return view('admin.barangays.index', compact('barangays', 'query', 'column', 'order', 'entries'));
     }
-
     public function create()
     {
         return view('barangays.create');
@@ -61,5 +66,4 @@ class BarangayController extends Controller
 
         return redirect()->route('barangays.index')->with('success', 'Barangay deleted successfully');
     }
-
 }

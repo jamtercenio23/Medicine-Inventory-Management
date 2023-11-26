@@ -26,14 +26,19 @@ class DistributionController extends Controller
 
         $distributions = $distributionsQuery
             ->when($query, function ($query) use ($request) {
-                $query->whereHas('patient', function ($subquery) use ($request) {
-                    $subquery->where('first_name', 'like', '%' . $request->input('search') . '%')
-                        ->orWhere('last_name', 'like', '%' . $request->input('search') . '%');
-                })
-                    ->orWhereHas('medicine', function ($subquery) use ($request) {
-                        $subquery->where('generic_name', 'like', '%' . $request->input('search') . '%')
-                            ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
-                    });
+                $numericSearch = is_numeric($request->input('search'));
+                $query->when($numericSearch, function ($query) use ($request) {
+                    $query->orWhere('id', $request->input('search'));
+                }, function ($query) use ($request) {
+                    $query->whereHas('patient', function ($subquery) use ($request) {
+                        $subquery->where('first_name', 'like', '%' . $request->input('search') . '%')
+                            ->orWhere('last_name', 'like', '%' . $request->input('search') . '%');
+                    })
+                        ->orWhereHas('medicine', function ($subquery) use ($request) {
+                            $subquery->where('generic_name', 'like', '%' . $request->input('search') . '%')
+                                ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
+                        });
+                });
             })
             ->orderBy($column, $order)
             ->paginate($entries);

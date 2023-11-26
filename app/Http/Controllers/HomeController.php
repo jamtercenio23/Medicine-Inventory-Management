@@ -62,7 +62,7 @@ class HomeController extends Controller
                 ->whereDate('schedule_date_time', today())
                 ->get();
             $distributionSchedulesThisWeek = Schedule::with(['barangay', 'medicine'])
-                ->whereBetween('schedule_date_time', [now()->startOfWeek(), now()->endOfWeek()])
+                ->whereBetween('schedule_date_time', [now()->startOfWeek(), now()->endOfWeek(),])
                 ->get();
             $nearlyOutOfStockMedicines = Medicine::where('stocks', '>', 1)
                 ->where('stocks', '<=', 50)

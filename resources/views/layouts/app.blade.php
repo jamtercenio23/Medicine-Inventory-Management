@@ -17,6 +17,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-3F0tV6vJvzZ2EFqHARPJS50fowCt2GoTxja8fRjtODz7VR6ViFq28ncPOvpviUmhif+fLgS3h/VLJc7EktHYS8g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-+TGTCb5qOzOsJ+1FJu69a5yo1Kz9FSs+K4K8H3L4HE37vwPOpydIHzOJb4pf5REH1hU6/oyhGHuJz5+M5Xs9kg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
     <script>
         jQuery(document).ready(function($) {
             $("#menu-toggle").click(function(e) {

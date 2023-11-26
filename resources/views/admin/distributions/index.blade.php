@@ -99,8 +99,10 @@
                             <thead>
                                 <tr>
                                     <th onclick="handleSort('id')">ID</th>
-                                    <th onclick="handleSort('patient_id')">Patient</th>
-                                    <th onclick="handleSort('medicine_id')">Medicine</th>
+                                    <th onclick="handleSort('patient_id')">First Name</th>
+                                    <th onclick="handleSort('patient_id')">Last Name</th>
+                                    <th onclick="handleSort('medicine_id')">Generic Name</th>
+                                    <th onclick="handleSort('medicine_id')">Brand Name</th>
                                     <th onclick="handleSort('checkup_date')">Checkup Date</th>
                                     <th onclick="handleSort('created_at')">Created At</th>
                                     <th onclick="handleSort('updated_at')">Updated At</th>
@@ -111,9 +113,10 @@
                                 @foreach ($distributions as $distribution)
                                     <tr>
                                         <td>{{ $distribution->id }}</td>
-                                        <td>{{ $distribution->patient->first_name }} {{ $distribution->patient->last_name }}
-                                        </td>
-                                        <td>{{ $distribution->medicine->generic_name }} - {{ $distribution->medicine->brand_name }}
+                                        <td>{{ $distribution->patient->first_name }}</td>
+                                        <td>{{ $distribution->patient->last_name }}</td>
+                                        <td>{{ $distribution->medicine->generic_name }}</td>
+                                        <td>{{ $distribution->medicine->brand_name }}</td>
                                         <td>{{ $distribution->checkup_date }}</td>
                                         <td>{{ $distribution->created_at }}</td>
                                         <td>{{ $distribution->updated_at }}</td>
@@ -154,7 +157,8 @@
 
         <div class="my-4 text-muted">
             <div class="float-left">
-                Showing {{ $distributions->firstItem() }} to {{ $distributions->lastItem() }} of {{ $distributions->total() }}
+                Showing {{ $distributions->firstItem() }} to {{ $distributions->lastItem() }} of
+                {{ $distributions->total() }}
                 entries
             </div>
             <div class="float-right">

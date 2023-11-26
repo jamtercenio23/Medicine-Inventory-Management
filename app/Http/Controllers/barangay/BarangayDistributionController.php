@@ -15,69 +15,67 @@ use Illuminate\Support\Facades\Response;
 
 class BarangayDistributionController extends Controller
 {
-
     public function index(Request $request)
-{
-    $query = $request->input('search');
-    $user = Auth::user();
-    $entries = $request->input('entries', 10);
-    $column = $request->input('column', 'id');
-    $order = $request->input('order', 'asc');
+    {
+        $query = $request->input('search');
+        $user = Auth::user();
+        $entries = $request->input('entries', 10);
+        $column = $request->input('column', 'id');
+        $order = $request->input('order', 'asc');
 
-    if ($user->isBarangayUser()) {
-        $barangayDistributions = BarangayDistribution::where('barangay_id', $user->barangay_id);
+        if ($user->isBarangayUser()) {
+            $barangayDistributions = BarangayDistribution::where('barangay_id', $user->barangay_id);
 
-        if ($user->isBHW()) {
-            $barangayDistributions->orWhere(function ($query) use ($user) {
-                $query->where('bhw_id', $user->id)
-                    ->where('barangay_id', $user->barangay_id);
-            });
-        }
-    } else {
-        $barangayDistributions = BarangayDistribution::query();
-    }
-
-    $barangayDistributions = $barangayDistributions
-        ->with(['barangayPatient', 'barangayMedicine'])
-        ->when($query, function ($queryBuilder) use ($query) {
-            $queryBuilder->whereHas('barangayPatient', function ($subquery) use ($query) {
-                $subquery->where('first_name', 'like', '%' . $query . '%')
-                    ->orWhere('last_name', 'like', '%' . $query . '%');
-            });
-        })
-        ->when(!$user->isAdmin(), function ($query) use ($user) {
-            $query->where('barangay_id', $user->barangay_id);
-        })
-        ->when($column === 'first_name', function ($query) use ($order) {
-            // If ordering by 'first_name', join the 'barangayPatient' table
-            $query->join('barangay_patients', 'barangay_distributions.barangay_patient_id', '=', 'barangay_patients.id')
-                ->orderBy('barangay_patients.first_name', $order);
-        })
-        ->orderBy($column, $order)
-        ->paginate($entries);
-
-    // Loop through the results and handle null values
-    $barangayDistributions->each(function ($distribution) {
-        $distribution->barangayPatient; // Access the relationship to trigger loading
-
-        // Check if the relationship is not null before accessing its properties
-        if ($distribution->barangayPatient) {
-            $distribution->patient_first_name = $distribution->barangayPatient->first_name;
-            // Add other properties as needed
+            if ($user->isBHW()) {
+                $barangayDistributions->orWhere(function ($query) use ($user) {
+                    $query->where('bhw_id', $user->id)
+                        ->where('barangay_id', $user->barangay_id);
+                });
+            }
         } else {
-            $distribution->patient_first_name = null; // or set a default value
+            $barangayDistributions = BarangayDistribution::query();
         }
-    });
 
-    // Define $barangayPatients and $barangayMedicines
-    $barangayPatients = BarangayPatient::all();
-    $barangayMedicines = BarangayMedicine::where('expiration_date', '>=', now()->toDateString())
-        ->where('barangay_id', $user->barangay_id)
-        ->get();
+        $barangayDistributions = $barangayDistributions
+            ->with(['barangayPatient', 'barangayMedicine'])
+            ->when($query, function ($queryBuilder) use ($query) {
+                $queryBuilder->whereHas('barangayPatient', function ($subquery) use ($query) {
+                    $subquery->where('first_name', 'like', '%' . $query . '%')
+                        ->orWhere('last_name', 'like', '%' . $query . '%');
+                });
+            })
+            ->when(!$user->isAdmin(), function ($query) use ($user) {
+                $query->where('barangay_distributions.barangay_id', $user->barangay_id);
+            })
+            ->when($column === 'first_name', function ($query) use ($order) {
+                // If ordering by 'first_name', join the 'barangayPatient' table
+                $query->join('barangay_patients', 'barangay_distributions.barangay_patient_id', '=', 'barangay_patients.id')
+                    ->orderBy('barangay_patients.first_name', $order);
+            })
+            ->orderBy($column, $order)
+            ->paginate($entries);
+
+        // Loop through the results and handle null values
+        $barangayDistributions->each(function ($distribution) {
+            $distribution->barangayPatient; // Access the relationship to trigger loading
+
+            // Check if the relationship is not null before accessing its properties
+            if ($distribution->barangayPatient) {
+                $distribution->patient_first_name = $distribution->barangayPatient->first_name;
+                // Add other properties as needed
+            } else {
+                $distribution->patient_first_name = null; // or set a default value
+            }
+        });
+
+        // Define $barangayPatients and $barangayMedicines
+        $barangayPatients = BarangayPatient::all();
+        $barangayMedicines = BarangayMedicine::where('expiration_date', '>=', now()->toDateString())
+            ->where('barangay_id', $user->barangay_id)
+            ->get();
 
         return view('barangay.barangay_distributions.index', compact('barangayDistributions', 'barangayPatients', 'barangayMedicines', 'query', 'entries', 'column', 'order'));
-}
-
+    }
     public function create()
     {
         $user = auth()->user();

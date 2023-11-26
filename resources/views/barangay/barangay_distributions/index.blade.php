@@ -105,12 +105,14 @@
                                     @if (auth()->user()->isAdmin())
                                         <th onclick="handleSort('barangay_id')">Barangay</th>
                                     @endif
-                                    <th onclick="handleSort('first_name')">Patient</th>
-                                    <th onclick="handleSort('generic_name')">Medicine</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Generic Name</th>
+                                    <th>Brand Name</th>
                                     <th onclick="handleSort('checkup_date')">Checkup Date</th>
                                     @if (auth()->user()->isBHW())
                                         <th onclick="handleSort('created_at')">Created At</th>
-                                        <th>Updated At</th>
+                                        <th onclick="handleSort('updated_at')">Updated At</th>
                                     @endif
                                     <th>Actions</th>
                                 </tr>
@@ -125,15 +127,10 @@
                                         @if (auth()->user()->isAdmin())
                                             <td>{{ $barangayDistribution->barangay->name }}</td>
                                         @endif
-                                        <td>
-                                            @if ($barangayDistribution->barangayPatient)
-                                                {{ $barangayDistribution->barangayPatient->first_name }}
-                                                {{ $barangayDistribution->barangayPatient->last_name }}
-                                            @else
-                                                N/A
-                                            @endif
-                                        </td>
-                                        <td>{{ $barangayDistribution->barangayMedicine->generic_name }} - {{ $barangayDistribution->barangayMedicine->generic_name }}</td>
+                                        <td> {{ $barangayDistribution->barangayPatient->first_name }}</td>
+                                        <td>{{ $barangayDistribution->barangayPatient->last_name }}</td>
+                                        <td>{{ $barangayDistribution->barangayMedicine->generic_name }}</td>
+                                        <td>{{ $barangayDistribution->barangayMedicine->generic_name }}</td>
                                         <td>{{ $barangayDistribution->checkup_date }}</td>
                                         @if (auth()->user()->isBHW())
                                             <td>{{ $barangayDistribution->created_at }}</td>

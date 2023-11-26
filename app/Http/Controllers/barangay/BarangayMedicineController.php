@@ -30,12 +30,20 @@ class BarangayMedicineController extends Controller
         }
 
         if ($query) {
-            $barangayMedicines->where(function ($queryBuilder) use ($query) {
-                $queryBuilder->whereHas('barangay', function ($subquery) use ($query) {
-                    $subquery->where('name', 'like', '%' . $query . '%');
-                })->orWhereHas('medicine', function ($subquery) use ($query) {
-                    $subquery->where('generic_name', 'like', '%' . $query . '%')
-                        ->orWhere('brand_name', 'like', '%' . $query . '%');
+            $numericSearch = is_numeric($query);
+            $barangayMedicines->where(function ($queryBuilder) use ($query, $numericSearch) {
+                $queryBuilder->when($numericSearch, function ($queryBuilder) use ($query) {
+                    $queryBuilder->orWhere('id', $query);
+                }, function ($queryBuilder) use ($query) {
+                    $queryBuilder->whereHas('barangay', function ($subquery) use ($query) {
+                        $subquery->where('name', 'like', '%' . $query . '%');
+                    })->orWhereHas('medicine', function ($subquery) use ($query) {
+                        $subquery->where('generic_name', 'like', '%' . $query . '%')
+                            ->orWhere('brand_name', 'like', '%' . $query . '%')
+                            ->orWhereHas('category', function ($categoryQuery) use ($query) {
+                                $categoryQuery->where('name', 'like', '%' . $query . '%');
+                            });
+                    });
                 });
             });
         }
@@ -44,8 +52,6 @@ class BarangayMedicineController extends Controller
 
         return view('barangay.barangay_medicines.index', compact('barangayMedicines', 'query', 'entries', 'column', 'order'));
     }
-
-
     public function generateBarangayMedicineReport(Request $request)
     {
         // Validate the input
@@ -101,7 +107,6 @@ class BarangayMedicineController extends Controller
             ->with('pdfFileName', $pdfFileName ?? null)
             ->with('excelFileName', $excelFileName ?? null);
     }
-
     public function outOfStock(Request $request)
     {
         $user = Auth::user();
@@ -118,8 +123,7 @@ class BarangayMedicineController extends Controller
         return view('barangay.barangay_medicines.out-of-stock', compact('outOfStockMedicines', 'query', 'entries', 'column', 'order'))
             ->with('success', 'Out of stock medicines retrieved successfully');
     }
-
-    protected function getOutOfStockMedicines($user, $query, $category)
+    public function getOutOfStockMedicines($user, $query, $category)
     {
         $queryBuilder = BarangayMedicine::where('stocks', '<=', 0);
 
@@ -135,13 +139,22 @@ class BarangayMedicineController extends Controller
                     $subquery->where('name', 'like', '%' . $query . '%');
                 })->orWhereHas('medicine', function ($subquery) use ($query, $category) {
                     $subquery->where('generic_name', 'like', '%' . $query . '%')
-                        ->orWhere('brand_name', 'like', '%' . $query . '%')
-                        ->orWhere('category', 'like', '%' . $category . '%');
+                        ->orWhere('brand_name', 'like', '%' . $query . '%');
+
+                    // Correct the column name for the category field
+                    $subquery->orWhereHas('category', function ($categoryQuery) use ($category) {
+                        $categoryQuery->where('name', 'like', '%' . $category . '%');
+                    });
                 });
             });
+
+            // Use where instead of orWhere for the ID search
+            $queryBuilder->where('id', $query);
         } elseif ($category) {
             $queryBuilder->whereHas('medicine', function ($subquery) use ($category) {
-                $subquery->where('category', 'like', '%' . $category . '%');
+                $subquery->whereHas('category', function ($categoryQuery) use ($category) {
+                    $categoryQuery->where('name', 'like', '%' . $category . '%');
+                });
             });
         }
 

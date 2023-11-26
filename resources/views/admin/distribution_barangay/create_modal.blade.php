@@ -16,28 +16,33 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="barangay_id">Barangay:</label>
-                                <select class="form-control select2" id="barangay_id" name="barangay_id" required>
+                                <input list="barangays" class="form-control" id="barangay_id" name="barangay_id" placeholder="Enter the Barangay Name/ID"
+                                    required>
+                                <datalist id="barangays">
                                     @foreach ($barangays as $barangay)
                                         <option value="{{ $barangay->id }}">{{ $barangay->name }}</option>
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
                             <div class="form-group">
                                 <label for="medicine_id">Medicine:</label>
-                                <select class="form-control select2" id="medicine_id" name="medicine_id" required>
+                                <input list="medicines" class="form-control" id="medicine_id" name="medicine_id" placeholder="Enter the Medicine Name/ID"
+                                    required>
+                                <datalist id="medicines">
                                     @foreach ($medicines as $medicine)
-                                        @if ($medicine->stocks > 0 && $medicine->expiration_date >= now()->toDateString())
+                                        @if ($medicine->stocks > 0 && $medicine->expiration_date > now()->toDateString())
                                             <option value="{{ $medicine->id }}">{{ $medicine->generic_name }} -
                                                 {{ $medicine->brand_name }} | Stocks: {{ $medicine->stocks }}</option>
                                         @endif
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="stocks">Stocks:</label>
-                                <input type="number" class="form-control" id="stocks" name="stocks" placeholder="Enter the Stocks" required>
+                                <input type="number" class="form-control" id="stocks" name="stocks"
+                                    placeholder="Enter the Stocks" required>
                             </div>
                             <div class="form-group">
                                 <label for="distribution_date">Distribution Date:</label>
@@ -47,7 +52,8 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Create</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i>
+                        Cancel</button>
                 </form>
             </div>
         </div>
@@ -57,7 +63,7 @@
 @push('scripts')
     <script>
         // Initialize Select2 for barangay and medicine selects
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2();
         });
     </script>

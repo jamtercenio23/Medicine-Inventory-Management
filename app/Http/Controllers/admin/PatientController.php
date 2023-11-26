@@ -23,28 +23,30 @@ class PatientController extends Controller
 
         $patients = Patient::with('barangay')
             ->when($query, function ($query) use ($request) {
-                $query->where('first_name', 'like', '%' . $request->input('search') . '%')
-                    ->orWhere('last_name', 'like', '%' . $request->input('search') . '%');
+                $query->where(function ($query) use ($request) {
+                    $numericSearch = is_numeric($request->input('search'));
+                    $query->when($numericSearch, function ($query) use ($request) {
+                        $query->orWhere('id', $request->input('search'));
+                    }, function ($query) use ($request) {
+                        $query->orWhere('first_name', 'like', '%' . $request->input('search') . '%')
+                            ->orWhere('last_name', 'like', '%' . $request->input('search') . '%');
+
+                        // Add condition to search by barangay name
+                        $query->orWhereHas('barangay', function ($query) use ($request) {
+                            $query->where('name', 'like', '%' . $request->input('search') . '%');
+                        });
+
+                        // Add condition to search by gender
+                        $gender = strtoupper($request->input('search'));
+                        $query->orWhere('gender', $gender);
+                    });
+                });
             })
             ->orderBy($column, $order)
             ->paginate($entries);
 
         return view('admin.patients.index', compact('patients', 'barangays', 'query', 'entries', 'column', 'order'));
     }
-
-
-    // public function index(Request $request)
-    // {
-    //     $barangays = Barangay::all();
-    //     $query = $request->input('search');
-    //     $sort = $request->input('sort', 'id');
-    //     $order = $request->input('order', 'asc');
-    //     $patients = Patient::with('barangay')->when($query, function ($query) use ($request) {
-    //         $query->where('first_name', 'like', '%' . $request->input('search') . '%')->orWhere('last_name', 'like', '%' . $request->input('search') . '%');
-    //     })->orderBy($sort === 'barangay' ? 'barangay_id' : $sort, $order)->paginate($request->input('entries', 10));
-    //     return view('admin.patients.index', compact('patients', 'barangays', 'query', 'sort', 'order'));
-    // }
-
     public function create()
     {
         $barangays = Barangay::all();

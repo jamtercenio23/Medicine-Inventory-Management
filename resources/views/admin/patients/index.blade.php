@@ -96,7 +96,8 @@
                                 <tr>
                                     <th onclick="handleSort('id')">ID</th>
                                     <th onclick="handleSort('barangay_id')">Barangay</th>
-                                    <th onclick="handleSort('first_name')">Name</th>
+                                    <th onclick="handleSort('first_name')">First Name</th>
+                                    <th onclick="handleSort('last_name')">Last Name</th>
                                     <th onclick="handleSort('gender')">Gender</th>
                                     <th onclick="handleSort('created_at')">Created At</th>
                                     <th>Created By</th>
@@ -110,7 +111,8 @@
                                     <tr>
                                         <td>{{ $patient->id }}</td>
                                         <td>{{ $patient->barangay->name }}</td>
-                                        <td>{{ $patient->first_name }} {{ $patient->last_name }}</td>
+                                        <td>{{ $patient->first_name }}</td>
+                                        <td>{{ $patient->last_name }}</td>
                                         <td>{{ $patient->gender }}</td>
                                         <td>{{ $patient->created_at ? $patient->created_at : 'N/A '}}</td>
                                         <td>{{ $patient->creator ? $patient->creator->name : 'N/A' }}</td>

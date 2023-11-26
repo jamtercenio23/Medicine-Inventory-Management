@@ -102,7 +102,8 @@
                                     @if (auth()->user()->isAdmin())
                                         <th onclick="handleSort('barangay_id')">Barangay</th>
                                     @endif
-                                    <th onclick="handleSort('first_name')">Name</th>
+                                    <th onclick="handleSort('first_name')">First Name</th>
+                                    <th onclick="handleSort('last_name')">Last Name</th>
                                     <th onclick="handleSort('gender')">Gender</th>
                                     @if (auth()->user()->isBHW())
                                     <th onclick="handleSort('created_at')">Created At</th>
@@ -118,7 +119,8 @@
                                         @if (auth()->user()->isAdmin())
                                             <td>{{ $barangayPatient->barangay->name }}</td>
                                         @endif
-                                        <td>{{ $barangayPatient->first_name }} {{ $barangayPatient->last_name }}</td>
+                                        <td>{{ $barangayPatient->first_name }}</td>
+                                        <td>{{ $barangayPatient->last_name }}</td>
                                         <td>{{ $barangayPatient->gender }}</td>
                                         @if (auth()->user()->isBHW())
                                         <td>{{ $barangayPatient->created_at }}</td>

@@ -25,8 +25,20 @@ class MedicineController extends Controller
 
         $medicines = Medicine::with('category')
             ->when($query, function ($query) use ($request) {
-                $query->where('generic_name', 'like', '%' . $request->input('search') . '%')
-                    ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
+                $query->where(function ($query) use ($request) {
+                    $numericSearch = is_numeric($request->input('search'));
+                    $query->when($numericSearch, function ($query) use ($request) {
+                        $query->orWhere('id', $request->input('search'));
+                    }, function ($query) use ($request) {
+                        $query->orWhere('generic_name', 'like', '%' . $request->input('search') . '%')
+                            ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
+
+                        // Add condition to search by category name
+                        $query->orWhereHas('category', function ($query) use ($request) {
+                            $query->where('name', 'like', '%' . $request->input('search') . '%');
+                        });
+                    });
+                });
             })
             ->where('stocks', '>', 0)
             ->where('expiration_date', '>=', $currentDate)
@@ -35,7 +47,6 @@ class MedicineController extends Controller
 
         return view('admin.medicines.index', compact('categories', 'medicines', 'query', 'column', 'order', 'entries'));
     }
-
     public function create()
     {
         $categories = Category::all();
@@ -109,8 +120,20 @@ class MedicineController extends Controller
         $outOfStockMedicines = Medicine::where('stocks', 0)
             ->where('expiration_date', '>=', now()) // Exclude expired medicines
             ->when($query, function ($query) use ($request) {
-                $query->where('generic_name', 'like', '%' . $request->input('search') . '%')
-                    ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
+                $query->where(function ($query) use ($request) {
+                    $numericSearch = is_numeric($request->input('search'));
+                    $query->when($numericSearch, function ($query) use ($request) {
+                        $query->orWhere('id', $request->input('search'));
+                    }, function ($query) use ($request) {
+                        $query->orWhere('generic_name', 'like', '%' . $request->input('search') . '%')
+                            ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
+
+                        // Add condition to search by category name
+                        $query->orWhereHas('category', function ($query) use ($request) {
+                            $query->where('name', 'like', '%' . $request->input('search') . '%');
+                        });
+                    });
+                });
             })
             ->orderBy($column, $order)
             ->paginate($entries); // Use the $entries variable for pagination
@@ -147,8 +170,20 @@ class MedicineController extends Controller
 
         $expiredMedicines = Medicine::where('expiration_date', '<', now())
             ->when($query, function ($query) use ($request) {
-                $query->where('generic_name', 'like', '%' . $request->input('search') . '%')
-                    ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
+                $query->where(function ($query) use ($request) {
+                    $numericSearch = is_numeric($request->input('search'));
+                    $query->when($numericSearch, function ($query) use ($request) {
+                        $query->orWhere('id', $request->input('search'));
+                    }, function ($query) use ($request) {
+                        $query->orWhere('generic_name', 'like', '%' . $request->input('search') . '%')
+                            ->orWhere('brand_name', 'like', '%' . $request->input('search') . '%');
+
+                        // Add condition to search by category name
+                        $query->orWhereHas('category', function ($query) use ($request) {
+                            $query->where('name', 'like', '%' . $request->input('search') . '%');
+                        });
+                    });
+                });
             })
             ->orderBy($column, $order)
             ->paginate($entries);
@@ -156,7 +191,6 @@ class MedicineController extends Controller
         return view('admin.medicines.expired', compact('expiredMedicines', 'query', 'entries', 'column', 'order'))
             ->with('success', 'Expired medicines retrieved successfully');
     }
-
     public function deleteExpired(Request $request)
     {
         $expiredMedicine = Medicine::where('expiration_date', '<', now())->first();

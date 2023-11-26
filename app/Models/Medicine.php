@@ -26,4 +26,8 @@ class Medicine extends Model
     {
         return $this->belongsTo(User::class, 'updated_by');
     }
+    public function distributions()
+    {
+        return $this->hasMany(Distribution::class, 'medicine_id');
+    }
 }

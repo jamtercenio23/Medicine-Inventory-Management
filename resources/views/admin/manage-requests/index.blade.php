@@ -46,7 +46,8 @@
                                 <tr>
                                     <th onclick="handleSort('id')">ID</th>
                                     <th onclick="handleSort('barangay_id')">Barangay</th>
-                                    <th onclick="handleSort('medicine_id')">Medicine</th>
+                                    <th onclick="handleSort('generic_name')">Generic Name</th>
+                                    <th onclick="handleSort('brand_name')">Brand Name</th>
                                     <th onclick="handleSort('expected_stocks')">Expected Stocks</th>
                                     <th onclick="handleSort('distribution_schedule')">Distribution Schedule</th>
                                     <th onclick="handleSort('status')">Status</th>
@@ -59,7 +60,8 @@
                                         <tr>
                                             <td>{{ $request->id }}</td>
                                             <td>{{ $request->barangay->name }}</td>
-                                            <td>{{ $request->medicine->generic_name }} - {{ $request->medicine->brand_name }}</td>
+                                            <td>{{ $request->medicine->generic_name }}</td>
+                                            <td>{{ $request->medicine->brand_name }}</td>
                                             <td>{{ $request->expected_stocks }}</td>
                                             <td>{{ $request->distribution_schedule }}</td>
                                             <td>{{ ucfirst($request->status) }}</td>
