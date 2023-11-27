@@ -3,7 +3,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editDistributionModalLabel{{ $barangayDistribution->id }}">Edit Distribution</h5>
+                <h5 class="modal-title" id="editDistributionModalLabel{{ $barangayDistribution->id }}">Edit Distribution
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -17,42 +18,51 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="patient_id">Patient:</label>
-                                <select class="form-control" id="patient_id" name="patient_id" required>
+                                <input list="barangayPatients" class="form-control" id="patient_id" name="patient_id"
+                                    placeholder="Enter the Barangay Patient Name/ID" required
+                                    value="{{ $barangayDistribution->barangayPatient->first_name }} {{ $barangayDistribution->barangayPatient->last_name }}">
+                                <datalist id="barangayPatients">
                                     @foreach ($barangayPatients as $barangayPatient)
                                         @if (auth()->user()->isBHW() && $barangayPatient->barangay_id !== auth()->user()->barangay_id)
                                             @continue
                                         @endif
-                                        <option value="{{ $barangayPatient->id }}"
-                                            {{ $barangayDistribution->barangayPatient->id == $barangayPatient->id ? 'selected' : '' }}>
-                                            {{ $barangayPatient->first_name }} {{ $barangayPatient->last_name }}
-                                        </option>
+                                        <option value="{{ $barangayPatient->id }}">{{ $barangayPatient->first_name }}
+                                            {{ $barangayPatient->last_name }}</option>
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
                             <div class="form-group">
                                 <label for="medicine_id">Medicine:</label>
-                                <select class="form-control" id="medicine_id" name="medicine_id" required>
+                                <input list="medicines" class="form-control" id="medicine_id" name="medicine_id"
+                                    placeholder="Enter the Medicine Name/ID" required
+                                    value="{{ $barangayDistribution->barangayMedicine->brand_name }}">
+                                <datalist id="medicines">
                                     @foreach ($barangayMedicines as $barangayMedicine)
-                                        @if (auth()->user()->isBHW() && $barangayMedicine->barangay_id !== auth()->user()->barangay_id)
-                                            @continue
+                                        @if ($barangayMedicine->stocks > 0 && $barangayMedicine->expiration_date > now()->toDateString())
+                                            @if (auth()->user()->isBHW() && $barangayMedicine->barangay_id !== auth()->user()->barangay_id)
+                                                @continue
+                                            @endif
+                                            <option value="{{ $barangayMedicine->id }}"
+                                                {{ $barangayDistribution->barangayMedicine->id == $barangayMedicine->id ? 'selected' : '' }}>
+                                                {{ $barangayMedicine->brand_name }}
+                                            </option>
                                         @endif
-                                        <option value="{{ $barangayMedicine->id }}"
-                                            {{ $barangayDistribution->barangayMedicine->id == $barangayMedicine->id ? 'selected' : '' }}>
-                                            {{ $barangayMedicine->brand_name }}
-                                        </option>
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
                             <div class="form-group">
                                 <label for="stocks">Stocks:</label>
                                 <input type="number" name="stocks" id="stocks" class="form-control"
-                                    value="{{ old('stocks', $barangayDistribution->stocks) }}" placeholder="Enter the Stocks" required>
+                                    value="{{ old('stocks', $barangayDistribution->stocks) }}"
+                                    placeholder="Enter the Stocks" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="diagnose">Diagnose:</label>
-                                <input type="text" class="form-control" id="diagnose" name="diagnose" value="{{ $barangayDistribution->diagnose }}" placeholder="Enter the Diagnose" required>
+                                <input type="text" class="form-control" id="diagnose" name="diagnose"
+                                    value="{{ $barangayDistribution->diagnose }}" placeholder="Enter the Diagnose"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="checkup_date">Checkup Date:</label>
@@ -62,7 +72,8 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i>
+                        Cancel</button>
                 </form>
             </div>
         </div>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
+
 class RoleController extends Controller
 {
     public function index(Request $request)
@@ -18,10 +19,10 @@ class RoleController extends Controller
         $order = $request->input('order', 'asc');
 
         $roles = Role::where('name', 'like', '%' . $query . '%')
-        ->when($query, function ($query) use ($request) {
-            $query->where('name', 'like', '%' . $request->input('search') . '%');
-        })
-        ->orderBy($column, $order)
+            ->when($query, function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->input('search') . '%');
+            })
+            ->orderBy($column, $order)
             ->paginate($entries);
 
         return view('admin.roles.index', compact('roles', 'query', 'entries', 'column', 'order'));
@@ -32,34 +33,35 @@ class RoleController extends Controller
         $permissions = Permission::all();
         return view('admin.roles.create_modal', compact('permissions'));
     }
-
-
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|unique:roles',
-            'permissions' => 'array', // Assuming the permissions are sent as an array
-        ]);
-
-        DB::beginTransaction();
-
         try {
-            $role = Role::create(['name' => $request->input('name')]);
+            $request->validate([
+                'name' => 'required|unique:roles',
+                'permissions' => 'array',
+            ]);
 
-            // Associate the selected permissions with the role
-            if ($request->has('permissions')) {
-                $role->syncPermissions($request->input('permissions'));
+            DB::beginTransaction();
+
+            try {
+                $role = Role::create(['name' => $request->input('name')]);
+
+                // Associate the selected permissions with the role
+                if ($request->has('permissions')) {
+                    $role->syncPermissions($request->input('permissions'));
+                }
+
+                DB::commit();
+
+                return redirect()->route('roles.index')->with('success', 'Role created successfully.');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->route('roles.index')->with('error', 'Failed to create the role: ' . $e->getMessage());
             }
-
-            DB::commit();
-
-            return redirect()->route('roles.index')->with('success', 'Role created successfully.');
         } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->route('roles.index')->with('error', 'Failed to create the role.');
+            return redirect()->route('roles.index')->with('error', 'An error occurred while processing the request: ' . $e->getMessage());
         }
     }
-
     public function edit($id)
     {
         $role = Role::find($id);
@@ -69,26 +71,29 @@ class RoleController extends Controller
 
     public function update(Request $request, Role $role)
     {
-        $request->validate([
-            'name' => 'required|unique:roles,name,' . $role->id,
-        ]);
-
-        DB::beginTransaction();
-
         try {
-            // Update the role
-            $role->name = $request->name;
-            $role->save();
+            $request->validate([
+                'name' => 'required|unique:roles,name,' . $role->id,
+                'permissions' => 'array',
+            ]);
 
-            // Sync permissions
-            $role->syncPermissions($request->permissions);
+            DB::beginTransaction();
 
-            DB::commit();
+            try {
+                $role->name = $request->name;
+                $role->save();
 
-            return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
+                $role->syncPermissions($request->permissions);
+
+                DB::commit();
+
+                return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->route('roles.index')->with('error', 'Failed to update the role: ' . $e->getMessage());
+            }
         } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->route('roles.index')->with('error', 'Failed to update the role.');
+            return redirect()->route('roles.index')->with('error', 'An error occurred while processing the request: ' . $e->getMessage());
         }
     }
 

@@ -16,7 +16,7 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     protected $maxAttempts = 5; // Max login attempts
-    protected $decayMinutes = 1; // Cooldown time in minutes
+    protected $decayMinutes = 3; // Cooldown time in minutes
 
     protected $limiter;
 

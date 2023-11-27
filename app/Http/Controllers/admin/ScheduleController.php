@@ -49,21 +49,23 @@ class ScheduleController extends Controller
 
         return view('schedules.create', compact('barangays', 'medicines'));
     }
-
     public function store(Request $request)
     {
-        $request->validate([
-            'barangay_id' => 'required|exists:barangays,id',
-            'medicine_id' => 'required|exists:medicines,id',
-            'stock' => 'required|integer',
-            'schedule_date_time' => 'required|date',
-        ]);
+        try {
+            $request->validate([
+                'barangay_id' => 'required|exists:barangays,id',
+                'medicine_id' => 'required|exists:medicines,id',
+                'stock' => 'required|integer',
+                'schedule_date_time' => 'required|date',
+            ]);
 
-        Schedule::create($request->all());
+            Schedule::create($request->all());
 
-        return redirect()->route('schedules.index')->with('success', 'Schedule created successfully');
+            return redirect()->route('schedules.index')->with('success', 'Schedule created successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('schedules.index')->with('error', 'An error occurred while creating the schedule: ' . $e->getMessage());
+        }
     }
-
     public function edit(Schedule $schedule)
     {
         $barangays = Barangay::all();
@@ -71,26 +73,28 @@ class ScheduleController extends Controller
 
         return view('schedules.edit', compact('schedule', 'barangays', 'medicines'));
     }
-
     public function update(Request $request, Schedule $schedule)
     {
-        $request->validate([
-            'barangay_id' => 'required|exists:barangays,id',
-            'medicine_id' => 'required|exists:medicines,id',
-            'stock' => 'required|integer',
-            'schedule_date_time' => 'required|date',
-        ]);
+        try {
+            $request->validate([
+                'barangay_id' => 'required|exists:barangays,id',
+                'medicine_id' => 'required|exists:medicines,id',
+                'stock' => 'required|integer',
+                'schedule_date_time' => 'required|date',
+            ]);
 
-        $schedule->update([
-            'barangay_id' => $request->input('barangay_id'), // Correct field name
-            'medicine_id' => $request->input('medicine_id'), // Correct field name
-            'stock' => $request->input('stock'),
-            'schedule_datetime' => $request->input('schedule_date_time'), // Correct field name
-        ]);
+            $schedule->update([
+                'barangay_id' => $request->input('barangay_id'),
+                'medicine_id' => $request->input('medicine_id'),
+                'stock' => $request->input('stock'),
+                'schedule_datetime' => $request->input('schedule_date_time'),
+            ]);
 
-        return redirect()->route('schedules.index')->with('success', 'Schedule updated successfully');
+            return redirect()->route('schedules.index')->with('success', 'Schedule updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('schedules.index')->with('error', 'An error occurred while updating the schedule: ' . $e->getMessage());
+        }
     }
-
     public function destroy(Schedule $schedule)
     {
         $schedule->delete();

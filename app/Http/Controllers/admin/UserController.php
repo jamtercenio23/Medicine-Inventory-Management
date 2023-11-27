@@ -42,29 +42,31 @@ class UserController extends Controller
 
         return view('admin.users.create', compact('roles', 'barangays'));
     }
-
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'role' => 'required',
-            'password' => 'required|min:8|confirmed',
-        ]);
+        try {
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email|unique:users',
+                'role' => 'required',
+                'password' => 'required|min:8|confirmed',
+            ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'is_active' => $request->filled('is_active') && $request->input('is_active') == 'on',
-            'barangay_id' => $request->barangay, // Add this line
-        ]);
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'is_active' => $request->filled('is_active') && $request->input('is_active') == 'on',
+                'barangay_id' => $request->barangay,
+            ]);
 
-        $user->assignRole($request->role);
+            $user->assignRole($request->role);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+            return redirect()->route('users.index')->with('success', 'User created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('users.index')->with('error', 'An error occurred while creating the user: ' . $e->getMessage());
+        }
     }
-
     public function edit($id)
     {
         $user = User::findOrFail($id);
@@ -72,39 +74,40 @@ class UserController extends Controller
 
         return view('admin.users.edit', compact('user', 'roles'));
     }
-
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        try {
+            $user = User::findOrFail($id);
 
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required',
-        ]);
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'role' => 'required',
+            ]);
 
-        // Check if the authenticated user is an admin
-        if (auth()->user()->hasRole('admin')) {
-            $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'is_active' => $request->has('is_active') && $request->input('is_active') == '1',
-                'barangay_id' => $request->barangay, // Add this line
-            ]);
-        } else {
-            // For non-admin users, update other fields but not is_active
-            $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-            ]);
+            // Check if the authenticated user is an admin
+            if (auth()->user()->hasRole('admin')) {
+                $user->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'is_active' => $request->has('is_active') && $request->input('is_active') == '1',
+                    'barangay_id' => $request->barangay,
+                ]);
+            } else {
+                // For non-admin users, update other fields but not is_active
+                $user->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                ]);
+            }
+
+            $user->syncRoles([$request->role]);
+
+            return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('users.index')->with('error', 'An error occurred while updating the user: ' . $e->getMessage());
         }
-
-        $user->syncRoles([$request->role]);
-
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
-
-
     public function destroy($id)
     {
         $user = User::findOrFail($id);

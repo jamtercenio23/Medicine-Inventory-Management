@@ -18,8 +18,8 @@ class CategoryController extends Controller
         $categories = Category::when($query, function ($query) use ($request) {
             $query->where('name', 'like', '%' . $request->input('search') . '%');
         })
-        ->orderBy($column, $order)
-        ->paginate($entries);
+            ->orderBy($column, $order)
+            ->paginate($entries);
 
         return view('admin.categories.index', compact('categories', 'query', 'column', 'order', 'entries'));
     }
@@ -32,16 +32,19 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|unique:categories',
-        ]);
+        try {
+            $request->validate([
+                'name' => 'required|string|unique:categories',
+            ]);
 
-        // Set the created_by field to the authenticated user's ID
-        $request->merge(['created_by' => auth()->id()]);
+            $request->merge(['created_by' => auth()->id()]);
 
-        Category::create($request->all());
+            Category::create($request->all());
 
-        return redirect()->route('categories.index')->with('success', 'Category created successfully');
+            return redirect()->route('categories.index')->with('success', 'Category created successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('categories.index')->with('error', 'An error occurred while creating the Category: ' . $e->getMessage());
+        }
     }
 
     public function edit(Category $category)
@@ -51,21 +54,25 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
-        // Make sure the user is authenticated
-        if (auth()->check()) {
-            $request->validate([
-                'name' => 'required|string|unique:categories,name,' . $category->id,
-            ]);
+        try {
+            // Make sure the user is authenticated
+            if (auth()->check()) {
+                $request->validate([
+                    'name' => 'required|string|unique:categories,name,' . $category->id,
+                ]);
 
-            // Set the updated_by field to the authenticated user's ID
-            $request->merge(['updated_by' => auth()->id()]);
+                // Set the updated_by field to the authenticated user's ID
+                $request->merge(['updated_by' => auth()->id()]);
 
-            $category->update($request->all());
+                $category->update($request->all());
 
-            return redirect()->route('categories.index')->with('success', 'Category updated successfully');
-        } else {
-            // Handle unauthenticated user (optional)
-            return redirect()->route('login')->with('error', 'Unauthorized access');
+                return redirect()->route('categories.index')->with('success', 'Category updated successfully');
+            } else {
+                // Handle unauthenticated user (optional)
+                return redirect()->route('login')->with('error', 'Unauthorized access');
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('categories.index')->with('error', 'An error occurred while updating the Category: ' . $e->getMessage());
         }
     }
     public function destroy(Category $category)

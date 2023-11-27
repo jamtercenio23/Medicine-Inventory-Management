@@ -62,8 +62,6 @@ class BarangayPatientController extends Controller
 
         return view('barangay.barangay_patients.index', compact('barangayPatients', 'barangays', 'query', 'entries', 'column', 'order'));
     }
-
-
     public function create()
     {
         $user = Auth::user();
@@ -71,28 +69,31 @@ class BarangayPatientController extends Controller
 
         return view('barangay.barangay_patients.create', compact('barangays'));
     }
-
     public function store(Request $request)
     {
-        $request->validate([
-            'barangay_id' => 'required|exists:barangays,id',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'birthdate' => 'required|date',
-            'age' => 'required|integer',
-            'gender' => 'required|in:Male,Female',
-        ]);
+        try {
+            $request->validate([
+                'barangay_id' => 'required|exists:barangays,id',
+                'first_name' => 'required|string',
+                'last_name' => 'required|string',
+                'birthdate' => 'required|date',
+                'age' => 'required|integer',
+                'gender' => 'required|in:Male,Female',
+            ]);
 
-        $user = Auth::user();
+            $user = Auth::user();
 
-        if ($user->isBHW()) {
-            // If the user is a BHW, set the patient's barangay to the BHW's barangay
-            $request['barangay_id'] = $user->barangay_id;
+            if ($user->isBHW()) {
+                // If the user is a BHW, set the patient's barangay to the BHW's barangay
+                $request['barangay_id'] = $user->barangay_id;
+            }
+
+            BarangayPatient::create($request->all());
+
+            return redirect()->route('barangay-patients.index')->with('success', 'Patient created successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('barangay-patients.index')->with('error', 'An error occurred while creating the patient: ' . $e->getMessage());
         }
-
-        BarangayPatient::create($request->all());
-
-        return redirect()->route('barangay-patients.index')->with('success', 'Patient created successfully');
     }
     public function edit($id)
     {
@@ -101,23 +102,25 @@ class BarangayPatientController extends Controller
 
         return view('barangay.barangay_patients.edit', compact('barangayPatient', 'barangays'));
     }
-
     public function update(Request $request, BarangayPatient $barangayPatient)
     {
-        $request->validate([
-            'barangay_id' => 'required|exists:barangays,id',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'birthdate' => 'required|date',
-            'age' => 'required|integer',
-            'gender' => 'required|in:Male,Female',
-        ]);
+        try {
+            $request->validate([
+                'barangay_id' => 'required|exists:barangays,id',
+                'first_name' => 'required|string',
+                'last_name' => 'required|string',
+                'birthdate' => 'required|date',
+                'age' => 'required|integer',
+                'gender' => 'required|in:Male,Female',
+            ]);
 
-        $barangayPatient->update($request->all());
+            $barangayPatient->update($request->all());
 
-        return redirect()->route('barangay-patients.index')->with('success', 'Patient updated successfully');
+            return redirect()->route('barangay-patients.index')->with('success', 'Patient updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('barangay-patients.index')->with('error', 'An error occurred while updating the patient: ' . $e->getMessage());
+        }
     }
-
     public function destroy(BarangayPatient $barangayPatient)
     {
         $barangayPatient->delete();

@@ -101,35 +101,39 @@ class DistributionController extends Controller
 
     public function update(Request $request, Distribution $distribution)
     {
-        $request->validate([
-            'patient_id' => 'required|exists:patients,id',
-            'medicine_id' => 'required|exists:medicines,id',
-            'stocks' => 'required|integer',
-            'checkup_date' => 'required|date',
-            'diagnose' => 'required|string',
-        ]);
+        try {
+            $request->validate([
+                'patient_id' => 'required|exists:patients,id',
+                'medicine_id' => 'required|exists:medicines,id',
+                'stocks' => 'required|integer',
+                'checkup_date' => 'required|date',
+                'diagnose' => 'required|string',
+            ]);
 
-        // Get the original distribution data
-        $originalDistribution = $distribution->fresh();
+            // Get the original distribution data
+            $originalDistribution = $distribution->fresh();
 
-        // Update Distribution
-        $distribution->update($request->all());
+            // Update Distribution
+            $distribution->update($request->all());
 
-        // Calculate the stock change
-        $stockChange = $request->input('stocks') - $originalDistribution->stocks;
+            // Calculate the stock change
+            $stockChange = $request->input('stocks') - $originalDistribution->stocks;
 
-        // Update Medicine stock
-        if ($stockChange != 0) {
-            if ($stockChange > 0) {
-                // Increase stock in inventory
-                $this->updateMedicineStock($distribution, 'decrement', abs($stockChange));
-            } else {
-                // Decrease stock in inventory
-                $this->updateMedicineStock($distribution, 'increment', abs($stockChange));
+            // Update Medicine stock
+            if ($stockChange != 0) {
+                if ($stockChange > 0) {
+                    // Increase stock in inventory
+                    $this->updateMedicineStock($distribution, 'decrement', abs($stockChange));
+                } else {
+                    // Decrease stock in inventory
+                    $this->updateMedicineStock($distribution, 'increment', abs($stockChange));
+                }
             }
-        }
 
-        return redirect()->route('distributions.index')->with('success', 'Distribution updated successfully');
+            return redirect()->route('distributions.index')->with('success', 'Distribution updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('distributions.index')->with('error', 'An error occurred while updating the distribution: ' . $e->getMessage());
+        }
     }
 
     public function destroy(Distribution $distribution)

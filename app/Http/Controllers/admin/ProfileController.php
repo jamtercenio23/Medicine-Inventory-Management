@@ -21,26 +21,31 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required|exists:roles,name',
-        ]);
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'role' => 'required|exists:roles,name',
+            ]);
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
 
-        $user->syncRoles([$request->role]);
+            $user->syncRoles([$request->role]);
 
-        return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
+            return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('profile.edit')->with('error', 'An error occurred while updating the profile: ' . $e->getMessage());
+        }
     }
 
     public function updatePassword(Request $request)
-    {
+{
+    try {
         $user = Auth::user();
 
         $request->validate([
@@ -57,5 +62,8 @@ class ProfileController extends Controller
         }
 
         return redirect()->route('profile.edit')->with('error', 'Current password is incorrect.');
+    } catch (\Exception $e) {
+        return redirect()->route('profile.edit')->with('error', 'An error occurred while updating the password: ' . $e->getMessage());
     }
+}
 }

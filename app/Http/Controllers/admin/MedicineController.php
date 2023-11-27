@@ -56,28 +56,32 @@ class MedicineController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'generic_name' => 'required|string',
-            'brand_name' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-            'price' => 'required|numeric',
-            'stocks' => 'required|integer',
-            'expiration_date' => 'required|date|after_or_equal:tomorrow', // Ensure expiration_date is not before tomorrow
-        ]);
+        try {
+            $request->validate([
+                'generic_name' => 'required|string',
+                'brand_name' => 'required|string',
+                'category_id' => 'required|exists:categories,id',
+                'price' => 'required|numeric',
+                'stocks' => 'required|integer',
+                'expiration_date' => 'required|date|after_or_equal:tomorrow', // Ensure expiration_date is not before tomorrow
+            ]);
 
-        $request->merge(['created_by' => auth()->id()]);
-        $medicine = Medicine::create($request->all());
+            $request->merge(['created_by' => auth()->id()]);
+            $medicine = Medicine::create($request->all());
 
-        // Check if the medicine is already expired
-        if ($medicine->expiration_date < now()->toDateString()) {
-            // If expired, set stocks to 0
-            $medicine->update(['stocks' => 0]);
-        } else {
-            // If not expired, proceed with normal stocks
-            $medicine->update(['stocks' => $request->input('stocks')]);
+            // Check if the medicine is already expired
+            if ($medicine->expiration_date < now()->toDateString()) {
+                // If expired, set stocks to 0
+                $medicine->update(['stocks' => 0]);
+            } else {
+                // If not expired, proceed with normal stocks
+                $medicine->update(['stocks' => $request->input('stocks')]);
+            }
+
+            return redirect()->route('medicines.index')->with('success', 'Medicine created successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('medicines.index')->with('error', 'An error occurred while creating the Medicine: ' . $e->getMessage());
         }
-
-        return redirect()->route('medicines.index')->with('success', 'Medicine created successfully');
     }
 
     public function edit(Medicine $medicine)
@@ -89,18 +93,22 @@ class MedicineController extends Controller
 
     public function update(Request $request, Medicine $medicine)
     {
-        $request->validate([
-            'generic_name' => 'required|string',
-            'brand_name' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-            'price' => 'required|numeric',
-            'stocks' => 'required|integer',
-            'expiration_date' => 'required|date',
-        ]);
-        $request->merge(['updated_by' => auth()->id()]);
-        $medicine->update($request->all());
+        try {
+            $request->validate([
+                'generic_name' => 'required|string',
+                'brand_name' => 'required|string',
+                'category_id' => 'required|exists:categories,id',
+                'price' => 'required|numeric',
+                'stocks' => 'required|integer',
+                'expiration_date' => 'required|date',
+            ]);
+            $request->merge(['updated_by' => auth()->id()]);
+            $medicine->update($request->all());
 
-        return redirect()->route('medicines.index')->with('success', 'Medicine updated successfully');
+            return redirect()->route('medicines.index')->with('success', 'Medicine updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('medicines.index')->with('error', 'An error occurred while updating the Medicine: ' . $e->getMessage());
+        }
     }
 
     public function destroy(Medicine $medicine)

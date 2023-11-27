@@ -56,52 +56,56 @@ class PatientController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'birthdate' => 'required|date',
-            'age' => 'required|integer',
-            'gender' => 'required|string',
-            'barangay_id' => 'required|exists:barangays,id',
-            'blood_pressure' => 'nullable|string',
-            'heart_rate' => 'nullable|integer',
-            'weight' => 'nullable|numeric',
-            'height' => 'nullable|numeric',
-        ]);
-        $request->merge(['created_by' => auth()->id()]);
-        Patient::create($request->all());
+        try {
+            $request->validate([
+                'first_name' => 'required|string',
+                'last_name' => 'required|string',
+                'birthdate' => 'required|date',
+                'age' => 'required|integer',
+                'gender' => 'required|string',
+                'barangay_id' => 'required|exists:barangays,id',
+                'blood_pressure' => 'nullable|string',
+                'heart_rate' => 'nullable|integer',
+                'weight' => 'nullable|numeric',
+                'height' => 'nullable|numeric',
+            ]);
+            $request->merge(['created_by' => auth()->id()]);
+            Patient::create($request->all());
 
-        return redirect()->route('patients.index')->with('success', 'Patient created successfully');
+            return redirect()->route('patients.index')->with('success', 'Patient created successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('patients.index')->with('error', 'An error occurred while creating the Patient: ' . $e->getMessage());
+        }
     }
-
-
     public function edit(Patient $patient)
     {
         $barangays = Barangay::all();
 
         return view('patients.edit', compact('patient', 'barangays'));
     }
-
     public function update(Request $request, Patient $patient)
     {
-        $request->validate([
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'birthdate' => 'required|date',
-            'age' => 'required|integer',
-            'gender' => 'required|string',
-            'barangay_id' => 'required|exists:barangays,id',
-            'blood_pressure' => 'nullable|string',
-            'heart_rate' => 'nullable|integer',
-            'weight' => 'nullable|numeric',
-            'height' => 'nullable|numeric',
-        ]);
-        $request->merge(['updated_by' => auth()->id()]);
-        $patient->update($request->all());
+        try {
+            $request->validate([
+                'first_name' => 'required|string',
+                'last_name' => 'required|string',
+                'birthdate' => 'required|date',
+                'age' => 'required|integer',
+                'gender' => 'required|string',
+                'barangay_id' => 'required|exists:barangays,id',
+                'blood_pressure' => 'nullable|string',
+                'heart_rate' => 'nullable|integer',
+                'weight' => 'nullable|numeric',
+                'height' => 'nullable|numeric',
+            ]);
+            $request->merge(['updated_by' => auth()->id()]);
+            $patient->update($request->all());
 
-        return redirect()->route('patients.index')->with('success', 'Patient updated successfully');
+            return redirect()->route('patients.index')->with('success', 'Patient updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('patients.index')->with('error', 'An error occurred while updating the Patient: ' . $e->getMessage());
+        }
     }
-
     public function destroy(Patient $patient)
     {
         $patient->delete();

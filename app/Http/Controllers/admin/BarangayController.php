@@ -35,13 +35,19 @@ class BarangayController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|unique:barangays',
-        ]);
-        $request->merge(['created_by' => auth()->id()]);
-        Barangay::create($request->all());
+        try {
+            $request->validate([
+                'name' => 'required|string|unique:barangays',
+            ]);
 
-        return redirect()->route('barangays.index')->with('success', 'Barangay created successfully');
+            $request->merge(['created_by' => auth()->id()]);
+
+            Barangay::create($request->all());
+
+            return redirect()->route('barangays.index')->with('success', 'Barangay created successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('barangays.index')->with('error', 'An error occurred while creating the Barangay: ' . $e->getMessage());
+        }
     }
 
     public function edit(Barangay $barangay)
@@ -51,13 +57,19 @@ class BarangayController extends Controller
 
     public function update(Request $request, Barangay $barangay)
     {
-        $request->validate([
-            'name' => 'required|string|unique:barangays,name,' . $barangay->id,
-        ]);
-        $request->merge(['updated_by' => auth()->id()]);
-        $barangay->update($request->all());
+        try {
+            $request->validate([
+                'name' => 'required|string|unique:barangays,name,' . $barangay->id,
+            ]);
 
-        return redirect()->route('barangays.index')->with('success', 'Barangay updated successfully');
+            $request->merge(['updated_by' => auth()->id()]);
+
+            $barangay->update($request->all());
+
+            return redirect()->route('barangays.index')->with('success', 'Barangay updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('barangays.index')->with('error', 'An error occurred while updating the Barangay: ' . $e->getMessage());
+        }
     }
 
     public function destroy(Barangay $barangay)

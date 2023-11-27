@@ -17,25 +17,27 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="patient_id">Patient:</label>
-                                <select class="form-control select2" id="patient_id" name="patient_id" required>
+                                <input list="patients" class="form-control" id="patient_id" name="patient_id" placeholder="Enter the Patient Name/ID" required
+                                       value="{{ $distribution->patient->first_name }} {{ $distribution->patient->last_name }}"> <!-- Assuming $distribution->patient is the related patient model -->
+                                <datalist id="patients">
                                     @foreach ($patients as $patient)
-                                        <option value="{{ $patient->id }}"
-                                            {{ $distribution->patient->id == $patient->id ? 'selected' : '' }}>
-                                            {{ $patient->first_name }} {{ $patient->last_name }}
-                                        </option>
+                                        <option value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }}</option>
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
+
                             <div class="form-group">
                                 <label for="medicine_id">Medicine:</label>
-                                <select class="form-control select2" id="medicine_id" name="medicine_id" required>
+                                <input list="medicines" class="form-control" id="medicine_id" name="medicine_id" placeholder="Enter the Medicine Name/ID" required
+                                       value="{{ $distribution->medicine->brand_name }}"> <!-- Assuming $distribution->medicine is the related medicine model -->
+                                <datalist id="medicines">
                                     @foreach ($medicines as $medicine)
-                                        <option value="{{ $medicine->id }}"
-                                            {{ $distribution->medicine->id == $medicine->id ? 'selected' : '' }}>
-                                            {{ $medicine->brand_name }}
-                                        </option>
+                                        @if ($medicine->stocks > 0 && $medicine->expiration_date > now()->toDateString())
+                                            <option value="{{ $medicine->id }}">{{ $medicine->generic_name }} -
+                                                {{ $medicine->brand_name }} | Stocks: {{ $medicine->stocks }}</option>
+                                        @endif
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
                             <div class="form-group">
                                 <label for="stocks">Stocks:</label>

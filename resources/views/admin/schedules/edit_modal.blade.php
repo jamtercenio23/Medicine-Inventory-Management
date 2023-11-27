@@ -16,23 +16,28 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="barangay_id">Barangay:</label>
-                                <select class="form-control" id="barangay_id" name="barangay_id" required>
+                                <input list="barangays" class="form-control" id="barangay_id" name="barangay_id"
+                                    placeholder="Enter the Barangay Name/ID" required
+                                    value="{{ $schedule->barangay->name }}">
+                                <datalist id="barangays">
                                     @foreach ($barangays as $barangay)
-                                        <option value="{{ $barangay->id }}"
-                                            {{ $schedule->barangay_id == $barangay->id ? 'selected' : '' }}>
-                                            {{ $barangay->name }}</option>
+                                        <option value="{{ $barangay->id }}">{{ $barangay->name }}</option>
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
                             <div class="form-group">
                                 <label for="medicine_id">Medicine:</label>
-                                <select class="form-control" id="medicine_id" name="medicine_id" required>
+                                <input list="medicines" class="form-control" id="medicine_id" name="medicine_id"
+                                    placeholder="Enter the Medicine Name/ID" required
+                                    value="{{ $schedule->medicine->generic_name }} - {{ $schedule->medicine->brand_name }}">
+                                <datalist id="medicines">
                                     @foreach ($medicines as $medicine)
-                                        <option value="{{ $medicine->id }}"
-                                            {{ $schedule->medicine_id == $medicine->id ? 'selected' : '' }}>
-                                            {{ $medicine->generic_name }} - {{ $medicine->brand_name }} | Stocks: {{ $medicine->stocks }}</option>
+                                        @if ($medicine->stocks > 0 && $medicine->expiration_date > now()->toDateString())
+                                            <option value="{{ $medicine->id }}">{{ $medicine->generic_name }} -
+                                                {{ $medicine->brand_name }} | Stocks: {{ $medicine->stocks }}</option>
+                                        @endif
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -51,7 +56,8 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i>
+                        Cancel</button>
                 </form>
             </div>
         </div>

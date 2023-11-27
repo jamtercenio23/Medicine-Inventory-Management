@@ -23,13 +23,22 @@
                                 <label for="brand_name">Brand Name:</label>
                                 <input type="text" class="form-control" id="brand_name" name="brand_name" placeholder="Enter the Brand Name" required>
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="category_id">Category:</label>
                                 <select class="form-control" id="category_id" name="category_id" required>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
+                            </div> --}}
+                            <div class="form-group">
+                                <label for="category_id">Category:</label>
+                                <input list="categories" class="form-control" id="category_id" name="category_id" placeholder="Enter the Category Name/ID" required>
+                                <datalist id="categories">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </datalist>
                             </div>
                         </div>
                         <div class="col-md-6">

@@ -26,13 +26,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="category_id">Category:</label>
-                                <select class="form-control" id="category_id" name="category_id" required>
+                                <input list="categories" class="form-control" id="category_id" name="category_id"
+                                    placeholder="Enter the Category Name/ID" required
+                                    value="{{ $medicine->category->name }}">
+                                <!-- Assuming $medicine->category is the related category model -->
+                                <datalist id="categories">
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                            {{ $medicine->category_id == $category->id ? 'selected' : '' }}>
-                                            {{ $category->name }}</option>
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
-                                </select>
+                                </datalist>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -49,12 +51,14 @@
                             <div class="form-group">
                                 <label for="expiration_date">Expiration Date:</label>
                                 <input type="date" class="form-control" id="expiration_date" name="expiration_date"
-                                    value="{{ $medicine->expiration_date }}" min="{{ now()->addDay()->toDateString() }}" required>
+                                    value="{{ $medicine->expiration_date }}"
+                                    min="{{ now()->addDay()->toDateString() }}" required>
                             </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i>
+                        Cancel</button>
                 </form>
             </div>
         </div>
