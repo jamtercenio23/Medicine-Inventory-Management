@@ -10,7 +10,7 @@ use App\Models\Medicine;
 use App\Models\Category;
 use Maatwebsite\Excel\Excel;
 use Illuminate\Support\Facades\Response;
-
+use Illuminate\Support\Facades\Log;
 
 class MedicineController extends Controller
 {
@@ -80,17 +80,16 @@ class MedicineController extends Controller
 
             return redirect()->route('medicines.index')->with('success', 'Medicine created successfully');
         } catch (\Exception $e) {
-            return redirect()->route('medicines.index')->with('error', 'An error occurred while creating the Medicine: ' . $e->getMessage());
+            Log::error('Error creating Medicine: ' . $e->getMessage());
+            return redirect()->route('medicines.index')->with('error', 'An error occurred while creating the Medicine. Please try again.');
         }
     }
-
     public function edit(Medicine $medicine)
     {
         $categories = Category::all();
 
         return view('medicines.edit', compact('medicine', 'categories'));
     }
-
     public function update(Request $request, Medicine $medicine)
     {
         try {
@@ -107,10 +106,10 @@ class MedicineController extends Controller
 
             return redirect()->route('medicines.index')->with('success', 'Medicine updated successfully');
         } catch (\Exception $e) {
-            return redirect()->route('medicines.index')->with('error', 'An error occurred while updating the Medicine: ' . $e->getMessage());
+            Log::error('Error updating Medicine: ' . $e->getMessage());
+            return redirect()->route('medicines.index')->with('error', 'An error occurred while updating the Medicine. Please try again.');
         }
     }
-
     public function destroy(Medicine $medicine)
     {
         $medicine->delete();

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use App\Models\Barangay;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -64,7 +65,8 @@ class UserController extends Controller
 
             return redirect()->route('users.index')->with('success', 'User created successfully.');
         } catch (\Exception $e) {
-            return redirect()->route('users.index')->with('error', 'An error occurred while creating the user: ' . $e->getMessage());
+            Log::error('Error creating user: ' . $e->getMessage());
+            return redirect()->route('users.index')->with('error', 'An error occurred while creating the user. Please try again.');
         }
     }
     public function edit($id)
@@ -94,7 +96,6 @@ class UserController extends Controller
                     'barangay_id' => $request->barangay,
                 ]);
             } else {
-                // For non-admin users, update other fields but not is_active
                 $user->update([
                     'name' => $request->name,
                     'email' => $request->email,
@@ -105,7 +106,8 @@ class UserController extends Controller
 
             return redirect()->route('users.index')->with('success', 'User updated successfully.');
         } catch (\Exception $e) {
-            return redirect()->route('users.index')->with('error', 'An error occurred while updating the user: ' . $e->getMessage());
+            Log::error('Error updating user: ' . $e->getMessage());
+            return redirect()->route('users.index')->with('error', 'An error occurred while updating the user. Please try again.');
         }
     }
     public function destroy($id)

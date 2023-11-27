@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Barangay;
+use Illuminate\Support\Facades\Log;
 
 class BarangayController extends Controller
 {
@@ -46,9 +47,11 @@ class BarangayController extends Controller
 
             return redirect()->route('barangays.index')->with('success', 'Barangay created successfully');
         } catch (\Exception $e) {
-            return redirect()->route('barangays.index')->with('error', 'An error occurred while creating the Barangay: ' . $e->getMessage());
+            Log::error('Error creating Barangay: ' . $e->getMessage());
+            return redirect()->route('barangays.index')->with('error', 'An error occurred while creating the Barangay. Please try again.');
         }
     }
+
 
     public function edit(Barangay $barangay)
     {
@@ -68,7 +71,8 @@ class BarangayController extends Controller
 
             return redirect()->route('barangays.index')->with('success', 'Barangay updated successfully');
         } catch (\Exception $e) {
-            return redirect()->route('barangays.index')->with('error', 'An error occurred while updating the Barangay: ' . $e->getMessage());
+            Log::error('Error updating Barangay: ' . $e->getMessage());
+            return redirect()->route('barangays.index')->with('error', 'An error occurred while updating the Barangay. Please try again.');
         }
     }
 

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Exports\BarangayDistributionReportExport;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
 
 class BarangayDistributionController extends Controller
 {
@@ -144,7 +145,10 @@ class BarangayDistributionController extends Controller
                 return redirect()->route('barangay-distributions.index')->with('error', 'Unauthorized to create distribution');
             }
         } catch (\Exception $e) {
-            return redirect()->route('barangay-distributions.index')->with('error', 'Failed to create distribution: ' . $e->getMessage());
+            // Log the error for reference
+            Log::error('Error creating distribution: ' . $e->getMessage());
+
+            return redirect()->route('barangay-distributions.index')->with('error', 'Failed to create distribution. Please try again.');
         }
     }
     public function update(Request $request, BarangayDistribution $barangayDistribution)
@@ -186,8 +190,10 @@ class BarangayDistributionController extends Controller
 
             return redirect()->route('barangay-distributions.index')->with('success', 'Distribution updated successfully');
         } catch (\Exception $e) {
-            // Handle the exception, you might want to log it or return an error message
-            return redirect()->route('barangay-distributions.index')->with('error', 'Failed to update distribution');
+            // Log the error for reference
+            Log::error('Error updating distribution: ' . $e->getMessage());
+
+            return redirect()->route('barangay-distributions.index')->with('error', 'Failed to update distribution. Please try again.');
         }
     }
 

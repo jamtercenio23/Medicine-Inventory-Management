@@ -13,6 +13,7 @@ use Illuminate\Validation\Rule;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Exports\DistributionBarangayReportExport;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
 
 class DistributionBarangayController extends Controller
 {
@@ -48,7 +49,6 @@ class DistributionBarangayController extends Controller
 
         return view('distribution_barangay.create', compact('barangays', 'medicines'));
     }
-
     public function store(Request $request)
     {
         try {
@@ -94,11 +94,10 @@ class DistributionBarangayController extends Controller
                 'stocks' => $request->input('stocks'),
             ]);
 
-            return redirect()->route('distribution_barangay.index')
-                ->with('success', 'Distribution created successfully');
+            return redirect()->route('distribution_barangay.index')->with('success', 'Distribution created successfully');
         } catch (\Exception $e) {
-            return redirect()->route('distribution_barangay.index')
-                ->with('error', 'Error creating distribution: ' . $e->getMessage());
+            Log::error('Error creating distribution: ' . $e->getMessage());
+            return redirect()->route('distribution_barangay.index')->with('error', 'An error occurred while creating the distribution. Please try again.');
         }
     }
     public function update(Request $request, DistributionBarangay $distribution_barangay)

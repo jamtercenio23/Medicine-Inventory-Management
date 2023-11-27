@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\Medicine;
 use App\Models\Barangay;
+use Illuminate\Support\Facades\Log;
 
 class ScheduleController extends Controller
 {
@@ -63,7 +64,8 @@ class ScheduleController extends Controller
 
             return redirect()->route('schedules.index')->with('success', 'Schedule created successfully');
         } catch (\Exception $e) {
-            return redirect()->route('schedules.index')->with('error', 'An error occurred while creating the schedule: ' . $e->getMessage());
+            Log::error('Error creating Schedule: ' . $e->getMessage());
+            return redirect()->route('schedules.index')->with('error', 'An error occurred while creating the schedule. Please try again.');
         }
     }
     public function edit(Schedule $schedule)
@@ -92,7 +94,8 @@ class ScheduleController extends Controller
 
             return redirect()->route('schedules.index')->with('success', 'Schedule updated successfully');
         } catch (\Exception $e) {
-            return redirect()->route('schedules.index')->with('error', 'An error occurred while updating the schedule: ' . $e->getMessage());
+            Log::error('Error updating Schedule: ' . $e->getMessage());
+            return redirect()->route('schedules.index')->with('error', 'An error occurred while updating the schedule. Please try again.');
         }
     }
     public function destroy(Schedule $schedule)

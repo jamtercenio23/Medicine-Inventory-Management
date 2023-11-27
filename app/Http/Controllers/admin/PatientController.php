@@ -10,6 +10,7 @@ use App\Models\Barangay;
 use Maatwebsite\Excel\Excel;
 use Illuminate\Support\Facades\Response;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Log;
 
 class PatientController extends Controller
 {
@@ -69,12 +70,14 @@ class PatientController extends Controller
                 'weight' => 'nullable|numeric',
                 'height' => 'nullable|numeric',
             ]);
+
             $request->merge(['created_by' => auth()->id()]);
             Patient::create($request->all());
 
             return redirect()->route('patients.index')->with('success', 'Patient created successfully');
         } catch (\Exception $e) {
-            return redirect()->route('patients.index')->with('error', 'An error occurred while creating the Patient: ' . $e->getMessage());
+            Log::error('Error creating Patient: ' . $e->getMessage());
+            return redirect()->route('patients.index')->with('error', 'An error occurred while creating the Patient. Please try again.');
         }
     }
     public function edit(Patient $patient)
@@ -98,12 +101,14 @@ class PatientController extends Controller
                 'weight' => 'nullable|numeric',
                 'height' => 'nullable|numeric',
             ]);
+
             $request->merge(['updated_by' => auth()->id()]);
             $patient->update($request->all());
 
             return redirect()->route('patients.index')->with('success', 'Patient updated successfully');
         } catch (\Exception $e) {
-            return redirect()->route('patients.index')->with('error', 'An error occurred while updating the Patient: ' . $e->getMessage());
+            Log::error('Error updating Patient: ' . $e->getMessage());
+            return redirect()->route('patients.index')->with('error', 'An error occurred while updating the Patient. Please try again.');
         }
     }
     public function destroy(Patient $patient)

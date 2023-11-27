@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -23,13 +24,10 @@ class CategoryController extends Controller
 
         return view('admin.categories.index', compact('categories', 'query', 'column', 'order', 'entries'));
     }
-
-
     public function create()
     {
         return view('categories.create');
     }
-
     public function store(Request $request)
     {
         try {
@@ -43,15 +41,14 @@ class CategoryController extends Controller
 
             return redirect()->route('categories.index')->with('success', 'Category created successfully');
         } catch (\Exception $e) {
-            return redirect()->route('categories.index')->with('error', 'An error occurred while creating the Category: ' . $e->getMessage());
+            Log::error('Error creating Category: ' . $e->getMessage());
+            return redirect()->route('categories.index')->with('error', 'An error occurred while creating the Category. Please try again.');
         }
     }
-
     public function edit(Category $category)
     {
         return view('categories.edit', compact('category'));
     }
-
     public function update(Request $request, Category $category)
     {
         try {
@@ -72,7 +69,8 @@ class CategoryController extends Controller
                 return redirect()->route('login')->with('error', 'Unauthorized access');
             }
         } catch (\Exception $e) {
-            return redirect()->route('categories.index')->with('error', 'An error occurred while updating the Category: ' . $e->getMessage());
+            Log::error('Error updating Category: ' . $e->getMessage());
+            return redirect()->route('categories.index')->with('error', 'An error occurred while updating the Category. Please try again.');
         }
     }
     public function destroy(Category $category)

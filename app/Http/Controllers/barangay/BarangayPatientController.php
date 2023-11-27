@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Exports\BarangayPatientReportExport;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
 
 class BarangayPatientController extends Controller
 {
@@ -92,7 +93,10 @@ class BarangayPatientController extends Controller
 
             return redirect()->route('barangay-patients.index')->with('success', 'Patient created successfully');
         } catch (\Exception $e) {
-            return redirect()->route('barangay-patients.index')->with('error', 'An error occurred while creating the patient: ' . $e->getMessage());
+            // Log the error for reference
+            Log::error('Error creating patient: ' . $e->getMessage());
+
+            return redirect()->route('barangay-patients.index')->with('error', 'Failed to create patient. Please try again.');
         }
     }
     public function edit($id)
@@ -118,7 +122,10 @@ class BarangayPatientController extends Controller
 
             return redirect()->route('barangay-patients.index')->with('success', 'Patient updated successfully');
         } catch (\Exception $e) {
-            return redirect()->route('barangay-patients.index')->with('error', 'An error occurred while updating the patient: ' . $e->getMessage());
+            // Log the error for reference
+            Log::error('Error updating patient: ' . $e->getMessage());
+
+            return redirect()->route('barangay-patients.index')->with('error', 'Failed to update patient. Please try again.');
         }
     }
     public function destroy(BarangayPatient $barangayPatient)

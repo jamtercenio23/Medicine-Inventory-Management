@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Exports\DistributionReportExport;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
 
 class DistributionController extends Controller
 {
@@ -90,15 +91,12 @@ class DistributionController extends Controller
             // Update Medicine stock
             $this->updateMedicineStock($distribution, 'decrement', $request->input('stocks'));
 
-            return redirect()->route('distributions.index')
-                ->with('success', 'Distribution created successfully');
+            return redirect()->route('distributions.index')->with('success', 'Distribution created successfully');
         } catch (\Exception $e) {
-            return redirect()->route('distributions.index')
-                ->with('error', 'Error creating distribution: ' . $e->getMessage());
+            Log::error('Error creating distribution: ' . $e->getMessage());
+            return redirect()->route('distributions.index')->with('error', 'An error occurred while creating the distribution. Please try again.');
         }
     }
-
-
     public function update(Request $request, Distribution $distribution)
     {
         try {
@@ -113,13 +111,21 @@ class DistributionController extends Controller
             // Get the original distribution data
             $originalDistribution = $distribution->fresh();
 
+            // Check if there are enough stocks available for the update
+            $availableStocks = Medicine::find($request->input('medicine_id'))->stocks;
+            $requestedStocks = $request->input('stocks');
+
+            if ($requestedStocks > $availableStocks) {
+                throw new \Exception("The selected medicine does not have enough stocks.");
+            }
+
             // Update Distribution
             $distribution->update($request->all());
 
             // Calculate the stock change
-            $stockChange = $request->input('stocks') - $originalDistribution->stocks;
+            $stockChange = $requestedStocks - $originalDistribution->stocks;
 
-            // Update Medicine stock
+            // Update Medicine stock only if there is a change
             if ($stockChange != 0) {
                 if ($stockChange > 0) {
                     // Increase stock in inventory
@@ -132,9 +138,11 @@ class DistributionController extends Controller
 
             return redirect()->route('distributions.index')->with('success', 'Distribution updated successfully');
         } catch (\Exception $e) {
-            return redirect()->route('distributions.index')->with('error', 'An error occurred while updating the distribution: ' . $e->getMessage());
+            Log::error('Error updating distribution: ' . $e->getMessage());
+            return redirect()->route('distributions.index')->with('error', 'An error occurred while updating the distribution. Please try again.');
         }
     }
+
 
     public function destroy(Distribution $distribution)
     {
