@@ -69,16 +69,20 @@
                             <div class="card mb-4 card-scrollable">
                                 <div class="card-body">
                                     <h5 class="card-title">Nearly Out of Stock Medicines</h5>
-                                    <ul class="list-group list-group-flush">
-                                        @foreach ($nearlyOutOfStockMedicines as $medicine)
-                                            <li class="list-group-item">
-                                                <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
-                                                <strong>Category:</strong> {{ $medicine->category->name }}<br>
-                                                <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
-                                                <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                    @if(count($nearlyOutOfStockMedicines) > 0)
+                                        <ul class="list-group list-group-flush">
+                                            @foreach ($nearlyOutOfStockMedicines as $medicine)
+                                                <li class="list-group-item">
+                                                    <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
+                                                    <strong>Category:</strong> {{ $medicine->category->name }}<br>
+                                                    <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
+                                                    <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p>No Nearly Out of Stock Medicines.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -86,16 +90,20 @@
                             <div class="card mb-4 card-scrollable">
                                 <div class="card-body">
                                     <h5 class="card-title">Nearly Expired Medicines</h5>
-                                    <ul class="list-group list-group-flush">
-                                        @foreach ($nearlyExpiredMedicines as $medicine)
-                                            <li class="list-group-item">
-                                                <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
-                                                <strong>Category:</strong> {{ $medicine->category->name }}<br>
-                                                <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
-                                                <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                    @if(count($nearlyExpiredMedicines) > 0)
+                                        <ul class="list-group list-group-flush">
+                                            @foreach ($nearlyExpiredMedicines as $medicine)
+                                                <li class="list-group-item">
+                                                    <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
+                                                    <strong>Category:</strong> {{ $medicine->category->name }}<br>
+                                                    <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
+                                                    <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p>No Nearly Expired Medicines.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -304,16 +312,20 @@
                             <div class="card mb-4 card-scrollable">
                                 <div class="card-body">
                                     <h5 class="card-title">Nearly Out of Stock Medicines</h5>
-                                    <ul class="list-group list-group-flush">
-                                        @foreach ($nearlyOutOfStockMedicines as $medicine)
-                                            <li class="list-group-item">
-                                                <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
-                                                <strong>Category:</strong> {{ $medicine->category->name }}<br>
-                                                <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
-                                                <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                    @if(count($nearlyOutOfStockMedicines) > 0)
+                                        <ul class="list-group list-group-flush">
+                                            @foreach ($nearlyOutOfStockMedicines as $medicine)
+                                                <li class="list-group-item">
+                                                    <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
+                                                    <strong>Category:</strong> {{ $medicine->category->name }}<br>
+                                                    <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
+                                                    <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p>No Nearly Out of Stock Medicines.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -321,16 +333,20 @@
                             <div class="card mb-4 card-scrollable">
                                 <div class="card-body">
                                     <h5 class="card-title">Nearly Expired Medicines</h5>
-                                    <ul class="list-group list-group-flush">
-                                        @foreach ($nearlyExpiredMedicines as $medicine)
-                                            <li class="list-group-item">
-                                                <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
-                                                <strong>Category:</strong> {{ $medicine->category->name }}<br>
-                                                <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
-                                                <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                    @if(count($nearlyExpiredMedicines) > 0)
+                                        <ul class="list-group list-group-flush">
+                                            @foreach ($nearlyExpiredMedicines as $medicine)
+                                                <li class="list-group-item">
+                                                    <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
+                                                    <strong>Category:</strong> {{ $medicine->category->name }}<br>
+                                                    <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
+                                                    <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p>No Nearly Expired Medicines.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
