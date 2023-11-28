@@ -55,17 +55,29 @@ class MedicineController extends Controller
     }
 
     public function store(Request $request)
-    {
-        try {
-            $request->validate([
-                'generic_name' => 'required|string',
-                'brand_name' => 'required|string',
-                'category_id' => 'required|exists:categories,id',
-                'price' => 'required|numeric',
-                'stocks' => 'required|integer',
-                'expiration_date' => 'required|date|after_or_equal:tomorrow', // Ensure expiration_date is not before tomorrow
-            ]);
+{
+    try {
+        $request->validate([
+            'generic_name' => 'required|string',
+            'brand_name' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric',
+            'stocks' => 'required|integer',
+            'expiration_date' => 'required|date|after_or_equal:tomorrow', // Ensure expiration_date is not before tomorrow
+        ]);
 
+        $existingMedicine = Medicine::where('generic_name', $request->input('generic_name'))
+            ->where('brand_name', $request->input('brand_name'))
+            ->where('category_id', $request->input('category_id'))
+            ->where('price', $request->input('price'))
+            ->where('expiration_date', $request->input('expiration_date'))
+            ->first();
+
+        if ($existingMedicine) {
+            // If medicine with the same details exists, merge stocks
+            $existingMedicine->update(['stocks' => $existingMedicine->stocks + $request->input('stocks')]);
+        } else {
+            // If not, create a new medicine
             $request->merge(['created_by' => auth()->id()]);
             $medicine = Medicine::create($request->all());
 
@@ -77,13 +89,16 @@ class MedicineController extends Controller
                 // If not expired, proceed with normal stocks
                 $medicine->update(['stocks' => $request->input('stocks')]);
             }
-
-            return redirect()->route('medicines.index')->with('success', 'Medicine created successfully');
-        } catch (\Exception $e) {
-            Log::error('Error creating Medicine: ' . $e->getMessage());
-            return redirect()->route('medicines.index')->with('error', 'An error occurred while creating the Medicine. Please try again.');
         }
+
+        return redirect()->route('medicines.index')->with('success', 'Medicine created successfully');
+    } catch (\Exception $e) {
+        Log::error('Error creating Medicine: ' . $e->getMessage());
+        return redirect()->route('medicines.index')->with('error', 'An error occurred while creating the Medicine. Please try again.');
     }
+}
+
+
     public function edit(Medicine $medicine)
     {
         $categories = Category::all();
