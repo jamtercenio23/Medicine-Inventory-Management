@@ -121,9 +121,9 @@
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showDistributionBarangayModal{{ $distribution_barangay->id }}">
                                                 <i class="fas fa-eye"></i> </button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                            {{-- <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                 data-target="#deleteDistributionBarangayModal{{ $distribution_barangay->id }}">
-                                                <i class="fas fa-trash"></i> </button>
+                                                <i class="fas fa-trash"></i> </button> --}}
                                         </td>
                                     </tr>
 
