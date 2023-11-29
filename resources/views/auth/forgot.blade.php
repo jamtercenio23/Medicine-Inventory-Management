@@ -8,7 +8,8 @@
                     <div class="card-header text-center" style="border-bottom: none; margin-bottom: 0;">
                         <img src="{{ asset('images/logo.png') }}" alt="Mabini Health Center Logo"
                             style="max-width: 200px; margin-top: 20px; border-radius: 50%;">
-                        <h2>{{ __('Mabini Health Center') }}</h2>
+                        <!-- <h2>{{ __('Mabini Health Center') }}</h2> -->
+                        <h3>Forgot Password</h3>
                     </div>
 
                     <div class="card-body">
@@ -21,39 +22,25 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ url('forgot-password') }}">
                             @csrf
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">{{ __('Email Address') }}</label>
-                                <input id="email" type="email"
+                                <input id="email" type="email" 
                                     class="form-control @error('email') is-invalid @enderror" name="email"
                                     value="{{ old('email') }}" required autocomplete="email" autofocus>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="password" class="form-label">{{ __('Password') }}</label>
-                                <div class="input-group">
-                                    <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="current-password">
-                                    <span class="input-group-text" id="password-toggle" style="cursor: pointer;">
-                                        <i class="fa fa-eye-slash" id="password-icon" aria-hidden="true"></i>
-                                    </span>
-                                </div>
-                            </div>
+                            
 
                             <div class="mb-3 text-center">
                                 <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
-                                    {{ __('Login') }}
+                                    Forgot
                                 </button>
                             </div>
 
-                            <div class="mb-3 text-center">
-                                <a href="/forgot-password" type="submit" class=" text-primary" style="width: 100%;">
-                                Forgot Password
-                                </a>
-                            </div>
+                            
 
                         </form>
                     </div>

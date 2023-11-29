@@ -16,6 +16,7 @@ use App\Http\Controllers\admin\ScheduleController;
 use App\Http\Controllers\admin\DistributionBarangayController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\ProfileController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\admin\ManageRequestsController;
 
 Route::get('/', function () {
@@ -24,6 +25,15 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return view('about');
 });
+
+
+
+Route::get('forgot-password',[AuthController::class,'forgotpassword']);
+Route::post('forgot-password',[AuthController::class,'PostForgotPassword'])->name('PostForgotPassword');
+Route::get('reset/{token}',[AuthController::class,'reset']);
+Route::post('reset/{token}',[AuthController::class,'PostReset']);
+
+
 Auth::routes();
 // Admin Route
 Route::middleware(['auth', 'is_active'])->group(function () {

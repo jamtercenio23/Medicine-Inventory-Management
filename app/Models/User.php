@@ -48,6 +48,22 @@ class User extends Authenticatable
         'password' => 'hashed',
         'is_active' => 'boolean',
     ];
+
+
+    static public function getEmailSingle($email){
+
+        return self::where('email',$email)->first();
+
+    }
+
+    static public function getTokenSingle($token)
+    {
+        return self::where('remember_token',$token)->first();
+
+        
+    }
+
+
     public function isAdmin()
     {
         return $this->hasRole('admin');
