@@ -66,6 +66,27 @@
                             </div>
                         </div>
                         <div class="col-md-4">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">Newly Added Medicines</h5>
+                                    @if(count($newlyAddedMedicines) > 0)
+                                        <ul class="list-group list-group-flush">
+                                            @foreach ($newlyAddedMedicines as $medicine)
+                                                <li class="list-group-item">
+                                                    <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
+                                                    <strong>Category:</strong> {{ $medicine->category->name }}<br>
+                                                    <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
+                                                    <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p>No newly added medicines.</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="card mb-4 card-scrollable">
                                 <div class="card-body">
                                     <h5 class="card-title">Nearly Out of Stock Medicines</h5>
@@ -194,7 +215,29 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <div class="card-body card-scrollable">
+                                    <h5 class="card-title">Newly Added Medicines in Your Barangay</h5>
+                                    @if (count($newlyAddedBarangayMedicines) > 0)
+                                        <ul class="list-group list-group-flush">
+                                            @foreach ($newlyAddedBarangayMedicines as $barangayMedicine)
+                                                <li class="list-group-item">
+                                                    <strong>Name:</strong> {{ $barangayMedicine->medicine->generic_name }} -
+                                                    {{ $barangayMedicine->medicine->brand_name }}<br>
+                                                    <strong>Category:</strong> {{ $barangayMedicine->medicine->category->name }}<br>
+                                                    <strong>Stocks:</strong> {{ $barangayMedicine->stocks }}<br>
+                                                    <strong>Expiration Date:</strong> {{ $barangayMedicine->expiration_date }}<br>
+                                                    <strong>Distributed Date:</strong> {{ $barangayMedicine->created_at }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p>No Newly Added Medicines in Your Barangay.</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-4">
                             <div class="card mb-4">
                                 <div class="card-body card-scrollable">
@@ -305,6 +348,27 @@
                                         <li class="list-group-item">Total Patients added today:
                                             {{ $totalPatientsAddedToday }}</li>
                                     </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">Newly Added Medicines</h5>
+                                    @if(count($newlyAddedMedicines) > 0)
+                                        <ul class="list-group list-group-flush">
+                                            @foreach ($newlyAddedMedicines as $medicine)
+                                                <li class="list-group-item">
+                                                    <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
+                                                    <strong>Category:</strong> {{ $medicine->category->name }}<br>
+                                                    <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
+                                                    <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p>No newly added medicines.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>

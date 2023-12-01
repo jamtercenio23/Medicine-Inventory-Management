@@ -56,8 +56,42 @@ class RolesAndPermissionsSeeder extends Seeder
 
         Permission::insert($permissions->toArray());
 
-        $role = Role::create(['name' => 'admin']);
-        $role->givePermissionTo(Permission::all());
+        // $role = Role::create(['name' => 'superadmin']);
+        // $role->givePermissionTo(Permission::all());
+
+        $role = Role::create(['name' => 'superadmin'])
+            ->givePermissionTo([
+                'view-users',
+                'view-access-control',
+                'view-roles',
+                'view-permissions',
+            ]);
+        $role = Role::create(['name' => 'admin'])
+            ->givePermissionTo([
+                'view-categories',
+                'view-distributions',
+                'view-reports',
+                'view-distribution-barangay',
+                'view-medicines',
+                'view-patients',
+                'view-barangays',
+                'view-schedules',
+                'view-expired',
+                'view-out-of-stock',
+                'view-admin_inventory',
+                'view-admin_manage',
+                'view-admin_distributions',
+                'view-manage-request',
+                'view-bhw_inventory',
+                'view-bhw_manage',
+                'view-bhw_distributions',
+                'view-barangay_medicines',
+                'view-barangay_out-of-stock',
+                'view-barangay_expired',
+                'view-barangay_distributions',
+                'view-barangay_patients',
+            ]);
+
         $role = Role::create(['name' => 'pharmacist'])
             ->givePermissionTo([
                 'view-categories',

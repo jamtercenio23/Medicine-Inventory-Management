@@ -71,6 +71,8 @@ class HomeController extends Controller
             $nearlyExpiredMedicines = Medicine::where('expiration_date', '>', now())
                 ->where('expiration_date', '<=', now()->addDays(10))
                 ->get();
+            $newlyAddedMedicines = Medicine::where('created_at', '>', now()->subHours(12))->get();
+
             return view('home', compact(
                 'totalMedicines',
                 'totalPatients',
@@ -88,6 +90,8 @@ class HomeController extends Controller
                 'distributionSchedulesThisWeek',
                 'nearlyOutOfStockMedicines',
                 'nearlyExpiredMedicines',
+                'newlyAddedMedicines'
+
             ));
         } elseif ($user->isBHW()) {
             // Get the BHW's barangay ID
@@ -134,6 +138,10 @@ class HomeController extends Controller
                 ->where('expiration_date', '>', now())
                 ->where('expiration_date', '<=', now()->addDays(10))
                 ->get();
+                $newlyAddedBarangayMedicines = BarangayMedicine::where('barangay_id', $barangayId)
+                ->where('created_at', '>', now()->subHours(12))
+                ->with('medicine.category') // Assuming there is a relationship between BarangayMedicine and Medicine
+                ->get();
             return view('home', compact(
                 'totalBarangayMedicines',
                 'totalBarangayPatients',
@@ -147,6 +155,7 @@ class HomeController extends Controller
                 'distributionSchedulesInYourBarangay',
                 'nearlyOutOfStockMedicines',
                 'nearlyExpiredMedicines',
+                'newlyAddedBarangayMedicines'
             ));
         } elseif ($user->isPharmacist()) {
             // Pharmacist Dashboard logic
@@ -179,6 +188,8 @@ class HomeController extends Controller
             $nearlyExpiredMedicines = Medicine::where('expiration_date', '>', now())
                 ->where('expiration_date', '<=', now()->addDays(10))
                 ->get();
+            $newlyAddedMedicines = Medicine::where('created_at', '>', now()->subHours(12))->get();
+
             return view('home', compact(
                 'totalMedicines',
                 'totalPatients',
@@ -196,6 +207,7 @@ class HomeController extends Controller
                 'distributionSchedulesThisWeek',
                 'nearlyOutOfStockMedicines',
                 'nearlyExpiredMedicines',
+                'newlyAddedMedicines'
             ));
         } else {
             return view('home');

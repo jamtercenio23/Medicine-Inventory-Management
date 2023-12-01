@@ -16,7 +16,7 @@ class BarangayPatientsSeeder extends Seeder
         $faker = Faker::create();
 
         for ($barangayId = 1; $barangayId <= 16; $barangayId++) {
-            $numPatients = rand(5, 20);
+            $numPatients = rand(5, 5);
             // $createdDate = $faker->dateTimeBetween('-2 years', 'now');
             for ($i = 0; $i < $numPatients; $i++) {
                 $patientsData[] = [
