@@ -89,14 +89,16 @@
                                         <td>{{ $role->created_at }}</td>
                                         <td>{{ $role->updated_at }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editRoleModal{{ $role->id }}">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteRoleModal{{ $role->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <div class="btn-group" role="group" aria-label="Role Actions">
+                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                    data-target="#editRoleModal{{ $role->id }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#deleteRoleModal{{ $role->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -112,6 +114,7 @@
                 </div>
             </div>
         </div>
+
         <div class="my-4 text-muted">
             <div class="float-left">
                 Showing {{ $roles->firstItem() }} to {{ $roles->lastItem() }} of {{ $roles->total() }}

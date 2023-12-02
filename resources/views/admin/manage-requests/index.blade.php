@@ -84,7 +84,8 @@
                                             <td>{{ ucfirst($request->status) }}</td>
                                             <td>
                                                 @if ($request->status != 'approved' && $request->status != 'rejected')
-                                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#approveRejectModal{{ $request->id }}">
+                                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                                        data-target="#approveRejectModal{{ $request->id }}">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                 @endif
@@ -100,6 +101,7 @@
                 @endif
             </div>
         </div>
+
 
         <div class="my-4 text-muted">
             <div class="float-left">

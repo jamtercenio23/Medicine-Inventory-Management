@@ -138,22 +138,22 @@
                                             <td>{{ $barangayPatient->updated_at }}</td>
                                         @endif
                                         <td>
-
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showBarangayPatientModal{{ $barangayPatient->id }}">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            @if (auth()->user()->isBHW())
-                                                <button type of="button" class="btn btn-warning btn-sm"
-                                                    data-toggle="modal"
-                                                    data-target="#editBarangayPatientModal{{ $barangayPatient->id }}">
-                                                    <i class="fas fa-edit"></i>
+                                            <div class="btn-group" role="group" aria-label="Patient Actions">
+                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                    data-target="#showBarangayPatientModal{{ $barangayPatient->id }}">
+                                                    <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                    data-target="#deleteBarangayPatientModal{{ $barangayPatient->id }}">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            @endif
+                                                @if (auth()->user()->isBHW())
+                                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                        data-target="#editBarangayPatientModal{{ $barangayPatient->id }}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        data-target="#deleteBarangayPatientModal{{ $barangayPatient->id }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                @endif
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -178,6 +178,7 @@
                 </div>
             </div>
         </div>
+
         <div class="my-4 text-muted">
             <div class="float-left">
                 Showing {{ $barangayPatients->firstItem() }} to {{ $barangayPatients->lastItem() }} of

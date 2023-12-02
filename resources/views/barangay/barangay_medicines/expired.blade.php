@@ -88,8 +88,7 @@
                             </select>
                         </div>
                         <div class="form-group flex-grow-1">
-                            <input type="text" class="form-control" placeholder="Search" name="search"
-                                value="{{ $query }}">
+                            <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
                         </div>
                         <div class="form-group ml-2">
                             <button class="btn btn-secondary" type="submit">
@@ -138,9 +137,12 @@
                                         <td>{{ $barangayMedicine->expiration_date }}</td>
                                         @if (auth()->user()->isBHW())
                                             <td>
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                    data-target="#deleteExpiredModal{{ $barangayMedicine->id }}"><i
-                                                        class="fas fa-trash"></i> </button>
+                                                <div class="btn-group" role="group" aria-label="Expired Medicine Actions">
+                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        data-target="#deleteExpiredModal{{ $barangayMedicine->id }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
                                             </td>
                                         @endif
                                     </tr>
@@ -155,6 +157,7 @@
                 </div>
             </div>
         </div>
+
         <div class="my-4 text-muted">
             <div class="float-left">
                 Showing {{ $expiredMedicines->firstItem() }} to {{ $expiredMedicines->lastItem() }} of

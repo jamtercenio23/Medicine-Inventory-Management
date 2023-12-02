@@ -88,14 +88,16 @@
                                         <td>{{ $category->created_at ? $category->created_at : 'N/A ' }}</td>
                                         <td>{{ $category->updated_at ? $category->updated_at : 'N/A ' }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editCategoryModal{{ $category->id }}">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteCategoryModal{{ $category->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                    data-target="#editCategoryModal{{ $category->id }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#deleteCategoryModal{{ $category->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @include('admin.categories.edit_modal', ['category' => $category])
@@ -107,6 +109,7 @@
                 @endif
             </div>
         </div>
+
         <div class="my-4 text-muted">
 
             <div class="float-left">

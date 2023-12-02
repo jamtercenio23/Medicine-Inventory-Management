@@ -68,48 +68,53 @@
                     @if ($barangays->isEmpty())
                         <p>No barangays found.</p>
                     @else
-                        <table class="table table-hover table-sm">
-                            <thead>
-                                <tr>
-                                    <th onclick="handleSort('id')">ID</th>
-                                    <th onclick="handleSort('name')">Name</th>
-                                    <th onclick="handleSort('created_at')">Created At</th>
-                                    <th onclick="handleSort('updated_at')">Updated At</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($barangays as $barangay)
+                        <div class="table-responsive">
+                            <table class="table table-hover table-sm">
+                                <thead>
                                     <tr>
-                                        <td>{{ $barangay->id }}</td>
-                                        <td>{{ $barangay->name }}</td>
-                                        <td>{{ $barangay->created_at }}</td>
-                                        <td>{{ $barangay->updated_at }}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showBarangayModal{{ $barangay->id }}">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editBarangayModal{{ $barangay->id }}">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteBarangayModal{{ $barangay->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
+                                        <th onclick="handleSort('id')">ID</th>
+                                        <th onclick="handleSort('name')">Name</th>
+                                        <th onclick="handleSort('created_at')">Created At</th>
+                                        <th onclick="handleSort('updated_at')">Updated At</th>
+                                        <th>Actions</th>
                                     </tr>
-                                    @include('admin.barangays.show_modal', ['barangay' => $barangay])
-                                    @include('admin.barangays.edit_modal', ['barangay' => $barangay])
-                                    @include('admin.barangays.delete_modal', ['barangay' => $barangay])
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($barangays as $barangay)
+                                        <tr>
+                                            <td>{{ $barangay->id }}</td>
+                                            <td>{{ $barangay->name }}</td>
+                                            <td>{{ $barangay->created_at }}</td>
+                                            <td>{{ $barangay->updated_at }}</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                        data-target="#showBarangayModal{{ $barangay->id }}">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                        data-target="#editBarangayModal{{ $barangay->id }}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        data-target="#deleteBarangayModal{{ $barangay->id }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @include('admin.barangays.show_modal', ['barangay' => $barangay])
+                                        @include('admin.barangays.edit_modal', ['barangay' => $barangay])
+                                        @include('admin.barangays.delete_modal', ['barangay' => $barangay])
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     @endif
                 </div>
             </div>
         </div>
+
         <div class="my-4 text-muted">
             <div class="float-left">
                 Showing {{ $barangays->firstItem() }} to {{ $barangays->lastItem() }} of {{ $barangays->total() }}

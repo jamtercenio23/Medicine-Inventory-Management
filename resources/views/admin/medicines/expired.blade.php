@@ -87,7 +87,8 @@
                             </select>
                         </div>
                         <div class="form-group flex-grow-1">
-                            <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
+                            <input type="text" class="form-control" placeholder="Search" name="search"
+                                value="{{ $query }}">
                         </div>
                         <div class="form-group ml-2">
                             <button class="btn btn-secondary" type="submit">
@@ -128,8 +129,9 @@
                                         <td>{{ $medicine->expiration_date }}</td>
                                         <td>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteExpiredModal{{ $medicine->id }}"><i
-                                                    class="fas fa-trash"></i> </button>
+                                                data-target="#deleteExpiredModal{{ $medicine->id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     <!-- Delete Expired Medicine Modal -->
@@ -143,6 +145,7 @@
                 </div>
             </div>
         </div>
+
         <div class="my-4 text-muted">
             <div class="float-left">
                 Showing {{ $expiredMedicines->firstItem() }} to {{ $expiredMedicines->lastItem() }} of
@@ -467,7 +470,5 @@
         body.dark-mode #generateExpiredReportModal .btn-secondary {
             color: #fff;
         }
-
-
     </style>
 @endsection

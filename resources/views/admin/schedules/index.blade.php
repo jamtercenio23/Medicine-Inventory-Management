@@ -90,18 +90,20 @@
                                         <td>{{ $schedule->created_at }}</td>
                                         <td>{{ $schedule->updated_at }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showScheduleModal{{ $schedule->id }}">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editScheduleModal{{ $schedule->id }}">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteScheduleModal{{ $schedule->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <div class="btn-group" role="group" aria-label="Schedule Actions">
+                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                    data-target="#showScheduleModal{{ $schedule->id }}">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                    data-target="#editScheduleModal{{ $schedule->id }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#deleteScheduleModal{{ $schedule->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -120,6 +122,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="my-4 text-muted">
             <div class="float-left">

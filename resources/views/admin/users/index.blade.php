@@ -107,14 +107,16 @@
                                         <td>{{ $user->created_at }}</td>
                                         <td>{{ $user->updated_at }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editUserModal{{ $user->id }}">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteUserModal{{ $user->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <div class="btn-group" role="group" aria-label="User Actions">
+                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                    data-target="#editUserModal{{ $user->id }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#deleteUserModal{{ $user->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -130,6 +132,7 @@
                 </div>
             </div>
         </div>
+
         <div class="my-4 text-muted">
             <div class="float-left">
                 Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }}

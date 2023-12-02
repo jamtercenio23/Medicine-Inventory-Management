@@ -114,7 +114,7 @@
                                     <th onclick="handleSort('category_id')">Category</th>
                                     <th onclick="handleSort('price')">Price</th>
                                     <th onclick="handleSort('expiration_date')">Expiration Date</th>
-                                    <th>Actions</th>
+                                    {{-- <th>Actions</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -126,17 +126,19 @@
                                         <td>{{ $medicine->category->name }}</td>
                                         <td>₱ {{ $medicine->price }}</td>
                                         <td>{{ $medicine->expiration_date }}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editOutOfStockModal{{ $medicine->id }}">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                        </td>
+                                        {{-- <td>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                    data-target="#editOutOfStockModal{{ $medicine->id }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </div>
+                                        </td> --}}
                                     </tr>
                                     <!-- Edit Out of Stock Medicine Modal -->
-                                    @include('admin.medicines.edit_out_of_stock_modal', [
+                                    {{-- @include('admin.medicines.edit_out_of_stock_modal', [
                                         'medicine' => $medicine,
-                                    ])
+                                    ]) --}}
                                 @endforeach
                             </tbody>
                         </table>
@@ -144,6 +146,7 @@
                 </div>
             </div>
         </div>
+
         <div class="my-4 text-muted">
             <div class="float-left">
                 Showing {{ $outOfStockMedicines->firstItem() }} to {{ $outOfStockMedicines->lastItem() }} of

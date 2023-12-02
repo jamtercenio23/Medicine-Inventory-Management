@@ -92,8 +92,7 @@
                             </select>
                         </div>
                         <div class="form-group flex-grow-1">
-                            <input type="text" class="form-control" placeholder="Search" name="search"
-                                value="{{ $query }}">
+                            <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
                         </div>
                         <div class="form-group ml-2">
                             <button class="btn btn-secondary" type="submit">
@@ -140,25 +139,24 @@
                                         <td>{{ $barangayMedicine->expiration_date }}</td>
                                         @if (auth()->user()->isBHW())
                                             <td>
+                                                <div class="btn-group" role="group" aria-label="Out-of-Stock Actions">
                                                 @if ($barangayMedicine->status == 'approved')
-                                                    <button type="button" class="btn btn-info btn-sm"
-                                                        data-toggle="modal"
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                         data-target="#statusModal{{ $barangayMedicine->id }}">
                                                         <i class="fas fa-info"></i> Status
                                                     </button>
                                                 @elseif ($barangayMedicine->requested_at)
-                                                    <button type="button" class="btn btn-info btn-sm"
-                                                        data-toggle="modal"
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                         data-target="#statusModal{{ $barangayMedicine->id }}">
                                                         <i class="fas fa-info"></i> Status
                                                     </button>
                                                 @else
-                                                    <button type="button" class="btn btn-danger  btn-sm"
-                                                        data-toggle="modal"
+                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                                         data-target="#editBarangayOutOfStockModal{{ $barangayMedicine->id }}">
                                                         <i class="fas fa-exclamation"></i> Request Restock
                                                     </button>
                                                 @endif
+                                                </div>
                                             </td>
                                         @endif
                                     </tr>
@@ -176,6 +174,7 @@
                 </div>
             </div>
         </div>
+
         <div class="my-4 text-muted">
             <div class="float-left">
                 Showing {{ $outOfStockMedicines->firstItem() }} to {{ $outOfStockMedicines->lastItem() }} of

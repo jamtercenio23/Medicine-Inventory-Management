@@ -129,12 +129,17 @@
                                         <td>{{ $distribution_barangay->distribution_date }}</td>
                                         <td>{{ $distribution_barangay->created_at }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showDistributionBarangayModal{{ $distribution_barangay->id }}">
-                                                <i class="fas fa-eye"></i> </button>
-                                            {{-- <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteDistributionBarangayModal{{ $distribution_barangay->id }}">
-                                                <i class="fas fa-trash"></i> </button> --}}
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                    data-target="#showDistributionBarangayModal{{ $distribution_barangay->id }}">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <!-- Uncomment this part if you want to include the delete button -->
+                                                {{-- <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#deleteDistributionBarangayModal{{ $distribution_barangay->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button> --}}
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -144,9 +149,9 @@
                                     ])
 
                                     <!-- Delete Distribution to Barangay Modal -->
-                                    @include('admin.distribution_barangay.delete_modal', [
+                                    {{-- @include('admin.distribution_barangay.delete_modal', [
                                         'distribution' => $distribution_barangay,
-                                    ])
+                                    ]) --}}
                                 @endforeach
                             </tbody>
                         </table>

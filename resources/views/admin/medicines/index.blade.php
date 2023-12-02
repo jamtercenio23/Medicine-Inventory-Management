@@ -131,18 +131,20 @@
                                             <td>{{ $medicine->created_at ? $medicine->created_at : 'N/A ' }}</td>
                                             <td>{{ $medicine->updated_at ? $medicine->updated_at : 'N/A ' }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                    data-target="#showMedicineModal{{ $medicine->id }}">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                    data-target="#editMedicineModal{{ $medicine->id }}">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                    data-target="#deleteMedicineModal{{ $medicine->id }}">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                        data-target="#showMedicineModal{{ $medicine->id }}">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                        data-target="#editMedicineModal{{ $medicine->id }}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        data-target="#deleteMedicineModal{{ $medicine->id }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
 
@@ -163,6 +165,7 @@
 
             </div>
         </div>
+
         <div class="my-4 text-muted">
             <div class="float-left">
                 Showing {{ $medicines->firstItem() }} to {{ $medicines->lastItem() }} of {{ $medicines->total() }}

@@ -90,7 +90,8 @@
                             </select>
                         </div>
                         <div class="form-group flex-grow-1">
-                            <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
+                            <input type="text" class="form-control" placeholder="Search" name="search"
+                                value="{{ $query }}">
                         </div>
                         <div class="form-group ml-2">
                             <button class="btn btn-secondary" type="submit">
@@ -133,15 +134,20 @@
                                         <td>{{ $distribution->created_at }}</td>
                                         <td>{{ $distribution->updated_at }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showDistributionModal{{ $distribution->id }}">
-                                                <i class="fas fa-eye"></i> </button>
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editDistributionModal{{ $distribution->id }}">
-                                                <i class="fas fa-edit"></i> </button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#deleteDistributionModal{{ $distribution->id }}">
-                                                <i class="fas fa-trash"></i> </button>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                    data-target="#showDistributionModal{{ $distribution->id }}">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                    data-target="#editDistributionModal{{ $distribution->id }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#deleteDistributionModal{{ $distribution->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -166,6 +172,7 @@
                 @endif
             </div>
         </div>
+
 
         <div class="my-4 text-muted">
             <div class="float-left">

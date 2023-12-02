@@ -149,20 +149,22 @@
                                             <td>{{ $barangayDistribution->updated_at }}</td>
                                         @endif
                                         <td>
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showDistributionModal{{ $barangayDistribution->id }}">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            @if (auth()->user()->isBHW())
-                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                    data-target="#editDistributionModal{{ $barangayDistribution->id }}">
-                                                    <i class="fas fa-edit"></i>
+                                            <div class="btn-group" role="group" aria-label="Distribution Actions">
+                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                    data-target="#showDistributionModal{{ $barangayDistribution->id }}">
+                                                    <i class="fas fa-eye"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                    data-target="#deleteDistributionModal{{ $barangayDistribution->id }}">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            @endif
+                                                @if (auth()->user()->isBHW())
+                                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
+                                                        data-target="#editDistributionModal{{ $barangayDistribution->id }}">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                        data-target="#deleteDistributionModal{{ $barangayDistribution->id }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                @endif
+                                            </div>
                                         </td>
                                     </tr>
                                     <!-- Show Distribution Modal -->
@@ -186,6 +188,7 @@
                 </div>
             </div>
         </div>
+
         <div class="my-4 text-muted">
             <div class="float-left">
                 Showing {{ $barangayDistributions->firstItem() }} to {{ $barangayDistributions->lastItem() }} of

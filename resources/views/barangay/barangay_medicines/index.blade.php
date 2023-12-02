@@ -138,10 +138,12 @@
                                             <td>{{ $barangayMedicine->created_at }}</td>
                                         @endif
                                         <td>
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                                data-target="#showbarangayMedicineModal{{ $barangayMedicine->id }}">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
+                                            <div class="btn-group" role="group" aria-label="Medicine Actions">
+                                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                    data-target="#showbarangayMedicineModal{{ $barangayMedicine->id }}">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                     @include('barangay.barangay_medicines.show_modal', [
@@ -154,6 +156,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="my-4 text-muted">
             <div class="float-left">
@@ -484,6 +487,5 @@
         body.dark-mode #generateBarangayMedicineReportModal .btn-secondary {
             color: #fff;
         }
-
     </style>
 @endsection
