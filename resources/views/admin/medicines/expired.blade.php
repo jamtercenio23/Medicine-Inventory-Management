@@ -48,12 +48,24 @@
             </div>
         </div>
         @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
+            <div class="alert alert-success position-fixed bottom-0 end-0 mb-3 mr-3" style="z-index: 9999;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        {{ session('success') }}
+                    </div>
+                    <i class="fas fa-solid fa-xmark" style="cursor: pointer; margin-left: 10px;" data-bs-dismiss="alert"
+                        aria-label="Close"></i>
+                </div>
             </div>
         @elseif (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
+            <div class="alert alert-danger position-fixed bottom-0 end-0 mb-3 mr-3" style="z-index: 9999;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        {{ session('error') }}
+                    </div>
+                    <i class="fas fa-solid fa-xmark" style="cursor: pointer; margin-left: 10px;" data-bs-dismiss="alert"
+                        aria-label="Close"></i>
+                </div>
             </div>
         @endif
 
@@ -63,10 +75,10 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <div class="float-right">
+                <div class="d-flex justify-content-end align-items-center">
                     <form action="{{ route('medicines.expired') }}" method="GET" class="form-inline">
-                        <div class="input-group mr-2">
-                            <label for="entriesSelect" class="mr-2">Show:</label>
+                        <div class="form-group mr-2">
+                            <label for="entriesSelect" class="mr-2 d-none d-md-inline">Show:</label>
                             <select id="entriesSelect" class="form-control" name="entries">
                                 <option value="10" {{ $entries == 10 ? 'selected' : '' }}>10</option>
                                 <option value="25" {{ $entries == 25 ? 'selected' : '' }}>25</option>
@@ -74,14 +86,13 @@
                                 <option value="100" {{ $entries == 100 ? 'selected' : '' }}>100</option>
                             </select>
                         </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="search"
-                                value="{{ $query }}">
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary btn" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
+                        <div class="form-group flex-grow-1">
+                            <input type="text" class="form-control" placeholder="Search" name="search" value="{{ $query }}">
+                        </div>
+                        <div class="form-group ml-2">
+                            <button class="btn btn-secondary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -214,6 +225,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#entriesSelect').change(function() {
@@ -455,5 +467,7 @@
         body.dark-mode #generateExpiredReportModal .btn-secondary {
             color: #fff;
         }
+
+
     </style>
 @endsection

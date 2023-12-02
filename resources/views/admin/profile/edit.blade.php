@@ -8,12 +8,24 @@
             <h1>Edit Profile</h1>
         </div>
         @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
+            <div class="alert alert-success position-fixed bottom-0 end-0 mb-3 mr-3" style="z-index: 9999;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        {{ session('success') }}
+                    </div>
+                    <i class="fas fa-solid fa-xmark" style="cursor: pointer; margin-left: 10px;" data-bs-dismiss="alert"
+                        aria-label="Close"></i>
+                </div>
             </div>
         @elseif (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
+            <div class="alert alert-danger position-fixed bottom-0 end-0 mb-3 mr-3" style="z-index: 9999;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        {{ session('error') }}
+                    </div>
+                    <i class="fas fa-solid fa-xmark" style="cursor: pointer; margin-left: 10px;" data-bs-dismiss="alert"
+                        aria-label="Close"></i>
+                </div>
             </div>
         @endif
 
@@ -138,6 +150,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrap.com/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         .card {
             border: 1px solid #ccc;
