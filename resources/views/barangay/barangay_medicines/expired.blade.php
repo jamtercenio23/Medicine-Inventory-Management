@@ -4,14 +4,16 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="mb-8 d-flex justify-content-between align-items-center">
-            <h1>Barangay Expired Medicines</h1>
-            @if (auth()->user()->isBHW())
-                <button type="button" class="btn btn-success" data-toggle="modal"
-                    data-target="#generateBarangayExpiredReportModal">
-                    <i class="fas fa-file-export"></i> Report
-                </button>
-            @endif
+        <div class="mb-8 d-sm-flex justify-content-between align-items-center">
+            <h1 class="mb-3 mb-sm-0">Barangay Expired Medicines</h1>
+            <div class="d-flex flex-column flex-sm-row">
+                @if (auth()->user()->isBHW())
+                    <button type="button" class="btn btn-success mb-2 mb-sm-0" data-toggle="modal"
+                        data-target="#generateBarangayExpiredReportModal">
+                        <i class="fas fa-file-export"></i> Report
+                    </button>
+                @endif
+            </div>
         </div>
         <div class="modal fade" id="generateBarangayExpiredReportModal" tabindex="-1" role="dialog"
             aria-labelledby="generateBarangayExpiredReportModalLabel" aria-hidden="true">
@@ -56,8 +58,9 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="breadcrumb">
-            <h6><a href="{{ route('home') }}">Dashboard</a> / <a href="{{ route('barangay-medicines.index') }}">Barangay Medicines</a> / Expired Medicines</h6>
+        <div class="breadcrumb" style="margin-top: 10px">
+            <h6><a href="{{ route('home') }}">Dashboard</a> / <a href="{{ route('barangay-medicines.index') }}">Barangay
+                    Medicines</a> / Expired Medicines</h6>
         </div>
         <div class="card">
             <div class="card-header">
@@ -142,14 +145,16 @@
         </div>
         <div class="my-4 text-muted">
             <div class="float-left">
-                Showing {{ $expiredMedicines->firstItem() }} to {{ $expiredMedicines->lastItem() }} of {{ $expiredMedicines->total() }}
+                Showing {{ $expiredMedicines->firstItem() }} to {{ $expiredMedicines->lastItem() }} of
+                {{ $expiredMedicines->total() }}
                 entries
             </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
                     <li class="page-item {{ $expiredMedicines->currentPage() == 1 ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $expiredMedicines->previousPageUrl() }}&entries={{ $entries }}"
+                        <a class="page-link"
+                            href="{{ $expiredMedicines->previousPageUrl() }}&entries={{ $entries }}"
                             aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
@@ -177,7 +182,8 @@
 
                     @if ($showFirstDots)
                         <li class="page-item">
-                            <a class="page-link" href="{{ $expiredMedicines->url(1) }}&entries={{ $entries }}">1</a>
+                            <a class="page-link"
+                                href="{{ $expiredMedicines->url(1) }}&entries={{ $entries }}">1</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">...</a>
@@ -273,7 +279,8 @@
             }
 
             var entries = $('#entriesSelect').val(); // Get the selected number of entries
-            window.location = "{{ route('barangay-medicines.expired') }}?column=" + column + "&order=" + order + "&entries=" +
+            window.location = "{{ route('barangay-medicines.expired') }}?column=" + column + "&order=" + order +
+                "&entries=" +
                 entries;
         }
     </script>

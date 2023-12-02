@@ -4,11 +4,13 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="mb-8 d-flex justify-content-between align-items-center">
-            <h1>Role Management</h1>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createRoleModal">
-                <i class="fas fa-plus"></i> Add Role
-            </button>
+        <div class="mb-8 d-sm-flex justify-content-between align-items-center">
+            <h1 class="mb-3 mb-sm-0">Role Management</h1>
+            <div class="d-flex flex-column flex-sm-row">
+                <button type="button" class="btn btn-primary mb-2 mb-sm-0" data-toggle="modal" data-target="#createRoleModal">
+                    <i class="fas fa-plus"></i> Add Role
+                </button>
+            </div>
         </div>
 
         <div>
@@ -21,7 +23,8 @@
                     {{ session('error') }}
                 </div>
             @endif
-            <div class="breadcrumb">
+
+            <div class="breadcrumb" style="margin-top: 10px">
                 <h6><a href="{{ route('home') }}">Dashboard</a> / Roles</h6>
             </div>
         </div>

@@ -4,11 +4,11 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="mb-8 d-flex justify-content-between align-items-center">
-            <h1>Manage Patients</h1>
-            <div class="d-flex">
+        <div class="mb-8 d-sm-flex justify-content-between align-items-center">
+            <h1 class="mb-3 mb-sm-0">Manage Patients</h1>
+            <div class="d-flex flex-column flex-sm-row">
                 @if (auth()->user()->isBHW())
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                    <button type="button" class="btn btn-primary mb-2 mb-sm-0" data-toggle="modal"
                         data-target="#createBarangayPatientModal">
                         <i class="fas fa-plus"></i> Add Patient
                     </button>
@@ -61,7 +61,7 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="breadcrumb">
+        <div class="breadcrumb" style="margin-top: 10px">
             <h6><a href="{{ route('home') }}">Dashboard</a> / Barangay Patients</h6>
         </div>
         <div class="card">
@@ -106,8 +106,8 @@
                                     <th onclick="handleSort('last_name')">Last Name</th>
                                     <th onclick="handleSort('gender')">Gender</th>
                                     @if (auth()->user()->isBHW())
-                                    <th onclick="handleSort('created_at')">Created At</th>
-                                    <th onclick="handleSort('updated_at')">Updated At</th>
+                                        <th onclick="handleSort('created_at')">Created At</th>
+                                        <th onclick="handleSort('updated_at')">Updated At</th>
                                     @endif
                                     <th>Actions</th>
                                 </tr>
@@ -123,8 +123,8 @@
                                         <td>{{ $barangayPatient->last_name }}</td>
                                         <td>{{ $barangayPatient->gender }}</td>
                                         @if (auth()->user()->isBHW())
-                                        <td>{{ $barangayPatient->created_at }}</td>
-                                        <td>{{ $barangayPatient->updated_at }}</td>
+                                            <td>{{ $barangayPatient->created_at }}</td>
+                                            <td>{{ $barangayPatient->updated_at }}</td>
                                         @endif
                                         <td>
 
@@ -169,14 +169,16 @@
         </div>
         <div class="my-4 text-muted">
             <div class="float-left">
-                Showing {{ $barangayPatients->firstItem() }} to {{ $barangayPatients->lastItem() }} of {{ $barangayPatients->total() }}
+                Showing {{ $barangayPatients->firstItem() }} to {{ $barangayPatients->lastItem() }} of
+                {{ $barangayPatients->total() }}
                 entries
             </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
                     <li class="page-item {{ $barangayPatients->currentPage() == 1 ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $barangayPatients->previousPageUrl() }}&entries={{ $entries }}"
+                        <a class="page-link"
+                            href="{{ $barangayPatients->previousPageUrl() }}&entries={{ $entries }}"
                             aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
@@ -204,7 +206,8 @@
 
                     @if ($showFirstDots)
                         <li class="page-item">
-                            <a class="page-link" href="{{ $barangayPatients->url(1) }}&entries={{ $entries }}">1</a>
+                            <a class="page-link"
+                                href="{{ $barangayPatients->url(1) }}&entries={{ $entries }}">1</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">...</a>

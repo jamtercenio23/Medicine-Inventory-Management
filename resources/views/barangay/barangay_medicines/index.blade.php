@@ -4,11 +4,11 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="mb-8 d-flex justify-content-between align-items-center">
-            <h1>Barangay Medicines</h1>
-            <div class="d-flex">
+        <div class="mb-8 d-sm-flex justify-content-between align-items-center">
+            <h1 class="mb-3 mb-sm-0">Barangay Medicines</h1>
+            <div class="d-flex flex-column flex-sm-row">
                 @if (auth()->user()->isBHW())
-                    <button type="button" class="btn btn-success" data-toggle="modal"
+                    <button type="button" class="btn btn-success mb-2 mb-sm-0" data-toggle="modal"
                         data-target="#generateBarangayMedicineReportModal">
                         <i class="fas fa-file-export"></i> Report
                     </button>
@@ -59,7 +59,7 @@
             </div>
         @endif
 
-        <div class="breadcrumb">
+        <div class="breadcrumb" style="margin-top: 10px">
             <h6><a href="{{ route('home') }}">Dashboard</a> / Barangay Medicines</h6>
         </div>
 
@@ -106,7 +106,7 @@
                                     <th onclick="handleSort('category')">Category</th>
                                     <th onclick="handleSort('stocks')">Stocks</th>
                                     @if (auth()->user()->isBHW())
-                                    <th onclick="handleSort('created_at')">Added At</th>
+                                        <th onclick="handleSort('created_at')">Added At</th>
                                     @endif
                                     <th>Action</th>
                                 </tr>
@@ -123,7 +123,7 @@
                                         <td>{{ $barangayMedicine->medicine->category->name }}</td>
                                         <td>{{ $barangayMedicine->stocks }}</td>
                                         @if (auth()->user()->isBHW())
-                                        <td>{{ $barangayMedicine->created_at }}</td>
+                                            <td>{{ $barangayMedicine->created_at }}</td>
                                         @endif
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
@@ -145,14 +145,16 @@
 
         <div class="my-4 text-muted">
             <div class="float-left">
-                Showing {{ $barangayMedicines->firstItem() }} to {{ $barangayMedicines->lastItem() }} of {{ $barangayMedicines->total() }}
+                Showing {{ $barangayMedicines->firstItem() }} to {{ $barangayMedicines->lastItem() }} of
+                {{ $barangayMedicines->total() }}
                 entries
             </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
                     <li class="page-item {{ $barangayMedicines->currentPage() == 1 ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $barangayMedicines->previousPageUrl() }}&entries={{ $entries }}"
+                        <a class="page-link"
+                            href="{{ $barangayMedicines->previousPageUrl() }}&entries={{ $entries }}"
                             aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
@@ -180,7 +182,8 @@
 
                     @if ($showFirstDots)
                         <li class="page-item">
-                            <a class="page-link" href="{{ $barangayMedicines->url(1) }}&entries={{ $entries }}">1</a>
+                            <a class="page-link"
+                                href="{{ $barangayMedicines->url(1) }}&entries={{ $entries }}">1</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">...</a>
@@ -280,7 +283,8 @@
             }
 
             var entries = $('#entriesSelect').val(); // Get the selected number of entries
-            window.location = "{{ route('barangay-medicines.index') }}?column=" + column + "&order=" + order + "&entries=" +
+            window.location = "{{ route('barangay-medicines.index') }}?column=" + column + "&order=" + order +
+                "&entries=" +
                 entries;
         }
     </script>

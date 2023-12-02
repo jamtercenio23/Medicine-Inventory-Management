@@ -4,10 +4,11 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="mb-8 d-flex justify-content-between align-items-center">
-            <h1>Manage Patients</h1>
-            <div class="d-flex">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createPatientModal">
+        <div class="mb-8 d-sm-flex justify-content-between align-items-center">
+            <h1 class="mb-3 mb-sm-0">Manage Patients</h1>
+            <div class="d-flex flex-column flex-sm-row">
+                <button type="button" class="btn btn-primary mb-2 mb-sm-0" data-toggle="modal"
+                    data-target="#createPatientModal">
                     <i class="fas fa-plus"></i> Add Patient
                 </button>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#generatePatientReportModal">
@@ -57,7 +58,8 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="breadcrumb">
+
+        <div class="breadcrumb" style="margin-top: 10px">
             <h6><a href="{{ route('home') }}">Dashboard</a> / Health Center Patients</h6>
         </div>
         <div class="card">
@@ -114,17 +116,17 @@
                                         <td>{{ $patient->first_name }}</td>
                                         <td>{{ $patient->last_name }}</td>
                                         <td>{{ $patient->gender }}</td>
-                                        <td>{{ $patient->created_at ? $patient->created_at : 'N/A '}}</td>
+                                        <td>{{ $patient->created_at ? $patient->created_at : 'N/A ' }}</td>
                                         <td>{{ $patient->creator ? $patient->creator->name : 'N/A' }}</td>
-                                        <td>{{ $patient->updated_at ? $patient->updated_at : 'N/A '}}</td>
+                                        <td>{{ $patient->updated_at ? $patient->updated_at : 'N/A ' }}</td>
                                         <td>{{ $patient->updater ? $patient->updater->name : 'N/A' }}</td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#showPatientModal{{ $patient->id }}">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <button type of="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                                data-target="#editPatientModal{{ $patient->id }}">
+                                            <button type of="button" class="btn btn-warning btn-sm"
+                                                data-toggle="modal" data-target="#editPatientModal{{ $patient->id }}">
                                                 <i class="fas fa-edit"></i>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"

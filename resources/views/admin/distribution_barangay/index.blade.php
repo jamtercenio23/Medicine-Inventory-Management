@@ -4,10 +4,10 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="mb-8 d-flex justify-content-between align-items-center">
-            <h1>Barangay Distribution</h1>
-            <div class="d-flex">
-                <button type="button" class="btn btn-primary" data-toggle="modal"
+        <div class="mb-8 d-sm-flex justify-content-between align-items-center">
+            <h1 class="mb-3 mb-sm-0">Barangay Distribution</h1>
+            <div class="d-flex flex-column flex-sm-row">
+                <button type="button" class="btn btn-primary mb-2 mb-sm-0" data-toggle="modal"
                     data-target="#createDistributionBarangayModal">
                     <i class="fas fa-plus"></i> Add Distribution
                 </button>
@@ -61,7 +61,7 @@
             </div>
         @endif
 
-        <div class="breadcrumb">
+        <div class="breadcrumb" style="margin-top: 10px">
             <h6><a href="{{ route('home') }}">Dashboard</a> / Distribution for Barangays</h6>
         </div>
         <div class="card">
@@ -146,13 +146,15 @@
 
         <div class="my-4 text-muted">
             <div class="float-left">
-                Showing {{ $distribution_barangays->firstItem() }} to {{ $distribution_barangays->lastItem() }} of {{ $distribution_barangays->total() }} entries
+                Showing {{ $distribution_barangays->firstItem() }} to {{ $distribution_barangays->lastItem() }} of
+                {{ $distribution_barangays->total() }} entries
             </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
                     <li class="page-item {{ $distribution_barangays->currentPage() == 1 ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $distribution_barangays->previousPageUrl() }}&entries={{ $entries }}"
+                        <a class="page-link"
+                            href="{{ $distribution_barangays->previousPageUrl() }}&entries={{ $entries }}"
                             aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
@@ -180,7 +182,8 @@
 
                     @if ($showFirstDots)
                         <li class="page-item">
-                            <a class="page-link" href="{{ $distribution_barangays->url(1) }}&entries={{ $entries }}">1</a>
+                            <a class="page-link"
+                                href="{{ $distribution_barangays->url(1) }}&entries={{ $entries }}">1</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">...</a>
@@ -205,7 +208,8 @@
                     @endif
 
                     <li class="page-item {{ $distribution_barangays->currentPage() == $lastPage ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $distribution_barangays->nextPageUrl() }}&entries={{ $entries }}"
+                        <a class="page-link"
+                            href="{{ $distribution_barangays->nextPageUrl() }}&entries={{ $entries }}"
                             aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
@@ -279,7 +283,8 @@
             }
 
             var entries = $('#entriesSelect').val(); // Get the selected number of entries
-            window.location = "{{ route('distribution_barangay.index') }}?column=" + column + "&order=" + order + "&entries=" +
+            window.location = "{{ route('distribution_barangay.index') }}?column=" + column + "&order=" + order +
+                "&entries=" +
                 entries;
         }
     </script>

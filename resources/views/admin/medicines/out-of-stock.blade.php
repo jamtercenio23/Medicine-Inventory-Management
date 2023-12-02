@@ -4,10 +4,11 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="mb-8 d-flex justify-content-between align-items-center">
-            <h1>Out of Stock Medicines</h1>
-            <div class="d-flex">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#generateOutOfStockReportModal">
+        <div class="mb-8 d-sm-flex justify-content-between align-items-center">
+            <h1 class="mb-3 mb-sm-0">Out of Stock Medicines</h1>
+            <div class="d-flex flex-column flex-sm-row">
+                <button type="button" class="btn btn-success mb-2 mb-sm-0" data-toggle="modal"
+                    data-target="#generateOutOfStockReportModal">
                     <i class="fas fa-file-export"></i> Report
                 </button>
             </div>
@@ -57,8 +58,10 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="breadcrumb">
-            <h6><a href="{{ route('home') }}">Dashboard</a> / <a href="{{ route('medicines.index') }}">Medicines</a> / Out of Stock Medicines</h6>
+
+        <div class="breadcrumb" style="margin-top: 10px">
+            <h6><a href="{{ route('home') }}">Dashboard</a> / <a href="{{ route('medicines.index') }}">Medicines</a> / Out
+                of Stock Medicines</h6>
         </div>
         <div class="card">
             <div class="card-header">
@@ -132,14 +135,16 @@
         </div>
         <div class="my-4 text-muted">
             <div class="float-left">
-                Showing {{ $outOfStockMedicines->firstItem() }} to {{ $outOfStockMedicines->lastItem() }} of {{ $outOfStockMedicines->total() }}
+                Showing {{ $outOfStockMedicines->firstItem() }} to {{ $outOfStockMedicines->lastItem() }} of
+                {{ $outOfStockMedicines->total() }}
                 entries
             </div>
             <div class="float-right">
                 <!-- Bootstrap Pagination -->
                 <ul class="pagination">
                     <li class="page-item {{ $outOfStockMedicines->currentPage() == 1 ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $outOfStockMedicines->previousPageUrl() }}&entries={{ $entries }}"
+                        <a class="page-link"
+                            href="{{ $outOfStockMedicines->previousPageUrl() }}&entries={{ $entries }}"
                             aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
@@ -167,7 +172,8 @@
 
                     @if ($showFirstDots)
                         <li class="page-item">
-                            <a class="page-link" href="{{ $outOfStockMedicines->url(1) }}&entries={{ $entries }}">1</a>
+                            <a class="page-link"
+                                href="{{ $outOfStockMedicines->url(1) }}&entries={{ $entries }}">1</a>
                         </li>
                         <li class="page-item disabled">
                             <a class="page-link">...</a>
@@ -192,7 +198,8 @@
                     @endif
 
                     <li class="page-item {{ $outOfStockMedicines->currentPage() == $lastPage ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $outOfStockMedicines->nextPageUrl() }}&entries={{ $entries }}"
+                        <a class="page-link"
+                            href="{{ $outOfStockMedicines->nextPageUrl() }}&entries={{ $entries }}"
                             aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>

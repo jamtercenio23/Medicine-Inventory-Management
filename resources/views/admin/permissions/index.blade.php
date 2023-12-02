@@ -19,7 +19,8 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="breadcrumb">
+
+        <div class="breadcrumb" style="margin-top: 10px">
             <h6><a href="{{ route('home') }}">Dashboard</a> / Permissions</h6>
         </div>
         <div class="card">

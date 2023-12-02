@@ -4,14 +4,16 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="mb-8 d-flex justify-content-between align-items-center">
-            <h1>Barangay Out of Stock Medicines</h1>
-            @if (auth()->user()->isBHW())
-                <button type="button" class="btn btn-success" data-toggle="modal"
-                    data-target="#generateBarangayOutOfStockReportModal">
-                    <i class="fas fa-file-export"></i> Report
-                </button>
-            @endif
+        <div class="mb-8 d-sm-flex justify-content-between align-items-center">
+            <h1 class="mb-3 mb-sm-0">Barangay Out of Stock Medicines</h1>
+            <div class="d-flex flex-column flex-sm-row">
+                @if (auth()->user()->isBHW())
+                    <button type="button" class="btn btn-success mb-2 mb-sm-0" data-toggle="modal"
+                        data-target="#generateBarangayOutOfStockReportModal">
+                        <i class="fas fa-file-export"></i> Report
+                    </button>
+                @endif
+            </div>
         </div>
 
         <!-- Generate Out of Stock Report Modal -->
@@ -60,7 +62,7 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="breadcrumb">
+        <div class="breadcrumb" style="margin-top: 10px">
             <h6><a href="{{ route('home') }}">Dashboard</a> / <a href="{{ route('barangay-medicines.index') }}">Barangay
                     Medicines</a> / Out of Stock Medicines</h6>
         </div>

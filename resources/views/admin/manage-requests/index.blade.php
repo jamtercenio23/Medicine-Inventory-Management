@@ -9,7 +9,8 @@
                 {{ session('success') }}
             </div>
         @endif
-        <div class="breadcrumb">
+
+        <div class="breadcrumb" style="margin-top: 10px">
             <h6><a href="{{ route('home') }}">Dashboard</a> / Restock Requests for Barangay</h6>
         </div>
         <div class="card">

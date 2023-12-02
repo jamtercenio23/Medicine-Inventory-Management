@@ -16,7 +16,8 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="breadcrumb">
+
+        <div class="breadcrumb" style="margin-top: 10px">
             <h6><a href="{{ route('home') }}">Dashboard</a> / Edit Profile</h6>
         </div>
         <div class="card">
