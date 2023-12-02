@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="mb-8 d-flex justify-content-between align-items-center">
-            <h1>Notification Updates</h1>
+            <h1>Dashboard Updates</h1>
         </div>
         <div class="card">
             <div class="card-body">
@@ -18,153 +18,245 @@
                 @if (Auth::user()->isAdmin())
                     <!-- Admin Dashboard -->
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Medicines</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Total Medicines: {{ $totalMedicines }}</li>
-                                        <li class="list-group-item">Out of Stock Medicines: {{ $totalOutOfStockMedicines }}
-                                        </li>
-                                        <li class="list-group-item">Nearly Out of Stock Medicines:
-                                            {{ $totalNearlyOutOfStockMedicines }}</li>
-                                        <li class="list-group-item">Expired Medicines: {{ $totalExpiredMedicines }}</li>
-                                        <li class="list-group-item">Nearly Expired Medicines:
-                                            {{ $totalNearlyExpiredMedicines }}</li>
-                                    </ul>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Total Medicines</h5>
+                                        <p class="card-text" style="font-size: 24px;">{{ $totalMedicines }}</p>
+                                    </div>
+                                    <i class="fas fa-pills" style="font-size: 36px; color: #3498db;"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Distributions</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Total Barangay Distributions:
-                                            {{ $totalDistributionBarangay }}</li>
-                                        <li class="list-group-item">Total Barangay Distributions added today:
-                                            {{ $totalBarangayDistributionAddedToday }}</li>
-                                        <li class="list-group-item">Total Patient Distributions:
-                                            {{ $totalPatientDistributions }}</li>
-                                        <li class="list-group-item">Total Patient Distributions added today:
-                                            {{ $totalPatientDistributionAddedToday }}</li>
-                                    </ul>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Out of Stock Medicines</h5>
+                                        <p class="card-text" style="font-size: 24px;">{{ $totalOutOfStockMedicines }}</p>
+                                    </div>
+                                    <i class="fas fa-ban" style="font-size: 36px; color: #e74c3c;"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Population</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Total Barangays: {{ $totalBarangay }}</li>
-                                        <li class="list-group-item">Total Patients: {{ $totalPatients }}</li>
-                                        <li class="list-group-item">Total Patients added today:
-                                            {{ $totalPatientsAddedToday }}</li>
-                                    </ul>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Expired Medicines</h5>
+                                        <p class="card-text" style="font-size: 24px;">{{ $totalExpiredMedicines }}</p>
+                                    </div>
+                                    <i class="fas fa-calendar-times" style="font-size: 36px; color: #f39c12;"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Total Barangay Distributions</h5>
+                                        <p class="card-text" style="font-size: 24px;">{{ $totalDistributionBarangay }}</p>
+                                    </div>
+                                    <i class="fas fa-hospital" style="font-size: 36px; color: #27ae60;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Total Patient Distributions</h5>
+                                        <p class="card-text" style="font-size: 24px;">{{ $totalPatientDistributions }}</p>
+                                    </div>
+                                    <i class="fas fa-user-friends" style="font-size: 36px; color: #3498db;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Total Barangays</h5>
+                                        <p class="card-text" style="font-size: 24px;">{{ $totalBarangay }}</p>
+                                    </div>
+                                    <i class="fas fa-city" style="font-size: 36px; color: #e74c3c;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Total Patients</h5>
+                                        <p class="card-text" style="font-size: 24px;">{{ $totalPatients }}</p>
+                                    </div>
+                                    <i class="fas fa-user" style="font-size: 36px; color: #f39c12;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card card-scrollable">
                                 <div class="card-body">
-                                    <h5 class="card-title">Newly Added Medicines</h5>
-                                    @if(count($newlyAddedMedicines) > 0)
-                                        <ul class="list-group list-group-flush">
-                                            @foreach ($newlyAddedMedicines as $medicine)
-                                                <li class="list-group-item">
-                                                    <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
-                                                    <strong>Category:</strong> {{ $medicine->category->name }}<br>
-                                                    <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
-                                                    <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title">Nearly Out of Stock Medicines</h5>
+                                        <span
+                                            style="font-weight: bold; font-size: 25px;">{{ $totalNearlyOutOfStockMedicines }}</span>
+                                    </div>
+                                    @if (count($nearlyOutOfStockMedicines) > 0)
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Category</th>
+                                                        <th>Stocks</th>
+                                                        <th>Expiration Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($nearlyOutOfStockMedicines as $medicine)
+                                                        <tr>
+                                                            <td>{{ $medicine->generic_name }} -
+                                                                {{ $medicine->brand_name }}</td>
+                                                            <td>{{ $medicine->category->name }}</td>
+                                                            <td>{{ $medicine->stocks }}</td>
+                                                            <td>{{ $medicine->expiration_date }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            {{ $nearlyOutOfStockMedicines->appends(['tab' => 'out_of_stock_page'])->links('vendor.pagination.bootstrap-4') }}
+                                        </div>
                                     @else
-                                        <p>No newly added medicines.</p>
+                                        <p class="text-center">No Nearly Out of Stock Medicines.</p>
                                     @endif
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4 card-scrollable">
+
+                        <div class="col-md-6 mb-4">
+                            <div class="card card-scrollable">
                                 <div class="card-body">
-                                    <h5 class="card-title">Nearly Out of Stock Medicines</h5>
-                                    @if(count($nearlyOutOfStockMedicines) > 0)
-                                        <ul class="list-group list-group-flush">
-                                            @foreach ($nearlyOutOfStockMedicines as $medicine)
-                                                <li class="list-group-item">
-                                                    <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
-                                                    <strong>Category:</strong> {{ $medicine->category->name }}<br>
-                                                    <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
-                                                    <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title">Nearly Expired Medicines</h5>
+                                        <span
+                                            style="font-weight: bold; font-size: 25px;">{{ $totalNearlyExpiredMedicines }}</span>
+                                    </div>
+                                    @if (count($nearlyExpiredMedicines) > 0)
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Category</th>
+                                                        <th>Stocks</th>
+                                                        <th>Expiration Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($nearlyExpiredMedicines as $medicine)
+                                                        <tr>
+                                                            <td>{{ $medicine->generic_name }} -
+                                                                {{ $medicine->brand_name }}</td>
+                                                            <td>{{ $medicine->category->name }}</td>
+                                                            <td>{{ $medicine->stocks }}</td>
+                                                            <td>{{ $medicine->expiration_date }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            {{ $nearlyExpiredMedicines->appends(['tab' => 'expired_page'])->links('vendor.pagination.bootstrap-4') }}
+                                        </div>
                                     @else
-                                        <p>No Nearly Out of Stock Medicines.</p>
+                                        <p class="text-center">No Nearly Expired Medicines.</p>
                                     @endif
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4 card-scrollable">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card card-scrollable">
                                 <div class="card-body">
-                                    <h5 class="card-title">Nearly Expired Medicines</h5>
-                                    @if(count($nearlyExpiredMedicines) > 0)
-                                        <ul class="list-group list-group-flush">
-                                            @foreach ($nearlyExpiredMedicines as $medicine)
-                                                <li class="list-group-item">
-                                                    <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
-                                                    <strong>Category:</strong> {{ $medicine->category->name }}<br>
-                                                    <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
-                                                    <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <p>No Nearly Expired Medicines.</p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body card-scrollable">
                                     <h5 class="card-title">Schedules for Distribution This Week</h5>
-                                    <ul class="list-group list-group-flush">
-                                        @forelse ($distributionSchedulesThisWeek as $schedule)
-                                            <li class="list-group-item">
-                                                <strong>Barangay:</strong> {{ $schedule->barangay->name }}<br>
-                                                <strong>Medicine:</strong> {{ $schedule->medicine->generic_name }} -
-                                                {{ $schedule->medicine->generic_name }}<br>
-                                                <strong>Stocks:</strong> {{ $schedule->stock }}<br>
-                                                <strong>Schedule Date:</strong>
-                                                {{ is_string($schedule->schedule_date_time) ? $schedule->schedule_date_time : $schedule->schedule_date_time->format('Y-m-d H:i:s') }}
-                                            </li>
-                                        @empty
-                                            <li class="list-group-item">No distribution schedules for this week.</li>
-                                        @endforelse
-                                    </ul>
+                                    @if (count($distributionSchedulesThisWeek) > 0)
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Barangay</th>
+                                                        <th>Medicine</th>
+                                                        <th>Stocks</th>
+                                                        <th>Schedule Date/Time</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($distributionSchedulesThisWeek as $schedule)
+                                                        <tr>
+                                                            <td>{{ $schedule->barangay->name }}</td>
+                                                            <td>{{ $schedule->medicine->generic_name }} -
+                                                                {{ $schedule->medicine->brand_name }}</td>
+                                                            <td>{{ $schedule->stock }}</td>
+                                                            <td>{{ is_string($schedule->schedule_date_time) ? $schedule->schedule_date_time : $schedule->schedule_date_time->format('Y-m-d H:i:s') }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            {{ $distributionSchedulesThisWeek->appends(['tab' => 'this_week_page'])->links('vendor.pagination.bootstrap-4') }}
+                                        </div>
+                                    @else
+                                        <p class="text-center">No Distribution Schedules for this week.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
+
+                        <div class="col-md-6 mb-4">
+                            <div class="card card-scrollable">
                                 <div class="card-body">
                                     <h5 class="card-title">Schedule for Distribution Today</h5>
-                                    <ul class="list-group list-group-flush">
-                                        @forelse ($distributionSchedulesToday as $schedule)
-                                            <li class="list-group-item">
-                                                <strong>Barangay:</strong> {{ $schedule->barangay->name }}<br>
-                                                <strong>Medicine:</strong> {{ $schedule->medicine->generic_name }} -
-                                                {{ $schedule->medicine->brand_name }}<br>
-                                                <strong>Stocks:</strong> {{ $schedule->stock }}
-                                            </li>
-                                        @empty
-                                            <li class="list-group-item">No distribution schedules for today.</li>
-                                        @endforelse
-                                    </ul>
+                                    @if (count($distributionSchedulesToday) > 0)
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Barangay</th>
+                                                        <th>Medicine</th>
+                                                        <th>Stocks</th>
+                                                        <th>Schedule Date/Time</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($distributionSchedulesToday as $schedule)
+                                                        <tr>
+                                                            <td>{{ $schedule->barangay->name }}</td>
+                                                            <td>{{ $schedule->medicine->generic_name }} -
+                                                                {{ $schedule->medicine->brand_name }}</td>
+                                                            <td>{{ $schedule->stock }}</td>
+                                                            <td>{{ $schedule->schedule_date_time }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            {{ $distributionSchedulesToday->appends(['tab' => 'today_page'])->links('vendor.pagination.bootstrap-4') }}
+                                        </div>
+                                    @else
+                                        <p class="text-center">No Distribution Schedules for today.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -172,289 +264,492 @@
                 @elseif (Auth::user()->isBHW())
                     <!-- BHW Dashboard -->
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Medicines</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Total Medicines: {{ $totalBarangayMedicines }}</li>
-                                        <li class="list-group-item">Out of Stock Medicines: {{ $totalOutOfStockMedicines }}
-                                        </li>
-                                        <li class="list-group-item">Nearly Out of Stock Medicines:
-                                            {{ $totalNearlyOutOfStockMedicines }}</li>
-                                        <li class="list-group-item">Expired Medicines: {{ $totalExpiredMedicines }}</li>
-                                        <li class="list-group-item">Nearly Expired Medicines:
-                                            {{ $totalNearlyExpiredMedicines }}</li>
-                                    </ul>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Total Medicines</h5>
+                                        <p class="card-text" style="font-size: 24px;">{{ $totalBarangayMedicines }}</p>
+                                    </div>
+                                    <i class="fas fa-pills" style="font-size: 36px; color: #3498db;"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Distributions</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Total Distributions: {{ $totalBarangayDistributions }}
-                                        </li>
-                                        <li class="list-group-item">Total Distributions added today:
-                                            {{ $totalDistributionAddedToday }}</li>
-                                        <!-- Add other BHW-specific distribution details here -->
-                                    </ul>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Out of Stock Medicines</h5>
+                                        <p class="card-text" style="font-size: 24px;">
+                                            {{ $totalBarangayOutOfStockMedicines }}</p>
+                                    </div>
+                                    <i class="fas fa-ban" style="font-size: 36px; color: #e74c3c;"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Population</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Total Patients: {{ $totalBarangayPatients }}</li>
-                                        <li class="list-group-item">Total Patients added today:
-                                            {{ $totalPatientsAddedToday }}</li>
-                                    </ul>
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Expired Medicines</h5>
+                                        <p class="card-text" style="font-size: 24px;">
+                                            {{ $totalBarangayExpiredMedicines }}</p>
+                                    </div>
+                                    <i class="fas fa-calendar-times" style="font-size: 36px; color: #f39c12;"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body card-scrollable">
-                                    <h5 class="card-title">Newly Added Medicines in Your Barangay</h5>
-                                    @if (count($newlyAddedBarangayMedicines) > 0)
-                                        <ul class="list-group list-group-flush">
-                                            @foreach ($newlyAddedBarangayMedicines as $barangayMedicine)
-                                                <li class="list-group-item">
-                                                    <strong>Name:</strong> {{ $barangayMedicine->medicine->generic_name }} -
-                                                    {{ $barangayMedicine->medicine->brand_name }}<br>
-                                                    <strong>Category:</strong> {{ $barangayMedicine->medicine->category->name }}<br>
-                                                    <strong>Stocks:</strong> {{ $barangayMedicine->stocks }}<br>
-                                                    <strong>Expiration Date:</strong> {{ $barangayMedicine->expiration_date }}<br>
-                                                    <strong>Distributed Date:</strong> {{ $barangayMedicine->created_at }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <p>No Newly Added Medicines in Your Barangay.</p>
-                                    @endif
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Total Distributions</h5>
+                                        <p class="card-text" style="font-size: 24px;">{{ $totalBarangayDistributions }}
+                                        </p>
+                                    </div>
+                                    <i class="fas fa-hospital" style="font-size: 36px; color: #27ae60;"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body card-scrollable">
-                                    <h5 class="card-title">Nearly Out of Stock Medicines in Your Barangay</h5>
-                                    @if (count($nearlyOutOfStockMedicines) > 0)
-                                        <ul class="list-group list-group-flush">
-                                            @foreach ($nearlyOutOfStockMedicines as $barangayMedicine)
-                                                <li class="list-group-item">
-                                                    <strong>Name:</strong> {{ $barangayMedicine->generic_name }} - {{ $barangayMedicine->brand_name }}<br>
-                                                    <strong>Category:</strong> {{ $barangayMedicine->medicine->category->name }}<br>
-                                                    <strong>Stocks:</strong> {{ $barangayMedicine->stocks }}<br>
-                                                    <strong>Expiration Date:</strong> {{ $barangayMedicine->expiration_date }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <p>No Nearly Out of Stock Medicines in Your Barangay.</p>
-                                    @endif
+                        <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="card-title">Total Patients</h5>
+                                        <p class="card-text" style="font-size: 24px;">{{ $totalBarangayPatients }}</p>
+                                    </div>
+                                    <i class="fas fa-user" style="font-size: 36px; color: #f39c12;"></i>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body card-scrollable">
-                                    <h5 class="card-title">Nearly Expired Medicines in Your Barangay</h5>
-                                    @if (count($nearlyExpiredMedicines) > 0)
-                                        <ul class="list-group list-group-flush">
-                                            @foreach ($nearlyExpiredMedicines as $barangayMedicine)
-                                                <li class="list-group-item">
-                                                    <strong>Name:</strong> {{ $barangayMedicine->generic_name }} - {{ $barangayMedicine->brand_name }}<br>
-                                                    <strong>Category:</strong> {{ $barangayMedicine->medicine->category->name }}<br>
-                                                    <strong>Stocks:</strong> {{ $barangayMedicine->stocks }}<br>
-                                                    <strong>Expiration Date:</strong> {{ $barangayMedicine->expiration_date }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <p>No Nearly Expired Medicines in Your Barangay.</p>
-                                    @endif
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card card-scrollable">
+                                    <div class="card-body">
+                                        <div class="card-body d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">Nearly Out of Stock Medicines</h5>
+                                            <span
+                                                style="font-weight: bold; font-size: 25px;">{{ $totalNearlyBarangayOutOfStockMedicines }}</span>
+                                        </div>
+                                        @if (count($nearlyBarangayOutOfStockMedicines) > 0)
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Category</th>
+                                                            <th>Stocks</th>
+                                                            <th>Expiration Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($nearlyBarangayOutOfStockMedicines as $barangayMedicine)
+                                                            <tr>
+                                                                <td>{{ $barangayMedicine->generic_name }} -
+                                                                    {{ $barangayMedicine->brand_name }}</td>
+                                                                <td>{{ $barangayMedicine->category->name }}</td>
+                                                                <td>{{ $barangayMedicine->stocks }}</td>
+                                                                <td>{{ $barangayMedicine->expiration_date }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                {{ $nearlyBarangayOutOfStockMedicines->appends(['tab' => 'out_of_stock_page'])->links('vendor.pagination.bootstrap-4') }}
+                                            </div>
+                                        @else
+                                            <p class="text-center">No Nearly Out of Stock Medicines.</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="card card-scrollable">
+                                    <div class="card-body">
+                                        <div class="card-body d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">Nearly Expired Medicines</h5>
+                                            <span
+                                                style="font-weight: bold; font-size: 25px;">{{ $totalNearlyBarangayExpiredMedicines }}</span>
+                                        </div>
+                                        @if (count($nearlyBarangayExpiredMedicines) > 0)
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Category</th>
+                                                            <th>Stocks</th>
+                                                            <th>Expiration Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($nearlyBarangayExpiredMedicines as $barangayMedicine)
+                                                            <tr>
+                                                                <td>{{ $barangayMedicine->generic_name }} -
+                                                                    {{ $barangayMedicine->brand_name }}</td>
+                                                                <td>{{ $barangayMedicine->category->name }}</td>
+                                                                <td>{{ $barangayMedicine->stocks }}</td>
+                                                                <td>{{ $barangayMedicine->expiration_date }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                {{ $nearlyBarangayExpiredMedicines->appends(['tab' => 'expired_page'])->links('vendor.pagination.bootstrap-4') }}
+                                            </div>
+                                        @else
+                                            <p class="text-center">No Nearly Expired Medicines.</p>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body card-scrollable">
-                                    <h5 class="card-title">Distribution Schedules in Your Barangay This Week</h5>
-                                    <ul class="list-group list-group-flush">
-                                        @forelse ($distributionSchedulesInYourBarangay as $schedule)
-                                            <li class="list-group-item">
-                                                <strong>Medicine:</strong> {{ $schedule->medicine->generic_name }} -
-                                                {{ $schedule->medicine->brand_name }}<br>
-                                                <strong>Stocks:</strong> {{ $schedule->stock }}<br>
-                                                <strong>Schedule Date:</strong>
-                                                {{ is_string($schedule->schedule_date_time) ? $schedule->schedule_date_time : $schedule->schedule_date_time->format('Y-m-d H:i:s') }}
-                                            </li>
-                                        @empty
-                                            <li class="list-group-item">No distribution schedules for your barangay this week.</li>
-                                        @endforelse
-                                    </ul>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card card-scrollable">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Distribution Schedules in Your Barangay This Week</h5>
+                                        @if (count($distributionSchedulesInYourBarangay) > 0)
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Medicine</th>
+                                                            <th>Stocks</th>
+                                                            <th>Schedule Date/Time</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($distributionSchedulesInYourBarangay as $schedule)
+                                                            <tr>
+                                                                <td>{{ $schedule->medicine->generic_name }} -
+                                                                    {{ $schedule->medicine->brand_name }}</td>
+                                                                <td>{{ $schedule->stock }}</td>
+                                                                <td>{{ is_string($schedule->schedule_date_time) ? $schedule->schedule_date_time : $schedule->schedule_date_time->format('Y-m-d H:i:s') }}
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                {{ $distributionSchedulesInYourBarangay->appends(['tab' => 'this_week_page'])->links('vendor.pagination.bootstrap-4') }}
+                                            </div>
+                                        @else
+                                            <p class="text-center">No distribution schedules for your barangay this week.
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="card card-scrollable">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Newly Added Medicines in Your Barangay</h5>
+                                        @if (count($newlyAddedBarangayMedicines) > 0)
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Category</th>
+                                                            <th>Stocks</th>
+                                                            <th>Expiration Date</th>
+                                                            <th>Distributed Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($newlyAddedBarangayMedicines as $barangayMedicine)
+                                                            <tr>
+                                                                <td>{{ $barangayMedicine->medicine->generic_name }} -
+                                                                    {{ $barangayMedicine->medicine->brand_name }}</td>
+                                                                <td>{{ $barangayMedicine->medicine->category->name }}</td>
+                                                                <td>{{ $barangayMedicine->stocks }}</td>
+                                                                <td>{{ $barangayMedicine->expiration_date }}</td>
+                                                                <td>{{ $barangayMedicine->created_at }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                {{ $distributionSchedulesInYourBarangay->appends(['tab' => 'this_week_page'])->links('vendor.pagination.bootstrap-4') }}
+                                            </div>
+                                        @else
+                                            <p class="text-center">No Newly Added Medicines in Your Barangay.</p>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @elseif (Auth::user()->isPharmacist())
-                    <!-- Pharmacist Dashboard -->
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Medicines</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Total Medicines: {{ $totalMedicines }}</li>
-                                        <li class="list-group-item">Out of Stock Medicines: {{ $totalOutOfStockMedicines }}
-                                        </li>
-                                        <li class="list-group-item">Nearly Out of Stock Medicines:
-                                            {{ $totalNearlyOutOfStockMedicines }}</li>
-                                        <li class="list-group-item">Expired Medicines: {{ $totalExpiredMedicines }}</li>
-                                        <li class="list-group-item">Nearly Expired Medicines:
-                                            {{ $totalNearlyExpiredMedicines }}</li>
-                                    </ul>
+                    @elseif (Auth::user()->isPharmacist())
+                        <!-- Pharmacist Dashboard -->
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title">Total Medicines</h5>
+                                            <p class="card-text" style="font-size: 24px;">{{ $totalMedicines }}</p>
+                                        </div>
+                                        <i class="fas fa-pills" style="font-size: 36px; color: #3498db;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title">Out of Stock Medicines</h5>
+                                            <p class="card-text" style="font-size: 24px;">{{ $totalOutOfStockMedicines }}
+                                            </p>
+                                        </div>
+                                        <i class="fas fa-ban" style="font-size: 36px; color: #e74c3c;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title">Expired Medicines</h5>
+                                            <p class="card-text" style="font-size: 24px;">{{ $totalExpiredMedicines }}
+                                            </p>
+                                        </div>
+                                        <i class="fas fa-calendar-times" style="font-size: 36px; color: #f39c12;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title">Total Barangay Distributions</h5>
+                                            <p class="card-text" style="font-size: 24px;">
+                                                {{ $totalDistributionBarangay }}</p>
+                                        </div>
+                                        <i class="fas fa-hospital" style="font-size: 36px; color: #27ae60;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Distributions</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Total Barangay Distributions:
-                                            {{ $totalDistributionBarangay }}</li>
-                                        <li class="list-group-item">Total Barangay Distributions added today:
-                                            {{ $totalBarangayDistributionAddedToday }}</li>
-                                        <li class="list-group-item">Total Patient Distributions:
-                                            {{ $totalPatientDistributions }}</li>
-                                        <li class="list-group-item">Total Patient Distributions added today:
-                                            {{ $totalPatientDistributionAddedToday }}</li>
-                                    </ul>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title">Total Patient Distributions</h5>
+                                            <p class="card-text" style="font-size: 24px;">
+                                                {{ $totalPatientDistributions }}</p>
+                                        </div>
+                                        <i class="fas fa-user-friends" style="font-size: 36px; color: #3498db;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title">Total Barangays</h5>
+                                            <p class="card-text" style="font-size: 24px;">{{ $totalBarangay }}</p>
+                                        </div>
+                                        <i class="fas fa-city" style="font-size: 36px; color: #e74c3c;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title">Total Patients</h5>
+                                            <p class="card-text" style="font-size: 24px;">{{ $totalPatients }}</p>
+                                        </div>
+                                        <i class="fas fa-user" style="font-size: 36px; color: #f39c12;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Population</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Total Barangays: {{ $totalBarangay }}</li>
-                                        <li class="list-group-item">Total Patients: {{ $totalPatients }}</li>
-                                        <li class="list-group-item">Total Patients added today:
-                                            {{ $totalPatientsAddedToday }}</li>
-                                    </ul>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card card-scrollable">
+                                    <div class="card-body">
+                                        <div class="card-body d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">Nearly Out of Stock Medicines</h5>
+                                            <span
+                                                style="font-weight: bold; font-size: 25px;">{{ $totalNearlyOutOfStockMedicines }}</span>
+                                        </div>
+                                        @if (count($nearlyOutOfStockMedicines) > 0)
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Category</th>
+                                                            <th>Stocks</th>
+                                                            <th>Expiration Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($nearlyOutOfStockMedicines as $medicine)
+                                                            <tr>
+                                                                <td>{{ $medicine->generic_name }} -
+                                                                    {{ $medicine->brand_name }}</td>
+                                                                <td>{{ $medicine->category->name }}</td>
+                                                                <td>{{ $medicine->stocks }}</td>
+                                                                <td>{{ $medicine->expiration_date }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                {{ $nearlyOutOfStockMedicines->appends(['tab' => 'out_of_stock_page'])->links('vendor.pagination.bootstrap-4') }}
+                                            </div>
+                                        @else
+                                            <p class="text-center">No Nearly Out of Stock Medicines.</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="card card-scrollable">
+                                    <div class="card-body">
+                                        <div class="card-body d-flex justify-content-between align-items-center">
+                                            <h5 class="card-title">Nearly Expired Medicines</h5>
+                                            <span
+                                                style="font-weight: bold; font-size: 25px;">{{ $totalNearlyExpiredMedicines }}</span>
+                                        </div>
+                                        @if (count($nearlyExpiredMedicines) > 0)
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Category</th>
+                                                            <th>Stocks</th>
+                                                            <th>Expiration Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($nearlyExpiredMedicines as $medicine)
+                                                            <tr>
+                                                                <td>{{ $medicine->generic_name }} -
+                                                                    {{ $medicine->brand_name }}</td>
+                                                                <td>{{ $medicine->category->name }}</td>
+                                                                <td>{{ $medicine->stocks }}</td>
+                                                                <td>{{ $medicine->expiration_date }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                {{ $nearlyExpiredMedicines->appends(['tab' => 'expired_page'])->links('vendor.pagination.bootstrap-4') }}
+                                            </div>
+                                        @else
+                                            <p class="text-center">No Nearly Expired Medicines.</p>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Newly Added Medicines</h5>
-                                    @if(count($newlyAddedMedicines) > 0)
-                                        <ul class="list-group list-group-flush">
-                                            @foreach ($newlyAddedMedicines as $medicine)
-                                                <li class="list-group-item">
-                                                    <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
-                                                    <strong>Category:</strong> {{ $medicine->category->name }}<br>
-                                                    <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
-                                                    <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <p>No newly added medicines.</p>
-                                    @endif
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card card-scrollable">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Schedules for Distribution This Week</h5>
+                                        @if (count($distributionSchedulesThisWeek) > 0)
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Barangay</th>
+                                                            <th>Medicine</th>
+                                                            <th>Stocks</th>
+                                                            <th>Schedule Date/Time</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($distributionSchedulesThisWeek as $schedule)
+                                                            <tr>
+                                                                <td>{{ $schedule->barangay->name }}</td>
+                                                                <td>{{ $schedule->medicine->generic_name }} -
+                                                                    {{ $schedule->medicine->brand_name }}</td>
+                                                                <td>{{ $schedule->stock }}</td>
+                                                                <td>{{ is_string($schedule->schedule_date_time) ? $schedule->schedule_date_time : $schedule->schedule_date_time->format('Y-m-d H:i:s') }}
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                {{ $distributionSchedulesThisWeek->appends(['tab' => 'this_week_page'])->links('vendor.pagination.bootstrap-4') }}
+                                            </div>
+                                        @else
+                                            <p class="text-center">No Distribution Schedules for this week.</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="card card-scrollable">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Schedule for Distribution Today</h5>
+                                        @if (count($distributionSchedulesToday) > 0)
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Barangay</th>
+                                                            <th>Medicine</th>
+                                                            <th>Stocks</th>
+                                                            <th>Schedule Date/Time</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($distributionSchedulesToday as $schedule)
+                                                            <tr>
+                                                                <td>{{ $schedule->barangay->name }}</td>
+                                                                <td>{{ $schedule->medicine->generic_name }} -
+                                                                    {{ $schedule->medicine->brand_name }}</td>
+                                                                <td>{{ $schedule->stock }}</td>
+                                                                <td>{{ $schedule->schedule_date_time }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                {{ $distributionSchedulesToday->appends(['tab' => 'today_page'])->links('vendor.pagination.bootstrap-4') }}
+                                            </div>
+                                        @else
+                                            <p class="text-center">No Distribution Schedules for today.</p>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4 card-scrollable">
-                                <div class="card-body">
-                                    <h5 class="card-title">Nearly Out of Stock Medicines</h5>
-                                    @if(count($nearlyOutOfStockMedicines) > 0)
-                                        <ul class="list-group list-group-flush">
-                                            @foreach ($nearlyOutOfStockMedicines as $medicine)
-                                                <li class="list-group-item">
-                                                    <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
-                                                    <strong>Category:</strong> {{ $medicine->category->name }}<br>
-                                                    <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
-                                                    <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <p>No Nearly Out of Stock Medicines.</p>
-                                    @endif
+                    @elseif (Auth::user()->isSuperAdmin())
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title">Total Users</h5>
+                                            <p class="card-text" style="font-size: 24px;">{{ $totalUsers }}</p>
+                                        </div>
+                                        <i class="fas fa-users" style="font-size: 36px; color: #27ae60;"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4 card-scrollable">
-                                <div class="card-body">
-                                    <h5 class="card-title">Nearly Expired Medicines</h5>
-                                    @if(count($nearlyExpiredMedicines) > 0)
-                                        <ul class="list-group list-group-flush">
-                                            @foreach ($nearlyExpiredMedicines as $medicine)
-                                                <li class="list-group-item">
-                                                    <strong>Name:</strong> {{ $medicine->generic_name }} - {{ $medicine->brand_name }}<br>
-                                                    <strong>Category:</strong> {{ $medicine->category->name }}<br>
-                                                    <strong>Stocks:</strong> {{ $medicine->stocks }}<br>
-                                                    <strong>Expiration Date:</strong> {{ $medicine->expiration_date }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <p>No Nearly Expired Medicines.</p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body card-scrollable">
-                                    <h5 class="card-title">Schedules for Distribution This Week</h5>
-                                    <ul class="list-group list-group-flush">
-                                        @forelse ($distributionSchedulesThisWeek as $schedule)
-                                            <li class="list-group-item">
-                                                <strong>Barangay:</strong> {{ $schedule->barangay->name }}<br>
-                                                <strong>Medicine:</strong> {{ $schedule->medicine->generic_name }} -
-                                                {{ $schedule->medicine->generic_name }}<br>
-                                                <strong>Stocks:</strong> {{ $schedule->stock }}<br>
-                                                <strong>Schedule Date:</strong>
-                                                {{ is_string($schedule->schedule_date_time) ? $schedule->schedule_date_time : $schedule->schedule_date_time->format('Y-m-d H:i:s') }}
-                                            </li>
-                                        @empty
-                                            <li class="list-group-item">No distribution schedules for this week.</li>
-                                        @endforelse
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Schedule for Distribution Today</h5>
-                                    <ul class="list-group list-group-flush">
-                                        @forelse ($distributionSchedulesToday as $schedule)
-                                            <li class="list-group-item">
-                                                <strong>Barangay:</strong> {{ $schedule->barangay->name }}<br>
-                                                <strong>Medicine:</strong> {{ $schedule->medicine->generic_name }} -
-                                                {{ $schedule->medicine->brand_name }}<br>
-                                                <strong>Stocks:</strong> {{ $schedule->stock }}
-                                            </li>
-                                        @empty
-                                            <li class="list-group-item">No distribution schedules for today.</li>
-                                        @endforelse
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 @endif
             </div>
         </div>
@@ -463,63 +758,109 @@
     <style>
         .card-scrollable::-webkit-scrollbar {
             width: 0;
-            /* Remove scrollbar space */
             background: transparent;
-            /* Optional: just make scrollbar invisible */
         }
 
         .card-scrollable {
             scrollbar-width: thin;
-            /* For Firefox */
             overflow-y: scroll;
-            /* Force scroll */
         }
 
         .card-scrollable {
-            max-height: 300px;
-            /* Set a maximum height for the card */
+            max-height: 400px;
             overflow-y: auto;
         }
 
         .card {
-            /* Optional: Set a fixed or max-height for the card */
-            /* max-height: 400px; */
             border: 1px solid #ccc;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             background-color: #fff;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
         }
 
-        .list-group-item {
-            transition: background-color 0.3s ease;
+        .pagination {
+            margin: 0;
+            padding: 0;
+            list-style: none;
         }
 
-        .list-group-item:hover {
-            background-color: #f0f0f0;
+        .pagination li {
+            display: inline;
+            margin-right: 5px;
         }
-        .row .card {
-                    height: 90%;
-                }
-        /* Dark mode styles */
+
+        .pagination a {
+            text-decoration: none;
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
+
+        .pagination a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
         body.dark-mode .card {
             background-color: #343a40;
-            /* Dark background color for cards in dark mode */
             color: #ffffff;
-            /* Text color for cards in dark mode */
         }
 
-        body.dark-mode .list-group-item {
+        body.dark-mode .table {
+            background-color: #2d2d2d;
+            color: #fff;
+        }
+
+        body.dark-mode .table th {
+            background-color: #1e1e1e;
+            color: #fff;
+        }
+
+        body.dark-mode .table th,
+        body.dark-mode .table td {
+            border: 1px solid #333;
+            background-color: #2d2d2d;
+            color: #fff;
+        }
+
+        body.dark-mode .pagination a {
+            text-decoration: none;
+            color: #007bff;
             background-color: #343a40;
-            color: #ffffff;
-            /* Text color for list items in dark mode */
+        }
+
+        body.dark-mode .pagination a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        body.dark-mode .pagination .page-item:first-child .page-link,
+        body.dark-mode .pagination .page-item:last-child .page-link {
+            border: 1px solid #007bff;
+            color: #007bff;
+            background-color: #343a40;
+        }
+
+        body.dark-mode .pagination .page-item:first-child .page-link:hover,
+        body.dark-mode .pagination .page-item:last-child .page-link:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        body.dark-mode .pagination .page-item.disabled .page-link {
+            background-color: #343a40;
+            color: #6c757d;
+            border: 1px solid #343a40;
+        }
+
+        body.dark-mode .form-control {
+            background-color: #2d2d2d;
+            color: #fff;
         }
     </style>
     <script>
-        // Check if dark mode is enabled in local storage
         const isDarkMode = localStorage.getItem('dark_mode') === 'true';
 
-        // Apply dark mode styles if enabled
         if (isDarkMode) {
             document.body.classList.add('dark-mode');
         }

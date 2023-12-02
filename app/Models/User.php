@@ -60,10 +60,13 @@ class User extends Authenticatable
     {
         return self::where('remember_token',$token)->first();
 
-        
+
     }
 
-
+    public function isSuperAdmin()
+    {
+        return $this->hasRole('superadmin');
+    }
     public function isAdmin()
     {
         return $this->hasRole('admin');
