@@ -121,11 +121,23 @@
                                                 <tbody>
                                                     @foreach ($nearlyOutOfStockMedicines as $medicine)
                                                         <tr>
-                                                            <td>{{ $medicine->generic_name }} -
-                                                                {{ $medicine->brand_name }}</td>
-                                                            <td>{{ $medicine->category->name }}</td>
-                                                            <td>{{ $medicine->stocks }}</td>
-                                                            <td>{{ $medicine->expiration_date }}</td>
+                                                            <td>
+                                                                {{ $medicine->generic_name }} -
+                                                                {{ $medicine->brand_name }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $medicine->category->name }}
+                                                            </td>
+                                                            <td
+                                                                style="background-color:
+                                                                @if ($medicine->stocks >= 41 && $medicine->stocks <= 50) #FFD700
+                                                                @elseif($medicine->stocks >= 21 && $medicine->stocks <= 40) #FFA500
+                                                                @elseif($medicine->stocks >= 1 && $medicine->stocks <= 20) #FF6347 @endif;">
+                                                                {{ $medicine->stocks }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $medicine->expiration_date }}
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -163,11 +175,24 @@
                                                 <tbody>
                                                     @foreach ($nearlyExpiredMedicines as $medicine)
                                                         <tr>
-                                                            <td>{{ $medicine->generic_name }} -
-                                                                {{ $medicine->brand_name }}</td>
-                                                            <td>{{ $medicine->category->name }}</td>
-                                                            <td>{{ $medicine->stocks }}</td>
-                                                            <td>{{ $medicine->expiration_date }}</td>
+                                                            <td>
+                                                                {{ $medicine->generic_name }} -
+                                                                {{ $medicine->brand_name }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $medicine->category->name }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $medicine->stocks }}
+                                                            </td>
+                                                            <td
+                                                                style="background-color:
+                                                                @if (strtotime($medicine->expiration_date) - strtotime(now()) > 10 * 24 * 3600) default
+                                                                @elseif(strtotime($medicine->expiration_date) - strtotime(now()) > 7 * 24 * 3600) #FFD700
+                                                                @elseif(strtotime($medicine->expiration_date) - strtotime(now()) > 4 * 24 * 3600) #FFA500
+                                                                @elseif(strtotime($medicine->expiration_date) - strtotime(now()) > 1 * 24 * 3600) #FF6347 @endif;">
+                                                                {{ $medicine->expiration_date }}
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -348,8 +373,13 @@
                                                             <tr>
                                                                 <td>{{ $barangayMedicine->generic_name }} -
                                                                     {{ $barangayMedicine->brand_name }}</td>
-                                                                <td>{{ $barangayMedicine->category->name }}</td>
-                                                                <td>{{ $barangayMedicine->stocks }}</td>
+                                                                <td>{{ $barangayMedicine->medicine->category->name }}</td>
+                                                                <td
+                                                                    style="background-color:
+                                                                @if ($barangayMedicine->stocks >= 41 && $barangayMedicine->stocks <= 50) #FFD700
+                                                                @elseif($barangayMedicine->stocks >= 21 && $barangayMedicine->stocks <= 40) #FFA500
+                                                                @elseif($barangayMedicine->stocks >= 1 && $barangayMedicine->stocks <= 20) #FF6347 @endif;">
+                                                                    {{ $barangayMedicine->stocks }}</td>
                                                                 <td>{{ $barangayMedicine->expiration_date }}</td>
                                                             </tr>
                                                         @endforeach
@@ -390,9 +420,14 @@
                                                             <tr>
                                                                 <td>{{ $barangayMedicine->generic_name }} -
                                                                     {{ $barangayMedicine->brand_name }}</td>
-                                                                <td>{{ $barangayMedicine->category->name }}</td>
+                                                                <td>{{ $barangayMedicine->medicine->category->name }}</td>
                                                                 <td>{{ $barangayMedicine->stocks }}</td>
-                                                                <td>{{ $barangayMedicine->expiration_date }}</td>
+                                                                <td style="background-color:
+                                                                @if(strtotime($barangayMedicine->expiration_date) - strtotime(now()) > 10 * 24 * 3600) default
+                                                                @elseif(strtotime($barangayMedicine->expiration_date) - strtotime(now()) > 7 * 24 * 3600) #FFD700
+                                                                @elseif(strtotime($barangayMedicine->expiration_date) - strtotime(now()) > 4 * 24 * 3600) #FFA500
+                                                                @elseif(strtotime($barangayMedicine->expiration_date) - strtotime(now()) > 1 * 24 * 3600) #FF6347
+                                                                @endif;">{{ $barangayMedicine->expiration_date }}</td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -477,7 +512,7 @@
                                                 </table>
                                             </div>
                                             <div class="d-flex justify-content-center">
-                                                {{ $distributionSchedulesInYourBarangay->appends(['tab' => 'this_week_page'])->links('vendor.pagination.bootstrap-4') }}
+                                                {{ $newlyAddedBarangayMedicines->appends(['tab' => 'newly_page'])->links('vendor.pagination.bootstrap-4') }}
                                             </div>
                                         @else
                                             <p class="text-center">No Newly Added Medicines in Your Barangay.</p>
@@ -596,11 +631,23 @@
                                                     <tbody>
                                                         @foreach ($nearlyOutOfStockMedicines as $medicine)
                                                             <tr>
-                                                                <td>{{ $medicine->generic_name }} -
-                                                                    {{ $medicine->brand_name }}</td>
-                                                                <td>{{ $medicine->category->name }}</td>
-                                                                <td>{{ $medicine->stocks }}</td>
-                                                                <td>{{ $medicine->expiration_date }}</td>
+                                                                <td>
+                                                                    {{ $medicine->generic_name }} -
+                                                                    {{ $medicine->brand_name }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ $medicine->category->name }}
+                                                                </td>
+                                                                <td
+                                                                    style="background-color:
+                                                                    @if ($medicine->stocks >= 41 && $medicine->stocks <= 50) #FFD700
+                                                                    @elseif($medicine->stocks >= 21 && $medicine->stocks <= 40) #FFA500
+                                                                    @elseif($medicine->stocks >= 1 && $medicine->stocks <= 20) #FF6347 @endif;">
+                                                                    {{ $medicine->stocks }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ $medicine->expiration_date }}
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -638,11 +685,24 @@
                                                     <tbody>
                                                         @foreach ($nearlyExpiredMedicines as $medicine)
                                                             <tr>
-                                                                <td>{{ $medicine->generic_name }} -
-                                                                    {{ $medicine->brand_name }}</td>
-                                                                <td>{{ $medicine->category->name }}</td>
-                                                                <td>{{ $medicine->stocks }}</td>
-                                                                <td>{{ $medicine->expiration_date }}</td>
+                                                                <td>
+                                                                    {{ $medicine->generic_name }} -
+                                                                    {{ $medicine->brand_name }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ $medicine->category->name }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ $medicine->stocks }}
+                                                                </td>
+                                                                <td
+                                                                    style="background-color:
+                                                                    @if (strtotime($medicine->expiration_date) - strtotime(now()) > 10 * 24 * 3600) default
+                                                                    @elseif(strtotime($medicine->expiration_date) - strtotime(now()) > 7 * 24 * 3600) #FFD700
+                                                                    @elseif(strtotime($medicine->expiration_date) - strtotime(now()) > 4 * 24 * 3600) #FFA500
+                                                                    @elseif(strtotime($medicine->expiration_date) - strtotime(now()) > 1 * 24 * 3600) #FF6347 @endif;">
+                                                                    {{ $medicine->expiration_date }}
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>

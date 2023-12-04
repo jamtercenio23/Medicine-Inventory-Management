@@ -144,7 +144,7 @@ class HomeController extends Controller
             $newlyAddedBarangayMedicines = BarangayMedicine::where('barangay_id', $barangayId)
                 ->where('created_at', '>', now()->subHours(12))
                 ->with('medicine.category') // Assuming there is a relationship between BarangayMedicine and Medicine
-                ->get();
+                ->paginate(2, ['*'], 'newly_page');
             return view('home', compact(
                 'totalBarangayMedicines',
                 'totalBarangayPatients',
